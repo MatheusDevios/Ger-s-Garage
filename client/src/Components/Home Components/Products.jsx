@@ -6,7 +6,7 @@ import Product from "./Product";
 // import axios from "axios";
 
 const Container = styled.div`
-  padding-bottom: 20px;
+  padding: 25px 0;
   background-color: #f5fbfd;
   display: flex;
   flex-direction: column;
@@ -14,6 +14,7 @@ const Container = styled.div`
   justify-content: center;
 `;
 const ProductContainer = styled.div`
+  padding: 20px 0;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   ${tablet({
@@ -25,7 +26,7 @@ const ProductContainer = styled.div`
 `;
 
 const Title = styled.h3`
-  font-size: 30px;
+  font-size: 38px;
   line-height: 1.4;
   font-weight: 800;
 `;

@@ -12,7 +12,7 @@ const AdvantagesTitle = styled.h2`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 30px;
+  font-size: 38px;
   line-height: 1.4;
   font-weight: 800;
 `;
@@ -39,18 +39,18 @@ const Container = styled.div`
 
 const Image = styled.img`
   padding-bottom: 1.4rem;
-  width: 60px;
+  width: 70px;
 `;
 
 const ContainerTitle = styled.div`
   padding: 1rem 0;
-  font-size: 20px;
+  font-size: 24px;
   line-height: 1.4;
   font-weight: 500;
 `;
 
 const ContainerInfo = styled.div`
-  font-size: 13px;
+  font-size: 15px;
   line-height: 2;
   font-weight: 300;
 `;

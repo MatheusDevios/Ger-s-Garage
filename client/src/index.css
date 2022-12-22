@@ -1,18 +1,22 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@700&family=Dosis:wght@300;400;500;600;700&family=Edu+TAS+Beginner&family=Montserrat:wght@300;400;500;900&display=swap');
+
+* {
   margin: 0;
   padding: 0;
   border: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  outline: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  font-family: -apple-system, 'Dosis', sans-serif, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* background-color: black; */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html {
+  scroll-behavior: smooth;
 }
 
 .swiper-pagination-clickable .swiper-pagination-bullet {

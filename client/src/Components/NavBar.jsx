@@ -10,8 +10,8 @@ import { Badge } from "@mui/material";
 import { mobile } from "../responsive";
 
 const ContainerGeral = styled.div`
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 700;
   /* border-bottom: 1px solid #f0f2f3; */
 `;
 const Container = styled.div`
@@ -27,7 +27,7 @@ const ContainerTop = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 500;
 `;
 const ContainerTopInner = styled.div`
@@ -46,6 +46,7 @@ const MyAccountIcon = styled.div`
   display: flex;
   align-items: center;
   transition: all 0.5s ease;
+  color: #fff;
   &:hover {
     transform: scale(1.1);
   }
@@ -59,6 +60,7 @@ const MainBarContainer = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
 `;
 const MainBarContainerLogo = styled.div`
   display: inline-block;
@@ -66,6 +68,7 @@ const MainBarContainerLogo = styled.div`
   font-size: 1.25rem;
   line-height: inherit;
   white-space: nowrap;
+  color: #18181d;
 `;
 const Nav = styled.div`
   padding: 0;
@@ -108,17 +111,23 @@ const NavBar = () => {
               <LinkedInIcon />
               <InstagramIcon />
             </Icons>
-            <MyAccountIcon>Sign Up / Sign In</MyAccountIcon>
-            <MyAccountIcon>My Account</MyAccountIcon>
+            <Link to="/Auth" style={{ textDecoration: "none" }}>
+              <MyAccountIcon>Sign Up / Sign In</MyAccountIcon>
+            </Link>
+            <Link to="/Auth" style={{ textDecoration: "none" }}>
+              <MyAccountIcon>My Account</MyAccountIcon>
+            </Link>
           </ContainerTopInner>
         </Container>
       </ContainerTop>
       <ContainerMid>
         <Container>
           <MainBarContainer>
-            <MainBarContainerLogo>LOGO</MainBarContainerLogo>
+            <Link to="/">
+              <MainBarContainerLogo>LOGO</MainBarContainerLogo>
+            </Link>
             <Nav>
-              <Link style={{ textDecoration: "none" }}>
+              <Link to="/" style={{ textDecoration: "none" }}>
                 <PageLink>Home</PageLink>
               </Link>
               <Link style={{ textDecoration: "none" }}>

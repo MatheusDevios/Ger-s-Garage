@@ -22,9 +22,10 @@ const Container = styled.div`
 const Header5 = styled.h5`
   margin-bottom: 10px;
   color: #c30c0c;
+  font-size: 15px;
 `;
 const TestimonialsTitle = styled.h2`
-  font-size: 30px;
+  font-size: 38px;
   line-height: 1.4;
   font-weight: 800;
   margin: 10px;
@@ -62,7 +63,8 @@ const ClientAvatar = styled.img`
 `;
 
 const ClientReview = styled.small`
-  font-weight: 300;
+  font-weight: 400;
+  font-size: 14px;
   display: block;
   width: 80%;
   margin: 0.8rem auto 0;

@@ -53,12 +53,17 @@ const Icon = styled.div`
 `;
 
 const Image = styled.img`
-  width: 40px;
+  width: 50px;
+  padding-bottom: 15px;
 `;
 
 const Content = styled.h5`
   font-weight: 500;
+  font-size: 20px;
   line-height: 1.5;
+  ${mobile({
+    fontSize: "18px",
+  })}
 `;
 
 const ServicesEg = () => {

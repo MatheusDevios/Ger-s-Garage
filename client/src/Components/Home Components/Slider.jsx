@@ -67,22 +67,22 @@ const InfoContainer = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 70px;
-  ${mobile({ fontSize: "40px" })}
+  font-size: 80px;
+  ${mobile({ fontSize: "50px" })}
 `;
 
 const Desc = styled.p`
   margin: 25px 0px;
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 500;
   letter-spacing: 3px;
-  ${mobile({ fontSize: "15px" })}
+  ${mobile({ fontSize: "25px" })}
 `;
 
 const Button = styled.button`
   padding: 10px;
   color: azure;
-  font-size: 20px;
+  font-size: 25px;
   background-color: #c30c0c;
   border-radius: 3rem;
   transition: all 0.5s ease;

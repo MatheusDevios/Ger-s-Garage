@@ -36,6 +36,7 @@ const Image = styled.img`
 `;
 const Info = styled.div`
   font-weight: 500;
+  font-size: 20px;
 `;
 const NameInfo = styled.div`
   color: #18181d;
