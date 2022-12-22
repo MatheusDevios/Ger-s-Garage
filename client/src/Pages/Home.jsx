@@ -1,11 +1,11 @@
 import React from "react";
-import Advantages from "../Components/Home Components/Advantages";
-import Testimonials from "../Components/Home Components/Testimonials";
+import Advantages from "../Components/Home/Advantages";
+import Testimonials from "../Components/Home/Testimonials";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
-import ServicesEg from "../Components/Home Components/ServicesEg";
-import Slider from "../Components/Home Components/Slider";
-import Products from "../Components/Home Components/Products";
+import ServicesEg from "../Components/Home/ServicesEg";
+import Slider from "../Components/Home/Slider";
+import Products from "../Components/Home/Products";
 
 const Home = () => {
   return (

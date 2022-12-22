@@ -8,9 +8,69 @@ import Room from "@mui/icons-material/LocationOn";
 import MailOutline from "@mui/icons-material/MailOutline";
 import Phone from "@mui/icons-material/Phone";
 
+const Footer = () => {
+  return (
+    <Container>
+      <Left>
+        <Logo>LAMA.</Logo>
+        <Desc>
+          There are many variations of passages of Lorem Ipsum available, but
+          the majority have suffered alteration in some form, by injected
+          humour, or randomised words which don’t look even slightly believable.
+        </Desc>
+        <SocialContainer>
+          <SocialIcon color="3B5999">
+            <Facebook />
+          </SocialIcon>
+          <SocialIcon color="E4405F">
+            <Instagram />
+          </SocialIcon>
+          <SocialIcon color="55ACEE">
+            <LinkedIn />
+          </SocialIcon>
+          <SocialIcon color="E60023">
+            <Twitter />
+          </SocialIcon>
+        </SocialContainer>
+      </Left>
+      <Center>
+        <Title>Useful Links</Title>
+        <List>
+          <ListItem>Home</ListItem>
+          <ListItem>Cart</ListItem>
+          <ListItem>Services</ListItem>
+          <ListItem>My Account</ListItem>
+          <ListItem>Sign Up</ListItem>
+          <ListItem>Sign In</ListItem>
+          <ListItem>Anual Service</ListItem>
+          <ListItem>Major Service</ListItem>
+          <ListItem>Repair / Fault</ListItem>
+          <ListItem>Najor Repair</ListItem>
+        </List>
+      </Center>
+      <Right>
+        <Title>Contact</Title>
+        <ContactItem>
+          <Room style={{ marginRight: "10px" }} /> 622 Dixie Path , South
+          Tobinchester 98336
+        </ContactItem>
+        <ContactItem>
+          <Phone style={{ marginRight: "10px" }} /> +353 083 123 4567
+        </ContactItem>
+        <ContactItem>
+          <MailOutline style={{ marginRight: "10px" }} /> contact@gersgarage.dev
+        </ContactItem>
+        <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
+      </Right>
+    </Container>
+  );
+};
+
+export default Footer;
+
 const Container = styled.div`
   display: flex;
-  background-color: #f5fbfd;
+  /* background-color: #f5fbfd; */
   ${mobile({ flexDirection: "column" })}
 `;
 
@@ -81,63 +141,3 @@ const ContactItem = styled.div`
 const Payment = styled.img`
   width: 50%;
 `;
-
-const Footer = () => {
-  return (
-    <Container>
-      <Left>
-        <Logo>LAMA.</Logo>
-        <Desc>
-          There are many variations of passages of Lorem Ipsum available, but
-          the majority have suffered alteration in some form, by injected
-          humour, or randomised words which don’t look even slightly believable.
-        </Desc>
-        <SocialContainer>
-          <SocialIcon color="3B5999">
-            <Facebook />
-          </SocialIcon>
-          <SocialIcon color="E4405F">
-            <Instagram />
-          </SocialIcon>
-          <SocialIcon color="55ACEE">
-            <LinkedIn />
-          </SocialIcon>
-          <SocialIcon color="E60023">
-            <Twitter />
-          </SocialIcon>
-        </SocialContainer>
-      </Left>
-      <Center>
-        <Title>Useful Links</Title>
-        <List>
-          <ListItem>Home</ListItem>
-          <ListItem>Cart</ListItem>
-          <ListItem>Services</ListItem>
-          <ListItem>My Account</ListItem>
-          <ListItem>Sign Up</ListItem>
-          <ListItem>Sign In</ListItem>
-          <ListItem>Anual Service</ListItem>
-          <ListItem>Major Service</ListItem>
-          <ListItem>Repair / Fault</ListItem>
-          <ListItem>Najor Repair</ListItem>
-        </List>
-      </Center>
-      <Right>
-        <Title>Contact</Title>
-        <ContactItem>
-          <Room style={{ marginRight: "10px" }} /> 622 Dixie Path , South
-          Tobinchester 98336
-        </ContactItem>
-        <ContactItem>
-          <Phone style={{ marginRight: "10px" }} /> +353 083 123 4567
-        </ContactItem>
-        <ContactItem>
-          <MailOutline style={{ marginRight: "10px" }} /> contact@gersgarage.dev
-        </ContactItem>
-        <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
-      </Right>
-    </Container>
-  );
-};
-
-export default Footer;

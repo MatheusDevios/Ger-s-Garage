@@ -6,7 +6,7 @@ function App() {
   return (
     <Routes>
       <Route exact path="/" element={<Home />} />
-      <Route exact path="/Auth" element={<Auth />} />
+      <Route exact path="/auth" element={<Auth />} />
     </Routes>
   );
 }

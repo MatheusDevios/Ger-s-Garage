@@ -1,7 +1,37 @@
 import React from "react";
 import styled from "styled-components";
-import { advantages } from "../../data";
+import { advantages } from "../../Data/data";
 import { mobile } from "../../responsive";
+
+const Advantages = () => {
+  return (
+    <AdvantagesContainer>
+      <AdvantagesTitle>Advantages</AdvantagesTitle>
+      <Row>
+        {advantages.map((item) => (
+          <Container key={item._id}>
+            <Image src={item.img} />
+            <ContainerTitle>{item.title}</ContainerTitle>
+            <ContainerInfo>{item.desc}</ContainerInfo>
+          </Container>
+        ))}
+        {/* <Container>
+          <Image src={GUARANTEE} />
+          <ContainerTitle>Official Guarantee</ContainerTitle>
+          <ContainerInfo>
+            We give a one-year guarantee for all work. Two years of official
+            warranty for spare parts from our online store.
+          </ContainerInfo>
+        </Container>
+        <Container>Advantages</Container>
+        <Container>Advantages</Container>
+        <Container>Advantages</Container> */}
+      </Row>
+    </AdvantagesContainer>
+  );
+};
+
+export default Advantages;
 
 const AdvantagesContainer = styled.div`
   width: 100%;
@@ -54,33 +84,3 @@ const ContainerInfo = styled.div`
   line-height: 2;
   font-weight: 300;
 `;
-
-const Advantages = () => {
-  return (
-    <AdvantagesContainer>
-      <AdvantagesTitle>Advantages</AdvantagesTitle>
-      <Row>
-        {advantages.map((item) => (
-          <Container key={item._id}>
-            <Image src={item.img} />
-            <ContainerTitle>{item.title}</ContainerTitle>
-            <ContainerInfo>{item.desc}</ContainerInfo>
-          </Container>
-        ))}
-        {/* <Container>
-          <Image src={GUARANTEE} />
-          <ContainerTitle>Official Guarantee</ContainerTitle>
-          <ContainerInfo>
-            We give a one-year guarantee for all work. Two years of official
-            warranty for spare parts from our online store.
-          </ContainerInfo>
-        </Container>
-        <Container>Advantages</Container>
-        <Container>Advantages</Container>
-        <Container>Advantages</Container> */}
-      </Row>
-    </AdvantagesContainer>
-  );
-};
-
-export default Advantages;

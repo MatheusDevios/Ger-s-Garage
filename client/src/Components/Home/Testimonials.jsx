@@ -1,7 +1,6 @@
 import React from "react";
-import { data } from "../../data";
-import { mobile } from "../../responsive";
-import { tablet } from "../../responsive";
+import { data } from "../../Data/data";
+import { mobile, tablet } from "../../responsive";
 
 // import Swiper core and required modules
 import { Pagination } from "swiper";
@@ -11,6 +10,39 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import styled from "styled-components";
+
+const Testimonials = () => {
+  return (
+    <Container>
+      <Header5>Review from clients</Header5>
+      <TestimonialsTitle>Testimonials</TestimonialsTitle>
+
+      <SwiperContainer>
+        <Swiper
+          // Swiper modules
+          modules={[Pagination]}
+          spaceBetween={40}
+          slidesPerView={1}
+          pagination={{ clickable: true, dynamicBullets: true }}
+        >
+          {data.map(({ image, name, review }, index) => {
+            return (
+              <SwiperSlide key={index}>
+                <SwiperSlideContainer>
+                  <ClientAvatar src={image} alt={name} />
+                  <Header5 style={{ color: "black" }}>{name}</Header5>
+                  <ClientReview>{review}</ClientReview>
+                </SwiperSlideContainer>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      </SwiperContainer>
+    </Container>
+  );
+};
+
+export default Testimonials;
 
 const Container = styled.div`
   display: flex;
@@ -70,36 +102,3 @@ const ClientReview = styled.small`
   margin: 0.8rem auto 0;
   text-align: justify;
 `;
-
-const Testimonials = () => {
-  return (
-    <Container>
-      <Header5>Review from clients</Header5>
-      <TestimonialsTitle>Testimonials</TestimonialsTitle>
-
-      <SwiperContainer>
-        <Swiper
-          // Swiper modules
-          modules={[Pagination]}
-          spaceBetween={40}
-          slidesPerView={1}
-          pagination={{ clickable: true, dynamicBullets: true }}
-        >
-          {data.map(({ image, name, review }, index) => {
-            return (
-              <SwiperSlide key={index}>
-                <SwiperSlideContainer>
-                  <ClientAvatar src={image} alt={name} />
-                  <Header5 style={{ color: "black" }}>{name}</Header5>
-                  <ClientReview>{review}</ClientReview>
-                </SwiperSlideContainer>
-              </SwiperSlide>
-            );
-          })}
-        </Swiper>
-      </SwiperContainer>
-    </Container>
-  );
-};
-
-export default Testimonials;

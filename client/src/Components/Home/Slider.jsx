@@ -2,8 +2,46 @@ import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { useState } from "react";
 import styled from "styled-components";
-import { sliderItems } from "../../data";
+import { sliderItems } from "../../Data/data";
 import { mobile } from "../../responsive";
+
+const Slider = () => {
+  const [slideIndex, setSlideIndex] = useState(0);
+  const slideSize = sliderItems.length - 1;
+  const handleClick = (direction) => {
+    if (direction === "left") {
+      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : slideSize);
+    } else {
+      setSlideIndex(slideIndex < slideSize ? slideIndex + 1 : 0);
+    }
+  };
+
+  return (
+    <Container>
+      <Arrow direction="left" onClick={() => handleClick("left")}>
+        <ArrowLeftIcon />
+      </Arrow>
+      <Wrapper slideIndex={slideIndex}>
+        {sliderItems.map((item) => (
+          <Slide bg={item.bg} key={item.id}>
+            <ImgContainer image={item.img}>
+              <InfoContainer>
+                <Title>{item.title}</Title>
+                <Desc>{item.desc}</Desc>
+                <Button>{item.button}</Button>
+              </InfoContainer>
+            </ImgContainer>
+          </Slide>
+        ))}
+      </Wrapper>
+      <Arrow direction="right" onClick={() => handleClick("right")}>
+        <ArrowRightIcon />
+      </Arrow>
+    </Container>
+  );
+};
+
+export default Slider;
 
 const Container = styled.div`
   width: 100%;
@@ -92,41 +130,3 @@ const Button = styled.button`
   cursor: pointer;
   ${mobile({ fontSize: "15px" })}
 `;
-
-const Slider = () => {
-  const [slideIndex, setSlideIndex] = useState(0);
-  const slideSize = sliderItems.length - 1;
-  const handleClick = (direction) => {
-    if (direction === "left") {
-      setSlideIndex(slideIndex > 0 ? slideIndex - 1 : slideSize);
-    } else {
-      setSlideIndex(slideIndex < slideSize ? slideIndex + 1 : 0);
-    }
-  };
-
-  return (
-    <Container>
-      <Arrow direction="left" onClick={() => handleClick("left")}>
-        <ArrowLeftIcon />
-      </Arrow>
-      <Wrapper slideIndex={slideIndex}>
-        {sliderItems.map((item) => (
-          <Slide bg={item.bg} key={item.id}>
-            <ImgContainer image={item.img}>
-              <InfoContainer>
-                <Title>{item.title}</Title>
-                <Desc>{item.desc}</Desc>
-                <Button>{item.button}</Button>
-              </InfoContainer>
-            </ImgContainer>
-          </Slide>
-        ))}
-      </Wrapper>
-      <Arrow direction="right" onClick={() => handleClick("right")}>
-        <ArrowRightIcon />
-      </Arrow>
-    </Container>
-  );
-};
-
-export default Slider;

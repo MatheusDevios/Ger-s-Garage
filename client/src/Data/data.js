@@ -1,9 +1,9 @@
-import AVATAR1 from "./assets/avatar1.png";
-import AVATAR2 from "./assets/avatar1.png";
-import GUARANTEE from "./assets/guarantee.png";
-import SPEED from "./assets/speed.png";
-import TEAM from "./assets/team.png";
-import TRUCK from "./assets/truck.png";
+import AVATAR1 from "../assets/avatar1.png";
+import AVATAR2 from "../assets/avatar1.png";
+import GUARANTEE from "../assets/guarantee.png";
+import SPEED from "../assets/speed.png";
+import TEAM from "../assets/team.png";
+import TRUCK from "../assets/truck.png";
 
 export const advantages = [
   {
@@ -51,13 +51,6 @@ export const sliderItems = [
     button: "SHOP NOW",
     bg: "f5fafd",
   },
-  // {
-  //   id: 3,
-  //   img: "https://cdn.motor1.com/images/mgl/g40BbP/s1/manhart-mh2-630-basis-bmw-f87-m2-competition.jpg",
-  //   title: "LOUNGEWEAR LOVE",
-  //   desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
-  //   bg: "fbf0f4",
-  // },
 ];
 
 export const categories = [

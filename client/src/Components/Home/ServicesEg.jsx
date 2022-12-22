@@ -7,6 +7,49 @@ import MAJORSERVICE from "../../assets/majorService.png";
 import REPAIR from "../../assets/repair.png";
 import MAJORREPAIR from "../../assets/majorRepair.png";
 
+const ServicesEg = () => {
+  return (
+    <ServicesContainer>
+      <Container>
+        <Row>
+          <Item>
+            <Icon>
+              <Image src={TURBO} />
+              <Content>Parts</Content>
+            </Icon>
+          </Item>
+          <Item>
+            <Icon>
+              <Image src={ANUALSERVICE} />
+              <Content>Anual Service</Content>
+            </Icon>
+          </Item>
+          <Item>
+            <Icon>
+              <Image src={MAJORSERVICE} />
+              <Content>Major Service</Content>
+            </Icon>
+          </Item>
+          <Item>
+            <Icon>
+              <Image src={REPAIR} />
+              <Content>Repair / Fault</Content>
+            </Icon>
+          </Item>
+          <Item>
+            <Icon>
+              <Image src={MAJORREPAIR} />
+              <Content>Major Repair</Content>
+            </Icon>
+          </Item>
+        </Row>
+      </Container>
+    </ServicesContainer>
+  );
+};
+
+export default ServicesEg;
+
 const ServicesContainer = styled.div`
   margin-top: -50px;
   padding-top: 0;
@@ -65,46 +108,3 @@ const Content = styled.h5`
     fontSize: "18px",
   })}
 `;
-
-const ServicesEg = () => {
-  return (
-    <ServicesContainer>
-      <Container>
-        <Row>
-          <Item>
-            <Icon>
-              <Image src={TURBO} />
-              <Content>Parts</Content>
-            </Icon>
-          </Item>
-          <Item>
-            <Icon>
-              <Image src={ANUALSERVICE} />
-              <Content>Anual Service</Content>
-            </Icon>
-          </Item>
-          <Item>
-            <Icon>
-              <Image src={MAJORSERVICE} />
-              <Content>Major Service</Content>
-            </Icon>
-          </Item>
-          <Item>
-            <Icon>
-              <Image src={REPAIR} />
-              <Content>Repair / Fault</Content>
-            </Icon>
-          </Item>
-          <Item>
-            <Icon>
-              <Image src={MAJORREPAIR} />
-              <Content>Major Repair</Content>
-            </Icon>
-          </Item>
-        </Row>
-      </Container>
-    </ServicesContainer>
-  );
-};
-
-export default ServicesEg;
