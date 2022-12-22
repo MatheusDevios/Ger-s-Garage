@@ -1,15 +1,15 @@
 import React from "react";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
-import AuthComp from "../Components/Auth/AuthComp";
+import AuthForm from "../Components/Auth/AuthForm";
 
 const Auth = () => {
   return (
-    <div>
+    <>
       <NavBar />
-      <AuthComp />
+      <AuthForm />
       <Footer />
-    </div>
+    </>
   );
 };
 
