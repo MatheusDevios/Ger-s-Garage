@@ -271,7 +271,6 @@ const ComponentAuth = styled.section`
   text-align: center;
   align-items: center;
   justify-content: center;
-
   ${mobile({
     height: "100vh",
   })}

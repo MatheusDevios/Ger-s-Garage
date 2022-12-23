@@ -1,5 +1,5 @@
 import ShoppingCartOutlined from "@mui/icons-material/ShoppingCartOutlined";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
 
@@ -8,20 +8,23 @@ const Product = ({ item }) => {
     <Wrapper>
       <ContainerList>
         <Container>
-          {/* <Link style={{ textDecoration: "none" }} to={`/product/${item._id}`}> */}
-          <Image src={item.img} />
-          {/* </Link> */}
+          <Link style={{ textDecoration: "none" }} to={`/product/${item._id}`}>
+            <Image src={item.img} />
+          </Link>
           <Info>
-            {/* <Link style={{ textDecoration: "none" }} to={`/product/${item._id}`}> */}
-            <NameInfo>{item.name}</NameInfo>
-            {/* </Link> */}
-            {/* <Link style={{ textDecoration: "none" }} to={`/product/${item._id}`}> */}
+            <Link
+              style={{ textDecoration: "none" }}
+              to={`/product/${item._id}`}
+            >
+              <NameInfo>{item.name}</NameInfo>
+            </Link>
             <PriceContianer>
               <PriceInfo>{item.price}</PriceInfo>
-              <Icon>
-                <ShoppingCartOutlined />
-              </Icon>
-              {/* </Link> */}
+              <Link style={{ textDecoration: "none" }} to={`/cart`}>
+                <Icon>
+                  <ShoppingCartOutlined />
+                </Icon>
+              </Link>
             </PriceContianer>
           </Info>
         </Container>
@@ -91,6 +94,7 @@ const PriceContianer = styled.div`
 `;
 
 const Icon = styled.div`
+  color: #18181d;
   width: 40px;
   height: 40px;
   border-radius: 50%;

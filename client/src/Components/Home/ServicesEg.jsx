@@ -2,10 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { mobile, tablet } from "../../responsive";
 import TURBO from "../../assets/turbo-engine.png";
-import ANUALSERVICE from "../../assets/anualService.png";
-import MAJORSERVICE from "../../assets/majorService.png";
-import REPAIR from "../../assets/repair.png";
-import MAJORREPAIR from "../../assets/majorRepair.png";
+import { Link } from "react-router-dom";
+import { services } from "../../Data/data";
 
 const ServicesEg = () => {
   return (
@@ -13,35 +11,26 @@ const ServicesEg = () => {
       <Container>
         <Row>
           <Item>
-            <Icon>
-              <Image src={TURBO} />
-              <Content>Parts</Content>
-            </Icon>
+            <Link style={{ textDecoration: "none" }} to={`/products`}>
+              <Icon>
+                <Image src={TURBO} />
+                <Content>Parts</Content>
+              </Icon>
+            </Link>
           </Item>
-          <Item>
-            <Icon>
-              <Image src={ANUALSERVICE} />
-              <Content>Anual Service</Content>
-            </Icon>
-          </Item>
-          <Item>
-            <Icon>
-              <Image src={MAJORSERVICE} />
-              <Content>Major Service</Content>
-            </Icon>
-          </Item>
-          <Item>
-            <Icon>
-              <Image src={REPAIR} />
-              <Content>Repair / Fault</Content>
-            </Icon>
-          </Item>
-          <Item>
-            <Icon>
-              <Image src={MAJORREPAIR} />
-              <Content>Major Repair</Content>
-            </Icon>
-          </Item>
+          {services.map((service) => (
+            <Item key={service._id}>
+              <Link
+                style={{ textDecoration: "none" }}
+                to={`/service/${service._id}`}
+              >
+                <Icon>
+                  <Image src={service.homeIcon} />
+                  <Content>{service.name}</Content>
+                </Icon>
+              </Link>
+            </Item>
+          ))}
         </Row>
       </Container>
     </ServicesContainer>
@@ -101,6 +90,7 @@ const Image = styled.img`
 `;
 
 const Content = styled.h5`
+  color: #18181d;
   font-weight: 500;
   font-size: 20px;
   line-height: 1.5;

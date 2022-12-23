@@ -41,17 +41,19 @@ const NavBar = () => {
               <Link to="/" style={{ textDecoration: "none" }}>
                 <PageLink>Home</PageLink>
               </Link>
-              <Link style={{ textDecoration: "none" }}>
+              <Link to="/services" style={{ textDecoration: "none" }}>
                 <PageLink>Services</PageLink>
               </Link>
-              <Link style={{ textDecoration: "none" }}>
+              <Link to="/products" style={{ textDecoration: "none" }}>
                 <PageLink>Shop</PageLink>
               </Link>
             </Nav>
             <CartContainer>
-              <Badge badgeContent={quantity} color="error">
-                <ShoppingCartIcon />
-              </Badge>
+              <Link style={{ textDecoration: "none" }} to={`/cart`}>
+                <Badge badgeContent={quantity} color="error">
+                  <ShoppingCartIcon style={{ color: "#18181d" }} />
+                </Badge>
+              </Link>
             </CartContainer>
           </MainBarContainer>
         </Container>
@@ -65,7 +67,6 @@ export default NavBar;
 const ContainerGeral = styled.div`
   font-size: 18px;
   font-weight: 700;
-  /* border-bottom: 1px solid #f0f2f3; */
 `;
 
 const Container = styled.div`
@@ -150,6 +151,9 @@ const PageLink = styled.div`
     transform: scale(1.2);
   }
   cursor: pointer;
+  ${mobile({
+    margin: "10px",
+  })}
 `;
 
 const CartContainer = styled.div`

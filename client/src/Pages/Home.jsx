@@ -5,7 +5,7 @@ import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
 import ServicesEg from "../Components/Home/ServicesEg";
 import Slider from "../Components/Home/Slider";
-import Products from "../Components/Home/Products";
+import Products from "../Components/Products";
 
 const Home = () => {
   return (
@@ -14,7 +14,7 @@ const Home = () => {
       <Slider />
       <ServicesEg />
       <Advantages />
-      <Products />
+      <Products page={false} />
       <Testimonials />
       <Footer />
     </>

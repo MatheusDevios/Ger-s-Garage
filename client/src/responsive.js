@@ -14,3 +14,10 @@ export const tablet = (props) => {
     }
   `;
 };
+export const special = (props) => {
+  return css`
+    @media only screen and (max-height: 800px) {
+      ${props}
+    }
+  `;
+};
