@@ -2,16 +2,13 @@ import "./authForm.css";
 import { useState, useRef } from "react";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
-import { useDispatch } from "react-redux";
-import useFetch from "../../hooks/use-fetch";
-import { authActions } from "../../Redux/authRedux";
+// import { useDispatch } from "react-redux";
+// import { authActions } from "../../Redux/authRedux";
 import { useNavigate } from "react-router-dom";
 import { publicRequest } from "../../requestMethods";
-import { login } from "../../Redux/apiCalls";
 
 const AuthComp = () => {
-  const dispatch = useDispatch();
-  const { sendRequest } = useFetch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   //ref to get the input form values
@@ -93,13 +90,6 @@ const AuthComp = () => {
         enteredEmail,
         enteredPassword,
       });
-      // console.log("response: ", res);
-
-      //if the response is not valid, displays the error message related to it
-      // if (res.status !== 200) {
-      //   let errorMessage = "Authentication failed!";
-      //   throw new Error(errorMessage);
-      // }
 
       const data = await res.data;
       console.log("Data: ", data);
@@ -113,6 +103,7 @@ const AuthComp = () => {
       //     expirationTime: expirationTime.toISOString(),
       //   })
       // );
+
       navigate("/");
 
       // console.log(data);
