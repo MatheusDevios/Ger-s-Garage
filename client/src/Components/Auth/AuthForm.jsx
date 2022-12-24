@@ -1,14 +1,16 @@
+import "./authForm.css";
 import { useState, useRef } from "react";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import useFetch from "../../hooks/use-fetch";
-// import { authActions } from "../../store/auth-slice";
-import "./authForm.css";
+import { authActions } from "../../Redux/authRedux";
 import { useNavigate } from "react-router-dom";
+import { publicRequest } from "../../requestMethods";
+import { login } from "../../Redux/apiCalls";
 
 const AuthComp = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { sendRequest } = useFetch();
   const navigate = useNavigate();
 
@@ -28,7 +30,6 @@ const AuthComp = () => {
   const [equalPassword, setEqualPassword] = useState("password"); //to change password input classes
 
   const [isLogin, setIsLogin] = useState(true);
-  const [isLoading, setIsLoading] = useState(false); //changes when the form is submited until the data is sent
 
   // This variable determines whether password is shown or not
   const [isShown, setIsSHown] = useState(false);
@@ -71,51 +72,37 @@ const AuthComp = () => {
 
   const submitHandler = async (event) => {
     // event.preventDefault();
-    setIsLoading(true);
-    let url;
-    if (isLogin) {
-      url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=$`;
-      // url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`;
-    } else {
-      //if I'm just doing the login I don't have these values bellow
-      enteredFirstName = nameInputRef.current.value;
-      enteredSurname = surInputRef.current.value;
-      enteredMobilePhone = numberInputRef.current.value;
-      url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=$`;
-      // url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
-    }
+
     try {
-      const res = await fetch(url, {
-        method: "POST",
-        body: JSON.stringify({
-          email: enteredEmail,
-          password: enteredPassword,
-          returnSecureToken: true,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      //console.log("response: ", res);
-
-      setIsLoading(false);
-
-      //if the response is not valid, displays the error message related to it
-      if (!res.ok) {
-        const data = await res.json();
-        let errorMessage = "Authentication failed!";
-        if (data && data.error && data.error.message) {
-          errorMessage = data.error.message;
-        }
-        throw new Error(errorMessage);
+      //REGISTERING A NEW USER
+      //if I'm loging in, i don't need to submit/post anithing to our DB only if I'm registering a new user
+      if (!isLogin) {
+        enteredFirstName = nameInputRef.current.value;
+        enteredSurname = surInputRef.current.value;
+        enteredMobilePhone = numberInputRef.current.value;
+        await publicRequest.post("/auth/register", {
+          enteredFirstName,
+          enteredSurname,
+          enteredMobilePhone,
+          enteredEmail,
+          enteredPassword,
+        });
       }
 
-      const data = await res.json();
-      // console.log("Data: ", data);
+      const res = await publicRequest.post("/auth/login", {
+        enteredEmail,
+        enteredPassword,
+      });
+      // console.log("response: ", res);
 
-      // const expirationTime = new Date(
-      //   new Date().getTime() + +data.expiresIn * 1000
-      // );
+      //if the response is not valid, displays the error message related to it
+      // if (res.status !== 200) {
+      //   let errorMessage = "Authentication failed!";
+      //   throw new Error(errorMessage);
+      // }
+
+      const data = await res.data;
+      console.log("Data: ", data);
 
       // send some data to Redux
       // dispatch(
@@ -126,28 +113,6 @@ const AuthComp = () => {
       //     expirationTime: expirationTime.toISOString(),
       //   })
       // );
-
-      //REGISTERING A NEW USER
-      //if I'm loging in, i don't need to submit/post anithing to our DB only if I'm registering a new user
-      if (!isLogin) {
-        await sendRequest({
-          url: "USER_DETAILS URL TO REGISTER A USER",
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: {
-            userId: data.localId,
-            user: {
-              firstName: enteredFirstName,
-              surname: enteredSurname,
-              phone: enteredMobilePhone,
-              email: enteredEmail,
-            },
-          },
-        });
-        window.location.reload(false);
-      }
       navigate("/");
 
       // console.log(data);
@@ -240,13 +205,9 @@ const AuthComp = () => {
             </div>
           </Control>
           <Actions>
-            {!isLoading ? (
-              <ActionsButton>
-                {isLogin ? "Login" : "Create Account"}
-              </ActionsButton>
-            ) : (
-              <p>Loading...</p>
-            )}
+            <ActionsButton>
+              {isLogin ? "Login" : "Create Account"}
+            </ActionsButton>
             <ActionsToggle
               type="button"
               className="toggle"
