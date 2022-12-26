@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -8,9 +8,35 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { Link } from "react-router-dom";
 import { Badge } from "@mui/material";
 import { mobile } from "../responsive";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../Redux/authRedux";
 
 const NavBar = () => {
+  const dispatch = useDispatch();
+  const authIsLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const isLogged = authIsLoggedIn;
+  const authToken = localStorage.getItem("token");
+  const authIsAdmin = localStorage.getItem("isAdmin");
+  const authUserId = localStorage.getItem("userId");
   const quantity = 4;
+
+  useEffect(() => {
+    if (authToken) {
+      dispatch(
+        authActions.login({
+          token: authToken,
+          userId: authUserId,
+          isAdmin: authIsAdmin,
+        })
+      );
+    } else {
+      dispatch(authActions.logout());
+    }
+  });
+
+  const logoutHandler = () => {
+    dispatch(authActions.logout());
+  };
   return (
     <ContainerGeral>
       <ContainerTop>
@@ -22,9 +48,19 @@ const NavBar = () => {
               <LinkedInIcon />
               <InstagramIcon />
             </Icons>
-            <Link to="/auth" style={{ textDecoration: "none" }}>
-              <MyAccountIcon>Sign Up / Sign In</MyAccountIcon>
-            </Link>
+            {!isLogged ? (
+              <Link to="/auth" style={{ textDecoration: "none" }}>
+                <MyAccountIcon>Sign Up / Sign In</MyAccountIcon>
+              </Link>
+            ) : (
+              <Link
+                onClick={logoutHandler}
+                to="/auth"
+                style={{ textDecoration: "none" }}
+              >
+                <MyAccountIcon>Logout</MyAccountIcon>
+              </Link>
+            )}
             <Link to="/auth" style={{ textDecoration: "none" }}>
               <MyAccountIcon>My Account</MyAccountIcon>
             </Link>

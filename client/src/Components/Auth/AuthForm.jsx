@@ -2,13 +2,13 @@ import "./authForm.css";
 import { useState, useRef } from "react";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
-// import { useDispatch } from "react-redux";
-// import { authActions } from "../../Redux/authRedux";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../Redux/authRedux";
 import { useNavigate } from "react-router-dom";
 import { publicRequest } from "../../requestMethods";
 
 const AuthComp = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   //ref to get the input form values
@@ -94,15 +94,14 @@ const AuthComp = () => {
       const data = await res.data;
       console.log("Data: ", data);
 
-      // send some data to Redux
-      // dispatch(
-      //   authActions.login({
-      //     token: data.idToken,
-      //     userId: data.localId,
-      //     logoutTimer: expirationTime.toISOString(),
-      //     expirationTime: expirationTime.toISOString(),
-      //   })
-      // );
+      // send data to Redux
+      dispatch(
+        authActions.login({
+          token: data.accessToken,
+          isAdmin: data.isAdmin,
+          userId: data._id,
+        })
+      );
 
       navigate("/");
 
