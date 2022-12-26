@@ -1,4 +1,4 @@
-import LOGO from "../assets/speed.png";
+import LOGO from "../assets/Logo.png";
 import styled from "styled-components";
 import { SyncLoader } from "react-spinners";
 
@@ -6,7 +6,7 @@ const Loading = () => {
   return (
     <LoadingContainer>
       <LoadingImage fetchpriority="high" src={LOGO} alt="Barber Logo" />
-      <SyncLoader className="load" color={"#ffffff"} loading={true} size={15} />
+      <SyncLoader className="load" color={"#c30c0c"} loading={true} size={15} />
     </LoadingContainer>
   );
 };

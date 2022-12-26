@@ -5,6 +5,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
+import LOGO from "../assets/Logo.png";
 import { Link } from "react-router-dom";
 import { Badge } from "@mui/material";
 import { mobile } from "../responsive";
@@ -71,7 +72,7 @@ const NavBar = () => {
         <Container>
           <MainBarContainer>
             <Link to="/">
-              <MainBarContainerLogo>LOGO</MainBarContainerLogo>
+              <MainBarContainerLogo src={LOGO} />
             </Link>
             <Nav>
               <Link to="/" style={{ textDecoration: "none" }}>
@@ -157,16 +158,10 @@ const MainBarContainer = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
 `;
 
-const MainBarContainerLogo = styled.div`
-  display: inline-block;
-  padding: 10px 0;
-  font-size: 1.25rem;
-  line-height: inherit;
-  white-space: nowrap;
-  color: #18181d;
+const MainBarContainerLogo = styled.img`
+  width: 100px;
 `;
 
 const Nav = styled.div`
