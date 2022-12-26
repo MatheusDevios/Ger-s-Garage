@@ -104,8 +104,6 @@ const AuthComp = () => {
       );
 
       navigate("/");
-
-      // console.log(data);
     } catch (err) {
       setEqualPassword("password invalid");
       alert(err.message);

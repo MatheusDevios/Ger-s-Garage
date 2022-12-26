@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -14,30 +13,14 @@ import { authActions } from "../Redux/authRedux";
 
 const NavBar = () => {
   const dispatch = useDispatch();
-  const authIsLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const isLogged = authIsLoggedIn;
-  const authToken = localStorage.getItem("token");
-  const authIsAdmin = localStorage.getItem("isAdmin");
-  const authUserId = localStorage.getItem("userId");
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
+  const isLogged = useSelector((state) => state.auth.isLoggedIn);
   const quantity = 4;
-
-  useEffect(() => {
-    if (authToken) {
-      dispatch(
-        authActions.login({
-          token: authToken,
-          userId: authUserId,
-          isAdmin: authIsAdmin,
-        })
-      );
-    } else {
-      dispatch(authActions.logout());
-    }
-  });
 
   const logoutHandler = () => {
     dispatch(authActions.logout());
   };
+
   return (
     <ContainerGeral>
       <ContainerTop>
@@ -51,7 +34,7 @@ const NavBar = () => {
             </Icons>
             {!isLogged ? (
               <Link to="/auth" style={{ textDecoration: "none" }}>
-                <MyAccountIcon>Sign Up / Sign In</MyAccountIcon>
+                <MyAccountIcon> Sign Up / Sign In</MyAccountIcon>
               </Link>
             ) : (
               <Link
@@ -62,7 +45,10 @@ const NavBar = () => {
                 <MyAccountIcon>Logout</MyAccountIcon>
               </Link>
             )}
-            <Link to="/auth" style={{ textDecoration: "none" }}>
+            <Link
+              to={isAdmin ? "/admin" : "/user"}
+              style={{ textDecoration: "none" }}
+            >
               <MyAccountIcon>My Account</MyAccountIcon>
             </Link>
           </ContainerTopInner>

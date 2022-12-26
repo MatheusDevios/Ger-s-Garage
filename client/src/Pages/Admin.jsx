@@ -1,16 +1,16 @@
 import React from "react";
+import AdminC from "../Components/Admin/AdminC";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
-import UserC from "../Components/User/UserC";
 
-const User = () => {
+const Admin = () => {
   return (
     <div>
       <NavBar />
-      <UserC />
+      <AdminC />
       <Footer />
     </div>
   );
 };
 
-export default User;
+export default Admin;

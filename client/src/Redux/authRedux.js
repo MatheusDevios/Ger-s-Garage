@@ -11,16 +11,14 @@ const authRedux = createSlice({
   reducers: {
     login(state, action) {
       localStorage.setItem("token", action.payload.token);
-      localStorage.setItem("isAdmin", action.payload.isAdmin);
       localStorage.setItem("userId", action.payload.userId);
       state.token = action.payload.token;
-      state.isAdmin = action.payload.token;
+      state.isAdmin = action.payload.isAdmin;
       state.userId = action.payload.userId;
       state.isLoggedIn = true;
     },
     logout(state) {
       localStorage.removeItem("token");
-      localStorage.removeItem("isAdmin");
       localStorage.removeItem("userId");
       state.token = null;
       state.isAdmin = null;

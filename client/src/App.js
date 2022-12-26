@@ -1,7 +1,11 @@
-import React, { Suspense } from "react";
-import { Routes, Route, Navigate, redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React, { Suspense, useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Loading from "./Components/Loading";
+import { authActions } from "./Redux/authRedux";
+// import { useQuery } from "@tanstack/react-query";
+import { userRequest } from "./requestMethods";
+const Admin = React.lazy(() => import("./Pages/Admin"));
 const Auth = React.lazy(() => import("./Pages/Auth"));
 const User = React.lazy(() => import("./Pages/User"));
 const Home = React.lazy(() => import("./Pages/Home"));
@@ -13,17 +17,58 @@ const SingleServices = React.lazy(() => import("./Pages/SingleServices"));
 const Error404 = React.lazy(() => import("./Pages/Error404"));
 
 function App() {
+  const dispatch = useDispatch();
+  const authToken = localStorage.getItem("token");
+  const authUserId = localStorage.getItem("userId");
   const isLogged = useSelector((state) => state.auth.isLoggedIn);
+  const isAdmin = useSelector((state) => state.auth.isAdmin);
+
+  // const { data } = useQuery(["userInfo"], async () => {
+  //   return await userRequest
+  //     .get(`users/find/${authUserId}`)
+  //     .then((res) => res.data)
+  //     .then((data) => console.log(data));
+  // });
+
+  useEffect(() => {
+    const getUser = async () => {
+      if (authToken) {
+        const res = await userRequest.get(`users/find/${authUserId}`);
+        // console.log(res.data);
+        if (res.data) {
+          dispatch(
+            authActions.login({
+              token: authToken,
+              userId: authUserId,
+              isAdmin: res.data.isAdmin,
+            })
+          );
+        }
+      } else {
+        dispatch(authActions.logout());
+      }
+    };
+    getUser();
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/user" element={<User />} />
+        <Route
+          path="/admin"
+          element={isAdmin ? <Admin /> : <Navigate replace to="/user" />}
+        />
+        <Route
+          path="/user"
+          element={isLogged ? <User /> : <Navigate replace to="/auth" />}
+        />
         <Route path="/services" element={<Services />} />
         <Route path="/service/:_id" element={<SingleServices />} />
         <Route
           path="/auth"
-          element={!isLogged ? <Auth /> : <Navigate replace to="/user" />}
+          element={!isLogged ? <Auth /> : <Navigate replace to="/admin" />}
         />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/product/:_id" element={<SingleProduct />} />
