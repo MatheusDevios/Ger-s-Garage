@@ -56,6 +56,8 @@ export default Product;
 
 const Wrapper = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const ContainerList = styled.div`
@@ -66,6 +68,8 @@ const ContainerList = styled.div`
 
 const Container = styled.div`
   position: relative;
+  width: 300px;
+  height: 420px;
   padding: 20px;
   box-shadow: 0 3px 24px rgb(0 0 0 / 4%);
   border-radius: 8px;
@@ -74,7 +78,8 @@ const Container = styled.div`
 `;
 
 const Image = styled.img`
-  max-width: 200px;
+  width: 250px;
+  height: 250px;
   margin: 0 auto 20px;
   overflow: hidden;
   cursor: pointer;
@@ -98,7 +103,7 @@ const NameInfo = styled.div`
   color: #18181d;
   cursor: pointer;
   padding-bottom: 5px;
-  width: 90px;
+  width: 90%;
   border-radius: 50%;
   transition: all 0.5s ease;
   &:hover {

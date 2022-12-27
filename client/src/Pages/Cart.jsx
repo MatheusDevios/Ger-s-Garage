@@ -74,7 +74,7 @@ const Cart = () => {
                       <b>Product:</b> {product.name}
                     </ProductName>
                     <ProductId>
-                      <b>Unit Price:</b> {product.price} €
+                      <b>Unit Price:</b> {product.price.toFixed(2)} €
                     </ProductId>
                     <ProductId>
                       <b>Quantity:</b> {product.amount}
@@ -93,7 +93,7 @@ const Cart = () => {
                     <Add onClick={cartItemAddHandler.bind(null, product)} />
                   </ProductAmountContainer>
                   <ProductPrice>
-                    {product.price * product.amount} €
+                    {(product.price * product.amount).toFixed(2)} €
                   </ProductPrice>
                 </PriceDetail>
               </Product>
@@ -112,7 +112,7 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>{discount} €</SummaryItemPrice>
+              <SummaryItemPrice>{discount.toFixed(2)} €</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>

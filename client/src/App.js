@@ -40,14 +40,16 @@ function App() {
   //   dispatch(cartActions.addItemToCartHandler(cartItem));
   // };
   const persistCartHandler = () => {
-    Object.keys(cartItems).forEach(function (product, index) {
-      dispatch(
-        cartActions.updateCartHandler({
-          items: cartItems,
-          totalAmount: cartTotalPrice,
-        })
-      );
-    });
+    if (cartItems) {
+      Object.keys(cartItems).forEach(function (product, index) {
+        dispatch(
+          cartActions.updateCartHandler({
+            items: cartItems,
+            totalAmount: cartTotalPrice,
+          })
+        );
+      });
+    }
   };
 
   useEffect(() => {
@@ -63,12 +65,12 @@ function App() {
               isAdmin: res.data.isAdmin,
             })
           );
-          persistCartHandler();
         }
       } else {
         dispatch(authActions.logout());
       }
     };
+    persistCartHandler();
     getUser();
     // eslint-disable-next-line
   }, []);

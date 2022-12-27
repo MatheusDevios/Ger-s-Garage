@@ -69,8 +69,8 @@ const AuthComp = () => {
     // event.preventDefault();
 
     try {
-      //REGISTERING A NEW USER
       //if I'm loging in, i don't need to submit/post anithing to our DB only if I'm registering a new user
+      //REGISTERING A NEW USER
       if (!isLogin) {
         enteredFirstName = nameInputRef.current.value;
         enteredSurname = surInputRef.current.value;

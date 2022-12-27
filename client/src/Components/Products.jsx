@@ -1,24 +1,36 @@
-// import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
-import { products } from "../Data/data";
+import { publicRequest } from "../requestMethods";
 import { mobile, tablet } from "../responsive";
 import Product from "./Home/Product";
-// import axios from "axios";
 
 const Products = ({ cat, filters, sort, page }) => {
-  // const [products, setProducts] = useState([]);
   //   const [filteredProducts, setFilteredProducts] = useState([]);
+  let content;
+
+  const { data: products, isFetching } = useQuery({
+    queryKey: ["productsData"],
+    queryFn: async () => {
+      const res = await publicRequest.get("/products/");
+      // console.log(res.data);
+      return res.data;
+    },
+  });
+
+  if (isFetching) {
+    content = <div>Fetching data, please wait...</div>;
+  } else {
+    content = page
+      ? products.map((item) => <Product item={item} key={item._id} />)
+      : products
+          .slice(0, 5)
+          .map((item) => <Product item={item} key={item._id} />);
+  }
 
   return (
     <Container>
       {page ? <Title>Shop With Us</Title> : <Title>Fresh Arrivals</Title>}
-      <ProductContainer>
-        {page
-          ? products.map((item) => <Product item={item} key={item._id} />)
-          : products
-              .slice(0, 5)
-              .map((item) => <Product item={item} key={item._id} />)}
-      </ProductContainer>
+      <ProductContainer>{content}</ProductContainer>
     </Container>
   );
 };
@@ -27,7 +39,6 @@ export default Products;
 
 const Container = styled.div`
   padding: 25px 0;
-  /* background-color: #f5fbfd; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,7 +49,7 @@ const ProductContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   ${tablet({
-    "grid-template-columns": `repeat(3,1fr)`,
+    "grid-template-columns": `repeat(2,1fr)`,
   })}
   ${mobile({
     "grid-template-columns": `1fr`,

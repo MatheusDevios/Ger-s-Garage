@@ -5,39 +5,31 @@ import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
 import { mobile, tablet } from "../responsive";
 import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Banner from "../Components/SingleProduct/Banner";
-// import { publicRequest } from "../requestMethods";
+import { publicRequest } from "../requestMethods";
 // import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../Redux/cartRedux";
-import { products } from "../Data/data";
+// import { products } from "../Data/data";
+import { useQuery } from "@tanstack/react-query";
 
 const SingleProduct = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
-  // const [product, setProduct] = useState({});
+  let content;
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
-  const product = products[id - 1];
+  // const product = products[id - 1];
 
-  // const { data } = useQuery(["userInfo"], async () => {
-  //   return await publicRequest
-  //     .get(`products/find/${id}`)
-  //     .then((res) => res.data)
-  //     .then((data) => console.log("Product: "+data));
-  // });
-
-  useEffect(() => {
-    const getProduct = async () => {
-      //   try {
-      //     const res = await publicRequest.get("/products/find/" + id);
-      //     setProduct(res.data);
-      //   } catch {}
-    };
-    getProduct();
-  }, [id]);
-
+  const { data: product, isFetching } = useQuery({
+    queryKey: ["productsData"],
+    queryFn: async () => {
+      const res = await publicRequest.get(`/products/find/${id}`);
+      // console.log(res.data);
+      return res.data;
+    },
+  });
   const handleQuantity = (type) => {
     if (type === "dec") {
       quantity > 1 && setQuantity(quantity - 1);
@@ -57,10 +49,11 @@ const SingleProduct = () => {
       })
     );
   };
-  return (
-    <Container>
-      <NavBar />
-      <Banner />
+
+  if (isFetching) {
+    content = <div>Fetching data, please wait...</div>;
+  } else {
+    content = (
       <Wrapper>
         <ImgContainer>
           <Image src={product.img} />
@@ -79,6 +72,14 @@ const SingleProduct = () => {
           </AddContainer>
         </InfoContainer>
       </Wrapper>
+    );
+  }
+
+  return (
+    <Container>
+      <NavBar />
+      <Banner />
+      {content}
       <Footer />
     </Container>
   );
