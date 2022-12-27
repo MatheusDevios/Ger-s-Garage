@@ -1,11 +1,38 @@
 import React from "react";
 import styled from "styled-components";
 import { mobile, tablet } from "../../responsive";
-import TURBO from "../../assets/turbo-engine.png";
 import { Link } from "react-router-dom";
-import { services } from "../../Data/data";
+import { useQuery } from "@tanstack/react-query";
+import { publicRequest } from "../../requestMethods";
 
 const ServicesEg = () => {
+  const TURBO =
+    "https://res.cloudinary.com/dotuxkpjj/image/upload/v1672165307/Ger%27s%20Garage/turbo-engine_jskppj.webp";
+
+  let content;
+  const { data: services, isFetching } = useQuery({
+    queryKey: ["servicesData"],
+    queryFn: async () => {
+      const res = await publicRequest.get("/services/");
+      // console.log(res.data);
+      return res.data;
+    },
+  });
+
+  if (isFetching) {
+    content = <div>Fetching data, please wait...</div>;
+  } else {
+    content = services.map((service) => (
+      <Item key={service._id}>
+        <Link style={{ textDecoration: "none" }} to={`/service/${service._id}`}>
+          <Icon>
+            <Image src={service.homeIcon} />
+            <Content>{service.name}</Content>
+          </Icon>
+        </Link>
+      </Item>
+    ));
+  }
   return (
     <ServicesContainer>
       <Container>
@@ -18,19 +45,7 @@ const ServicesEg = () => {
               </Icon>
             </Link>
           </Item>
-          {services.map((service) => (
-            <Item key={service._id}>
-              <Link
-                style={{ textDecoration: "none" }}
-                to={`/service/${service._id}`}
-              >
-                <Icon>
-                  <Image src={service.homeIcon} />
-                  <Content>{service.name}</Content>
-                </Icon>
-              </Link>
-            </Item>
-          ))}
+          {content}
         </Row>
       </Container>
     </ServicesContainer>

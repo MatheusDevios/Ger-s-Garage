@@ -1,19 +1,32 @@
-// import { useState } from "react";
 import styled from "styled-components";
-import { services } from "../../Data/data";
 import Service from "./Service";
 import { mobile, tablet } from "../../responsive";
-// import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import { publicRequest } from "../../requestMethods";
 
 const ServicesList = () => {
+  let content;
+  const { data: services, isFetching } = useQuery({
+    queryKey: ["servicesData"],
+    queryFn: async () => {
+      const res = await publicRequest.get("/services/");
+      // console.log(res.data);
+      return res.data;
+    },
+  });
+
+  if (isFetching) {
+    content = <div>Fetching data, please wait...</div>;
+  } else {
+    content = services.map((service) => (
+      <Service service={service} key={service._id} />
+    ));
+  }
+
   return (
     <Container>
       <Title>Services</Title>
-      <ProductContainer>
-        {services.slice(0, 5).map((service) => (
-          <Service service={service} key={service._id} />
-        ))}
-      </ProductContainer>
+      <ProductContainer>{content}</ProductContainer>
     </Container>
   );
 };

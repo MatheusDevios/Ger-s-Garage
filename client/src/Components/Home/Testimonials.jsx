@@ -1,5 +1,5 @@
 import React from "react";
-import { data } from "../../Data/data";
+import { testimonialsData } from "../../Data/data";
 import { mobile, tablet } from "../../responsive";
 
 // import Swiper core and required modules
@@ -25,7 +25,7 @@ const Testimonials = () => {
           slidesPerView={1}
           pagination={{ clickable: true, dynamicBullets: true }}
         >
-          {data.map(({ image, name, review }, index) => {
+          {testimonialsData.map(({ image, name, review }, index) => {
             return (
               <SwiperSlide key={index}>
                 <SwiperSlideContainer>

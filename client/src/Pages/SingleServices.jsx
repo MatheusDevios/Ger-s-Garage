@@ -53,7 +53,7 @@ const SingleServices = () => {
         <InfoContainer>
           <Title>{product.title}</Title>
           <Desc>{product.desc}</Desc>
-          <Price>{product.price} €</Price>
+          <Price>From {product.price} €</Price>
           <AddContainer>
             <AmountContainer>
               <Remove onClick={() => handleQuantity("dec")} />
