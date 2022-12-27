@@ -9,27 +9,33 @@ import { useEffect, useState } from "react";
 import Banner from "../Components/SingleProduct/Banner";
 // import { publicRequest } from "../requestMethods";
 // import { addProduct } from "../redux/cartRedux";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { cartActions } from "../Redux/cartRedux";
+import { products } from "../Data/data";
 
 const SingleProduct = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
-  // const [service, setService] = useState({});
+  // const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
-  // const [color, setColor] = useState("");
-  // const [size, setSize] = useState("");
-  //   const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const product = products[id - 1];
 
-  const service = [];
+  // const { data } = useQuery(["userInfo"], async () => {
+  //   return await publicRequest
+  //     .get(`products/find/${id}`)
+  //     .then((res) => res.data)
+  //     .then((data) => console.log("Product: "+data));
+  // });
 
   useEffect(() => {
-    const getService = async () => {
+    const getProduct = async () => {
       //   try {
       //     const res = await publicRequest.get("/products/find/" + id);
-      //     setService(res.data);
+      //     setProduct(res.data);
       //   } catch {}
     };
-    getService();
+    getProduct();
   }, [id]);
 
   const handleQuantity = (type) => {
@@ -40,8 +46,16 @@ const SingleProduct = () => {
     }
   };
 
-  const handleClick = () => {
-    // dispatch(addProduct({ ...product, quantity, color, size }));
+  const addToCartHandler = () => {
+    dispatch(
+      cartActions.addItemToCartHandler({
+        id: product._id,
+        name: product.name,
+        amount: quantity,
+        price: product.price,
+        img: product.img,
+      })
+    );
   };
   return (
     <Container>
@@ -49,19 +63,19 @@ const SingleProduct = () => {
       <Banner />
       <Wrapper>
         <ImgContainer>
-          <Image src={service.img} />
+          <Image src={product.img} />
         </ImgContainer>
         <InfoContainer>
-          <Title>{service.name}</Title>
-          <Desc>{service.description}</Desc>
-          <Price>{service.price} €</Price>
+          <Title>{product.name}</Title>
+          <Desc>{product.description}</Desc>
+          <Price>{product.price} €</Price>
           <AddContainer>
             <AmountContainer>
               <Remove onClick={() => handleQuantity("dec")} />
               <Amount>{quantity}</Amount>
               <Add onClick={() => handleQuantity("inc")} />
             </AmountContainer>
-            <Button onClick={handleClick}>ADD TO CART</Button>
+            <Button onClick={addToCartHandler}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
       </Wrapper>

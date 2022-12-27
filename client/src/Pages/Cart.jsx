@@ -2,17 +2,31 @@ import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
-// import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import { products } from "../Data/data";
+import { useDispatch, useSelector } from "react-redux";
+import { cartActions } from "../Redux/cartRedux";
 // import StripeCheckout from "react-stripe-checkout";
 // import { useEffect, useState } from "react";
 // import { userRequest } from "../requestMethods";
 
 const Cart = () => {
-  // const cart = useSelector((state) => state.cart);
-  const cart = products;
+  const cart = useSelector((state) => state.cart.items);
+  const cartTotalRedux = useSelector((state) => state.cart.totalAmount);
+  const shipping = 5.9;
+  const discount = 0;
+  const subTotal = cartTotalRedux.toFixed(2);
+  const TotalPrice = (cartTotalRedux + shipping - discount).toFixed(2);
+  const dispatch = useDispatch();
+
+  const cartItemRemoveHandler = (id) => {
+    dispatch(cartActions.removeItemFromCart(id));
+  };
+  const cartItemAddHandler = (item) => {
+    // console.log(item);
+    const cartItem = { ...item, amount: 1 };
+    dispatch(cartActions.addItemToCartHandler(cartItem));
+  };
 
   // const [stripeToken, setStripeToken] = useState(null);
 
@@ -52,7 +66,7 @@ const Cart = () => {
         <Bottom>
           <Info>
             {cart.map((product) => (
-              <Product>
+              <Product key={product.id}>
                 <ProductDetail>
                   <Image src={product.img} />
                   <Details>
@@ -60,18 +74,26 @@ const Cart = () => {
                       <b>Product:</b> {product.name}
                     </ProductName>
                     <ProductId>
-                      <b>ID:</b> {product._id}
+                      <b>Unit Price:</b> {product.price} €
+                    </ProductId>
+                    <ProductId>
+                      <b>Quantity:</b> {product.amount}
+                    </ProductId>
+                    <ProductId>
+                      <b>ID:</b> {product.id}
                     </ProductId>
                   </Details>
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
-                    <Add />
-                    <ProductAmount>{product.quantity}</ProductAmount>
-                    <Remove />
+                    <Remove
+                      onClick={cartItemRemoveHandler.bind(null, product.id)}
+                    />
+                    <ProductAmount>|</ProductAmount>
+                    <Add onClick={cartItemAddHandler.bind(null, product)} />
                   </ProductAmountContainer>
                   <ProductPrice>
-                    {product.price * product.quantity} €
+                    {product.price * product.amount} €
                   </ProductPrice>
                 </PriceDetail>
               </Product>
@@ -82,19 +104,19 @@ const Cart = () => {
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+              <SummaryItemPrice>{subTotal} €</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+              <SummaryItemPrice>{shipping.toFixed(2)} €</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+              <SummaryItemPrice>{discount} €</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
+              <SummaryItemPrice>{TotalPrice} €</SummaryItemPrice>
             </SummaryItem>
             {/* <StripeCheckout
               name="Lama Shop"

@@ -4,12 +4,10 @@ import styled from "styled-components";
 import { mobile } from "../../responsive";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../Redux/authRedux";
-import { useNavigate } from "react-router-dom";
 import { publicRequest } from "../../requestMethods";
 
 const AuthComp = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   //ref to get the input form values
   const emailInputRef = useRef();
@@ -92,7 +90,7 @@ const AuthComp = () => {
       });
 
       const data = await res.data;
-      console.log("Data: ", data);
+      // console.log("Data: ", data);
 
       // send data to Redux
       dispatch(
@@ -102,8 +100,6 @@ const AuthComp = () => {
           userId: data._id,
         })
       );
-
-      navigate("/");
     } catch (err) {
       setEqualPassword("password invalid");
       alert(err.message);

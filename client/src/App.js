@@ -5,6 +5,7 @@ import Loading from "./Components/Loading";
 import { authActions } from "./Redux/authRedux";
 // import { useQuery } from "@tanstack/react-query";
 import { userRequest } from "./requestMethods";
+import { cartActions } from "./Redux/cartRedux";
 const Admin = React.lazy(() => import("./Pages/Admin"));
 const Auth = React.lazy(() => import("./Pages/Auth"));
 const User = React.lazy(() => import("./Pages/User"));
@@ -20,6 +21,9 @@ function App() {
   const dispatch = useDispatch();
   const authToken = localStorage.getItem("token");
   const authUserId = localStorage.getItem("userId");
+  // const cartItems = localStorage.getItem("cartItems");
+  const cartItems = JSON.parse(localStorage.getItem("cartItems"));
+  const cartTotalPrice = parseInt(localStorage.getItem("cartTotalAmount"));
   const isLogged = useSelector((state) => state.auth.isLoggedIn);
   const isAdmin = useSelector((state) => state.auth.isAdmin);
 
@@ -29,6 +33,22 @@ function App() {
   //     .then((res) => res.data)
   //     .then((data) => console.log(data));
   // });
+
+  // const cartItemAddHandler = (item) => {
+  //   // console.log(item);
+  //   const cartItem = { ...item, amount: 1 };
+  //   dispatch(cartActions.addItemToCartHandler(cartItem));
+  // };
+  const persistCartHandler = () => {
+    Object.keys(cartItems).forEach(function (product, index) {
+      dispatch(
+        cartActions.updateCartHandler({
+          items: cartItems,
+          totalAmount: cartTotalPrice,
+        })
+      );
+    });
+  };
 
   useEffect(() => {
     const getUser = async () => {
@@ -43,6 +63,7 @@ function App() {
               isAdmin: res.data.isAdmin,
             })
           );
+          persistCartHandler();
         }
       } else {
         dispatch(authActions.logout());

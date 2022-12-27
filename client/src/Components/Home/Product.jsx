@@ -1,9 +1,25 @@
 import ShoppingCartOutlined from "@mui/icons-material/ShoppingCartOutlined";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { cartActions } from "../../Redux/cartRedux";
 import { mobile } from "../../responsive";
 
 const Product = ({ item }) => {
+  const dispatch = useDispatch();
+
+  const addToCartHandler = () => {
+    dispatch(
+      cartActions.addItemToCartHandler({
+        id: item._id,
+        name: item.name,
+        amount: 1,
+        price: item.price,
+        img: item.img,
+      })
+    );
+  };
+
   return (
     <Wrapper>
       <ContainerList>
@@ -20,7 +36,10 @@ const Product = ({ item }) => {
             </Link>
             <PriceContianer>
               <PriceInfo>{item.price}</PriceInfo>
-              <Link style={{ textDecoration: "none" }} to={`/cart`}>
+              <Link
+                style={{ textDecoration: "none" }}
+                onClick={addToCartHandler}
+              >
                 <Icon>
                   <ShoppingCartOutlined />
                 </Icon>

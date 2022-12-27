@@ -5,20 +5,28 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
 import LOGO from "../assets/Logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Badge } from "@mui/material";
 import { mobile } from "../responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../Redux/authRedux";
+import { cartActions } from "../Redux/cartRedux";
 
 const NavBar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isAdmin = useSelector((state) => state.auth.isAdmin);
   const isLogged = useSelector((state) => state.auth.isLoggedIn);
-  const quantity = 4;
+  const cartItemsRedux = useSelector((state) => state.cart.items);
+  const numberOfItems = cartItemsRedux.reduce((currNumber, item) => {
+    return currNumber + item.amount;
+  }, 0);
 
   const logoutHandler = () => {
     dispatch(authActions.logout());
+    dispatch(cartActions.clearCartHandler());
+    navigate("/");
+    window.location.reload(false);
   };
 
   return (
@@ -73,7 +81,7 @@ const NavBar = () => {
             </Nav>
             <CartContainer>
               <Link style={{ textDecoration: "none" }} to={`/cart`}>
-                <Badge badgeContent={quantity} color="error">
+                <Badge badgeContent={numberOfItems} color="error">
                   <ShoppingCartIcon style={{ color: "#18181d" }} />
                 </Badge>
               </Link>

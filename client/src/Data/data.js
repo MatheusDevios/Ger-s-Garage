@@ -144,37 +144,37 @@ export const products = [
   {
     _id: 1,
     name: "Spark Plug",
-    price: "25€",
+    price: 25,
     img: "https://slidesigma.nyc/templatemonster/react/tezzla/assets/img/products/7.png",
   },
   {
     _id: 2,
     name: "Gears",
-    price: "30€",
+    price: 30,
     img: "https://slidesigma.nyc/templatemonster/react/tezzla/assets/img/products/8.png",
   },
   {
     _id: 3,
     name: "Car Engine",
-    price: "80€",
+    price: 80,
     img: "https://slidesigma.nyc/templatemonster/react/tezzla/assets/img/products/9.png",
   },
   {
     _id: 4,
     name: "Tyres",
-    price: "40€",
+    price: 40,
     img: "https://slidesigma.nyc/templatemonster/react/tezzla/assets/img/products/10.png",
   },
   {
     _id: 5,
     name: "Engines",
-    price: "57€",
+    price: 57,
     img: "https://slidesigma.nyc/templatemonster/react/tezzla/assets/img/products/11.png",
   },
   {
     _id: 6,
     name: "Gears",
-    price: "30€",
+    price: 30,
     img: "https://slidesigma.nyc/templatemonster/react/tezzla/assets/img/products/8.png",
   },
 ];
