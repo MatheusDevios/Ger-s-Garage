@@ -41,7 +41,7 @@ const UserInfo = () => {
     });
   }
 
-  console.log(loadedData);
+  // console.log(loadedData);
   if (orderIsFetching || userIsFetching) {
     content = <Loading />;
   } else {

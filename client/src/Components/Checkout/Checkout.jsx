@@ -174,31 +174,37 @@ const Actions = styled.div`
   display: flex;
   justify-content: center;
   gap: 1rem;
+  margin-bottom: 0.5rem;
 `;
 
 const ActionsButton = styled.button`
   font: inherit;
-  color: #5a1a01;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  color: black;
   cursor: pointer;
   background-color: transparent;
   border: none;
   border-radius: 25px;
   padding: 0.5rem 2rem;
-  &:hover,
-  :active {
-    background-color: #ffe6dc;
+  transition: all 0.5s ease;
+  transform: scale(0.95);
+  &:hover {
+    transform: scale(1.1);
   }
 `;
 
 const ActionsSubmit = styled.button`
-  border: 1px solid #5a1a01;
-  background-color: #5a1a01;
+  font: inherit;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  border: 1px solid black;
+  background-color: black;
   cursor: pointer;
   padding: 0.5rem 2rem;
   border-radius: 25px;
   color: white;
-  &:hover,
-  :active {
-    background-color: #7a2706;
+  transition: all 0.5s ease;
+  transform: scale(0.95);
+  &:hover {
+    transform: scale(1.1);
   }
 `;

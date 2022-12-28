@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import InvoiceDetails from "./InvoiceDetails";
+import { useNavigate } from "react-router-dom";
 
 const InvoiceInfo = (props) => {
   const {
@@ -19,13 +20,19 @@ const InvoiceInfo = (props) => {
     phone,
   } = props.invoice;
 
+  const navigate = useNavigate();
+
   const dateCreated = new Date(date);
   const dateFormated = `${dateCreated.getDate()}/${dateCreated.getMonth()}/${dateCreated.getFullYear()}`;
   const timeFormated = `${dateCreated.getHours()}:${dateCreated.getMinutes()}`;
-  // const timeCreated;
+
+  const handleClick = () => {
+    navigate(-1);
+  };
   return (
     <Container>
       <Card>
+        <Button onClick={handleClick}>Back</Button>
         <UserDetailsContainer>
           <TopContainer>
             <h3>{name}</h3>
@@ -140,4 +147,19 @@ const Price = styled.div`
 
 const PriceInfo = styled.div`
   margin-bottom: 0.2rem;
+`;
+
+const Button = styled.button`
+  width: max-content;
+  padding: 8px 12px;
+  background-color: black;
+  box-shadow: 0 3px 24px rgb(0 0 0 / 30%);
+  border-radius: 1rem;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;

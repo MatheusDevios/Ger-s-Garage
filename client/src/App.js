@@ -84,7 +84,10 @@ function App() {
           />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/product/:_id" element={<SingleProduct />} />
-          <Route path="/invoice/:_id" element={<Invoice />} />
+          <Route
+            path="/invoice/:_id"
+            element={isLogged ? <Invoice /> : <Navigate replace to="/*" />}
+          />
           <Route path="/cart" element={<Cart />} />
           <Route
             path="/checkout"

@@ -179,6 +179,10 @@ const TopButton = styled.button`
   background-color: ${(props) =>
     props.type === "filled" ? "black" : "transparent"};
   color: ${(props) => props.type === "filled" && "white"};
+  transition: all 0.5s ease;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const Bottom = styled.div`
@@ -288,4 +292,8 @@ const Button = styled.button`
   color: white;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.5s ease;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;

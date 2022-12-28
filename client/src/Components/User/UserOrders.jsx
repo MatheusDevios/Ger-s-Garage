@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const UserOrders = (props) => {
-  const { name, img, amount } = props;
+  const { name, amount } = props;
   return (
     <Orders>
       <OrderInfo>

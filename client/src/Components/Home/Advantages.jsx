@@ -15,17 +15,6 @@ const Advantages = () => {
             <ContainerInfo>{item.desc}</ContainerInfo>
           </Container>
         ))}
-        {/* <Container>
-          <Image src={GUARANTEE} />
-          <ContainerTitle>Official Guarantee</ContainerTitle>
-          <ContainerInfo>
-            We give a one-year guarantee for all work. Two years of official
-            warranty for spare parts from our online store.
-          </ContainerInfo>
-        </Container>
-        <Container>Advantages</Container>
-        <Container>Advantages</Container>
-        <Container>Advantages</Container> */}
       </Row>
     </AdvantagesContainer>
   );

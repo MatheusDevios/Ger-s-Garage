@@ -50,6 +50,10 @@ const Button = styled.button`
   color: white;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.5s ease;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 const OrderID = styled.div`
   color: rgb(163, 153, 153);
