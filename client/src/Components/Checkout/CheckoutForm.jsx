@@ -103,14 +103,3 @@ const SummaryItem = styled.div`
 const SummaryItemText = styled.span``;
 
 const SummaryItemPrice = styled.span``;
-
-const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: black;
-  box-shadow: 0 3px 24px rgb(0 0 0 / 30%);
-  border-radius: 1rem;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-`;
