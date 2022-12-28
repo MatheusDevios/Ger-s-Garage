@@ -21,8 +21,8 @@ const UserDetails = (props) => {
         />
       ))}
       <Price>
-        <PriceInfo>SubTotal: {subtotal} €</PriceInfo>
-        <PriceInfo>Total: {total} €</PriceInfo>
+        <PriceInfo>SubTotal: {subtotal.toFixed(2)} €</PriceInfo>
+        <PriceInfo>Total: {total.toFixed(2)} €</PriceInfo>
       </Price>
     </UserDetailsContainer>
   );

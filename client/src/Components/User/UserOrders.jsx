@@ -9,7 +9,7 @@ const UserOrders = (props) => {
         <Info>Item: {name}</Info>
       </OrderInfo>
       <OrderInfo>
-        <Info>Price: {price}</Info>
+        <Info>Price: {price.toFixed(2)}</Info>
       </OrderInfo>
       <OrderInfo>
         <Info>Amount: {amount}</Info>

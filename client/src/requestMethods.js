@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
 const BASE_URL = "http://localhost:5001/api/";
 // const TOKEN =
 //   JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser

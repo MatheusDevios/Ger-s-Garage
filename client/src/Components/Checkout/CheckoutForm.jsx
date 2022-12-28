@@ -18,7 +18,7 @@ const CheckoutForm = () => {
   const totalPrice = (cartTotalRedux + shipping - discount).toFixed(2);
 
   const submitOrder = async (address) => {
-    await userRequest.post("/orders", {
+    await userRequest.post(`/orders/${userId}`, {
       userId: userId,
       products: cart,
       subtotal: parseInt(subTotal),
