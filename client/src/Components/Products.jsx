@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { publicRequest } from "../requestMethods";
 import { mobile, tablet } from "../responsive";
 import Product from "./Home/Product";
+import Loading from "./Loading";
 
 const Products = ({ cat, filters, sort, page }) => {
   //   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -18,19 +19,23 @@ const Products = ({ cat, filters, sort, page }) => {
   });
 
   if (isFetching) {
-    content = <div>Fetching data, please wait...</div>;
+    content = <Loading />;
   } else {
-    content = page
-      ? products.map((item) => <Product item={item} key={item._id} />)
-      : products
-          .slice(0, 5)
-          .map((item) => <Product item={item} key={item._id} />);
+    content = (
+      <ProductContainer>
+        {page
+          ? products.map((item) => <Product item={item} key={item._id} />)
+          : products
+              .slice(0, 5)
+              .map((item) => <Product item={item} key={item._id} />)}
+      </ProductContainer>
+    );
   }
 
   return (
     <Container>
       {page ? <Title>Shop With Us</Title> : <Title>Fresh Arrivals</Title>}
-      <ProductContainer>{content}</ProductContainer>
+      {content}
     </Container>
   );
 };

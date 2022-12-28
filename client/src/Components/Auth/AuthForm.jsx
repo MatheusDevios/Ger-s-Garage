@@ -109,6 +109,7 @@ const AuthComp = () => {
           userId: data._id,
         })
       );
+      window.location.reload(false);
     } catch (err) {
       setInvalidPassword({
         border: "1px solid #b40e0e",

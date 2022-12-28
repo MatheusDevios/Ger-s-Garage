@@ -3,6 +3,7 @@ import Service from "./Service";
 import { mobile, tablet } from "../../responsive";
 import { useQuery } from "@tanstack/react-query";
 import { publicRequest } from "../../requestMethods";
+import Loading from "../Loading";
 
 const ServicesList = () => {
   let content;
@@ -16,17 +17,22 @@ const ServicesList = () => {
   });
 
   if (isFetching) {
-    content = <div>Fetching data, please wait...</div>;
+    content = <Loading />;
   } else {
-    content = services.map((service) => (
-      <Service service={service} key={service._id} />
-    ));
+    content = (
+      <ProductContainer>
+        {services.map((service) => (
+          <Service service={service} key={service._id} />
+        ))}
+        ;
+      </ProductContainer>
+    );
   }
 
   return (
     <Container>
       <Title>Services</Title>
-      <ProductContainer>{content}</ProductContainer>
+      {content}
     </Container>
   );
 };

@@ -1,13 +1,13 @@
 import React from "react";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
-import UserC from "../Components/User/UserC";
+import UserInfo from "../Components/User/UserInfo";
 
 const User = () => {
   return (
     <div>
       <NavBar />
-      <UserC />
+      <UserInfo />
       <Footer />
     </div>
   );
