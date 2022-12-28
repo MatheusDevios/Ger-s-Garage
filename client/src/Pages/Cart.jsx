@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { mobile } from "../responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../Redux/cartRedux";
+import { Link } from "react-router-dom";
 // import StripeCheckout from "react-stripe-checkout";
 // import { useEffect, useState } from "react";
 // import { userRequest } from "../requestMethods";
@@ -60,15 +61,21 @@ const Cart = () => {
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          <Link to="/products">
+            <TopButton>CONTINUE SHOPPING</TopButton>
+          </Link>
+          <Link to="/checkout">
+            <TopButton type="filled">CHECKOUT NOW</TopButton>
+          </Link>
         </Top>
         <Bottom>
           <Info>
             {cart.map((product) => (
               <Product key={product.id}>
                 <ProductDetail>
-                  <Image src={product.img} />
+                  <Link to={`/product/${product.id}`}>
+                    <Image src={product.img} />
+                  </Link>
                   <Details>
                     <ProductName>
                       <b>Product:</b> {product.name}
@@ -128,7 +135,9 @@ const Cart = () => {
               token={onToken}
               stripeKey={KEY}
             > */}
-            <Button>CHECKOUT NOW</Button>
+            <Link to="/checkout">
+              <Button>CHECKOUT NOW</Button>
+            </Link>
             {/* </StripeCheckout> */}
           </Summary>
         </Bottom>
@@ -196,7 +205,11 @@ const ProductDetail = styled.div`
 `;
 
 const Image = styled.img`
+  cursor: pointer;
   width: 200px;
+  ${mobile({
+    width: "120px",
+  })}
 `;
 
 const Details = styled.div`
@@ -274,4 +287,5 @@ const Button = styled.button`
   border-radius: 1rem;
   color: white;
   font-weight: 600;
+  cursor: pointer;
 `;

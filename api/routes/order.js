@@ -9,7 +9,7 @@ const router = require("express").Router();
 
 //CREATE
 
-router.post("/", verifyToken, async (req, res) => {
+router.post("/", verifyTokenAndAuthorization, async (req, res) => {
   const newOrder = new Order(req.body);
 
   try {
@@ -56,7 +56,7 @@ router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
-//GET ALL USERS
+//GET ALL ORDERS
 
 router.get("/", verifyTokenAndAdmin, async (req, res) => {
   try {

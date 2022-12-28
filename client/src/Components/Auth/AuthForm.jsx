@@ -1,4 +1,3 @@
-import "./authForm.css";
 import { useState, useRef } from "react";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
@@ -22,7 +21,11 @@ const AuthComp = () => {
   let enteredSurname = "";
   let enteredMobilePhone = "";
 
-  const [equalPassword, setEqualPassword] = useState("password"); //to change password input classes
+  //to change password input classes
+  const [invalidPassword, setInvalidPassword] = useState({
+    border: "1px solid white",
+    backgroundColor: "#f1e1fc",
+  });
 
   const [isLogin, setIsLogin] = useState(true);
 
@@ -41,7 +44,10 @@ const AuthComp = () => {
 
   //changes the password input class
   const clearWrongPassword = () => {
-    setEqualPassword("password");
+    setInvalidPassword({
+      border: "1px solid white",
+      backgroundColor: "#f1e1fc",
+    });
   };
 
   const passwordIsEqual = (event) => {
@@ -61,7 +67,10 @@ const AuthComp = () => {
       submitHandler();
     } else {
       //change the password input class
-      setEqualPassword("password invalid");
+      setInvalidPassword({
+        border: "1px solid #b40e0e",
+        backgroundColor: "#fddddd",
+      });
     }
   };
 
@@ -101,7 +110,10 @@ const AuthComp = () => {
         })
       );
     } catch (err) {
-      setEqualPassword("password invalid");
+      setInvalidPassword({
+        border: "1px solid #b40e0e",
+        backgroundColor: "#fddddd",
+      });
       alert(err.message);
     }
   };
@@ -158,7 +170,7 @@ const AuthComp = () => {
           </Control>
           <Control>
             <ControlLabel htmlFor="password">Your Password</ControlLabel>
-            <div className={equalPassword}>
+            <EqualPassword invalidPassword={invalidPassword}>
               <ControlInput
                 type={isShown ? "text" : "password"}
                 id="password"
@@ -177,26 +189,20 @@ const AuthComp = () => {
                   required
                 />
               )}
-            </div>
-            <div className="checkbox-container">
-              <h4 htmlFor="checkbox">Show password?</h4>
-              <CheckboxContainerInput
-                id="checkbox"
-                type="checkbox"
-                checked={isShown}
-                onChange={togglePassword}
-              />
-            </div>
+            </EqualPassword>
+            <h4>Show password?</h4>
+            <CheckboxContainerInput
+              id="checkbox"
+              type="checkbox"
+              checked={isShown}
+              onChange={togglePassword}
+            />
           </Control>
           <Actions>
             <ActionsButton>
               {isLogin ? "Login" : "Create Account"}
             </ActionsButton>
-            <ActionsToggle
-              type="button"
-              className="toggle"
-              onClick={switchAuthModeHandler}
-            >
+            <ActionsToggle type="button" onClick={switchAuthModeHandler}>
               {isLogin ? "Create new account" : "Login with existing account"}
             </ActionsToggle>
           </Actions>
@@ -240,11 +246,22 @@ const Control = styled.div`
   margin-bottom: 0.5rem;
 `;
 
+const EqualPassword = styled.div`
+  display: flex;
+  gap: 1rem;
+  & input {
+    background-color: ${(props) => props.invalidPassword.backgroundColor};
+    border: ${(props) => props.invalidPassword.border};
+  }
+`;
+
 const ControlInput = styled.input`
+  display: flex;
+  gap: 1rem;
   font: inherit;
-  background-color: #f1e1fc;
   color: #38015c;
   border-radius: 4px;
+  background-color: #f1e1fc;
   border: 1px solid white;
   width: 100%;
   height: 100%;
