@@ -1,29 +1,22 @@
 import React from "react";
 import UserOrders from "./UserOrders";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const UserDetails = (props) => {
-  const { name, city, country, street, postalCode, items, subtotal, total } =
-    props;
+  const { orderId, items, status } = props;
   return (
     <UserDetailsContainer>
-      <h3>{name}</h3>
-      <Street>{street}</Street>
-      <Address>{postalCode}</Address>
-      <Address>{city}</Address>
-      <Address>{country}</Address>
+      <TopContainer>
+        <h3>{status}</h3>
+        <Link to={`/invoice/${orderId}`} state={{ from: props }}>
+          <Button>Invoice</Button>
+        </Link>
+      </TopContainer>
+      <OrderID>Order # {orderId}</OrderID>
       {items.map((order, index) => (
-        <UserOrders
-          key={index}
-          name={order.name}
-          price={order.price}
-          amount={order.amount}
-        />
+        <UserOrders key={index} name={order.name} amount={order.amount} />
       ))}
-      <Price>
-        <PriceInfo>SubTotal: {subtotal.toFixed(2)} €</PriceInfo>
-        <PriceInfo>Total: {total.toFixed(2)} €</PriceInfo>
-      </Price>
     </UserDetailsContainer>
   );
 };
@@ -35,35 +28,32 @@ const UserDetailsContainer = styled.li`
   flex-direction: column;
   margin: 1rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid black;
   & h3 {
     margin: 0 0 0.25rem 0;
     font-size: 1.4rem;
   }
 `;
 
-const Street = styled.div`
-  margin-top: 0.4rem;
-  font-weight: bold;
-  color: #d32929;
-  font-size: 1.2rem;
-`;
-
-const Address = styled.div`
-  color: #d32929;
-  font-weight: bold;
-`;
-
-const Price = styled.div`
+const TopContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  color: #d32929;
-  font-weight: bold;
-  margin-top: 0.4rem;
 `;
 
-const PriceInfo = styled.div`
-  margin-bottom: 0.2rem;
+const Button = styled.button`
+  width: 100%;
+  padding: 10px 15px;
+  background-color: black;
+  box-shadow: 0 3px 24px rgb(0 0 0 / 30%);
+  border-radius: 1rem;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+`;
+const OrderID = styled.div`
+  color: rgb(163, 153, 153);
+  font-weight: 600;
+  padding-bottom: 10px;
+  font-size: 0.9rem;
 `;

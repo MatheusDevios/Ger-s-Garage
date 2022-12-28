@@ -13,7 +13,7 @@ const UserInfo = () => {
     queryKey: ["userInfo"],
     queryFn: async () => {
       const res = await userRequest.get(`users/find/${userId}`);
-      console.log(res.data);
+      // console.log(res.data);
       return res.data;
     },
   });
@@ -21,7 +21,7 @@ const UserInfo = () => {
     queryKey: ["orderInfo"],
     queryFn: async () => {
       const res = await userRequest.get(`orders/find/${userId}`);
-      console.log(res.data);
+      // console.log(res.data);
       return res.data;
     },
   });
@@ -37,9 +37,11 @@ const UserInfo = () => {
       subtotal: orderInfo[keyData].subtotal,
       total: orderInfo[keyData].total,
       status: orderInfo[keyData].status,
+      date: orderInfo[keyData].createdAt,
     });
   }
 
+  console.log(loadedData);
   if (orderIsFetching || userIsFetching) {
     content = <Loading />;
   } else {
@@ -48,7 +50,10 @@ const UserInfo = () => {
         {loadedData.map((item, index) => (
           <UserDetails
             key={item.orderId}
+            orderId={item.orderId}
             name={item.name}
+            email={item.email}
+            phone={item.phone}
             city={item.address.county}
             country={item.address.country}
             street={item.address.street}
@@ -56,6 +61,8 @@ const UserInfo = () => {
             items={item.products}
             subtotal={item.subtotal}
             total={item.total}
+            date={item.date}
+            status={item.status}
           />
         ))}
       </>
@@ -63,6 +70,7 @@ const UserInfo = () => {
   }
   return (
     <UserInfoContainer>
+      <Title>Orders</Title>
       <Card>
         <ul>{content}</ul>
       </Card>
@@ -92,6 +100,10 @@ const Card = styled.div`
 `;
 
 const UserInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   max-width: 60rem;
   width: 90%;
   margin: 2rem auto;
@@ -101,4 +113,11 @@ const UserInfoContainer = styled.div`
     padding: 0;
   }
   animation: ${usersApear} 1s ease-out forwards;
+`;
+
+const Title = styled.h3`
+  padding-bottom: 1rem;
+  font-size: 38px;
+  line-height: 1.4;
+  font-weight: 800;
 `;

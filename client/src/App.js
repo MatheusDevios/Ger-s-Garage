@@ -5,6 +5,7 @@ import Loading from "./Components/Loading";
 import { authActions } from "./Redux/authRedux";
 import { userRequest } from "./requestMethods";
 import { cartActions } from "./Redux/cartRedux";
+const Invoice = React.lazy(() => import("./Pages/Invoice"));
 const Admin = React.lazy(() => import("./Pages/Admin"));
 const Auth = React.lazy(() => import("./Pages/Auth"));
 const User = React.lazy(() => import("./Pages/User"));
@@ -83,6 +84,7 @@ function App() {
           />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/product/:_id" element={<SingleProduct />} />
+          <Route path="/invoice/:_id" element={<Invoice />} />
           <Route path="/cart" element={<Cart />} />
           <Route
             path="/checkout"
