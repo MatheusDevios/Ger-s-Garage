@@ -3,20 +3,16 @@ import UserDetails from "./UserDetails";
 import { useQuery } from "@tanstack/react-query";
 import { userRequest } from "../../Utils/requestMethods";
 import styled, { keyframes } from "styled-components";
+import { useSelector } from "react-redux";
 
 const UserInfo = () => {
   const userId = localStorage.getItem("userId");
+  const name = useSelector((state) => state.auth.name);
+  const phone = useSelector((state) => state.auth.phone);
+  const email = useSelector((state) => state.auth.email);
   let content;
   let loadedData = [];
 
-  const { data: userInfo, isFetching: userIsFetching } = useQuery({
-    queryKey: ["userInfo"],
-    queryFn: async () => {
-      const res = await userRequest.get(`users/find/${userId}`);
-      // console.log(res.data);
-      return res.data;
-    },
-  });
   const { data: orderInfo, isFetching: orderIsFetching } = useQuery({
     queryKey: ["orderInfo"],
     queryFn: async () => {
@@ -29,9 +25,9 @@ const UserInfo = () => {
   for (const keyData in orderInfo) {
     loadedData.push({
       orderId: orderInfo[keyData]._id,
-      name: userInfo.firstname + " " + userInfo.surname,
-      email: userInfo.email,
-      phone: userInfo.phone,
+      name: name,
+      email: email,
+      phone: phone,
       address: orderInfo[keyData].address,
       products: orderInfo[keyData].products,
       subtotal: orderInfo[keyData].subtotal,
@@ -40,9 +36,9 @@ const UserInfo = () => {
       date: orderInfo[keyData].createdAt,
     });
   }
-
   // console.log(loadedData);
-  if (orderIsFetching || userIsFetching) {
+
+  if (orderIsFetching) {
     content = <Loading />;
   } else {
     content = (

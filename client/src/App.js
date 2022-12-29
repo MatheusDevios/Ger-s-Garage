@@ -44,13 +44,16 @@ function App() {
     const getUser = async () => {
       if (authToken) {
         const res = await userRequest.get(`users/find/${authUserId}`);
-        // console.log(res.data);
+        console.log(res.data);
         if (res.data) {
           dispatch(
             authActions.login({
               token: authToken,
               userId: authUserId,
               isAdmin: res.data.isAdmin,
+              name: `${res.data.firstname} ${res.data.surname}`,
+              phone: res.data.phone,
+              email: res.data.email,
             })
           );
         }

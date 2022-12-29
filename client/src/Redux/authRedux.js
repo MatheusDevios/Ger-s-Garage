@@ -5,6 +5,9 @@ const authRedux = createSlice({
   initialState: {
     token: null,
     isAdmin: null,
+    name: null,
+    phone: null,
+    email: null,
     userId: null,
     isLoggedIn: false,
   },
@@ -15,6 +18,9 @@ const authRedux = createSlice({
       state.token = action.payload.token;
       state.isAdmin = action.payload.isAdmin;
       state.userId = action.payload.userId;
+      state.name = action.payload.name;
+      state.phone = action.payload.phone;
+      state.email = action.payload.email;
       state.isLoggedIn = true;
     },
     logout(state) {
@@ -23,6 +29,9 @@ const authRedux = createSlice({
       state.token = null;
       state.isAdmin = null;
       state.userId = null;
+      state.name = null;
+      state.phone = null;
+      state.email = null;
       state.isLoggedIn = false;
     },
   },
