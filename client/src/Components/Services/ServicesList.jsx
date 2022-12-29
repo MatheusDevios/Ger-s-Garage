@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import Service from "./Service";
-import { mobile, tablet } from "../../responsive";
+import { mobile, tablet } from "../../Utils/responsive";
 import { useQuery } from "@tanstack/react-query";
-import { publicRequest } from "../../requestMethods";
+import { publicRequest } from "../../Utils/requestMethods";
 import Loading from "../Loading";
 
 const ServicesList = () => {

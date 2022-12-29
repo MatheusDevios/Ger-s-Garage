@@ -3,7 +3,7 @@ import Remove from "@mui/icons-material/Remove";
 import styled from "styled-components";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
-import { mobile, tablet } from "../responsive";
+import { mobile, tablet } from "../Utils/responsive";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Banner from "../Components/SingleProduct/Banner";

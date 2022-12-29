@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { banner } from "../../Data/data";
-import { special } from "../../responsive";
+import { special } from "../../Utils/responsive";
 
 const Component404 = () => {
   return (

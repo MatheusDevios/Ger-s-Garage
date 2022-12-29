@@ -1,9 +1,9 @@
 import { useState, useRef } from "react";
 import styled from "styled-components";
-import { mobile } from "../../responsive";
+import { mobile } from "../../Utils/responsive";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../Redux/authRedux";
-import { publicRequest } from "../../requestMethods";
+import { publicRequest } from "../../Utils/requestMethods";
 
 const AuthComp = () => {
   const dispatch = useDispatch();

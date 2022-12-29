@@ -3,7 +3,7 @@ import Remove from "@mui/icons-material/Remove";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
 import styled from "styled-components";
-import { mobile } from "../responsive";
+import { mobile } from "../Utils/responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../Redux/cartRedux";
 import { Link } from "react-router-dom";

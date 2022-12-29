@@ -7,7 +7,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCartOutlined";
 import LOGO from "../assets/Logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Badge } from "@mui/material";
-import { mobile } from "../responsive";
+import { mobile } from "../Utils/responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../Redux/authRedux";
 import { cartActions } from "../Redux/cartRedux";

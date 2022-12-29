@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { cartActions } from "../../Redux/cartRedux";
-import { mobile } from "../../responsive";
+import { mobile } from "../../Utils/responsive";
 
 const Product = ({ item }) => {
   const dispatch = useDispatch();

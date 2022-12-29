@@ -3,7 +3,7 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { useState } from "react";
 import styled from "styled-components";
 import { sliderItems } from "../../Data/data";
-import { mobile } from "../../responsive";
+import { mobile } from "../../Utils/responsive";
 
 const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0);

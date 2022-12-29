@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
-import { publicRequest } from "../requestMethods";
-import { mobile, tablet } from "../responsive";
+import { publicRequest } from "../Utils/requestMethods";
+import { mobile, special, tablet } from "../Utils/responsive";
 import Product from "./Home/Product";
 import Loading from "./Loading";
 
@@ -53,6 +53,9 @@ const ProductContainer = styled.div`
   padding: 20px 0;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  ${special({
+    "grid-template-columns": `repeat(3,1fr)`,
+  })}
   ${tablet({
     "grid-template-columns": `repeat(2,1fr)`,
   })}

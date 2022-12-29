@@ -1,4 +1,4 @@
-import { mobile, tablet } from "../responsive";
+import { mobile, tablet } from "../Utils/responsive";
 import styled from "styled-components";
 import Facebook from "@mui/icons-material/Facebook";
 import Twitter from "@mui/icons-material/Twitter";

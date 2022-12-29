@@ -1,6 +1,6 @@
 import React from "react";
 import { testimonialsData } from "../../Data/data";
-import { mobile, tablet } from "../../responsive";
+import { mobile, tablet } from "../../Utils/responsive";
 
 // import Swiper core and required modules
 import { Pagination } from "swiper";

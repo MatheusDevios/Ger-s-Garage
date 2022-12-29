@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "./Components/Loading";
 import { authActions } from "./Redux/authRedux";
-import { userRequest } from "./requestMethods";
+import { userRequest } from "./Utils/requestMethods";
 import { cartActions } from "./Redux/cartRedux";
 const Invoice = React.lazy(() => import("./Pages/Invoice"));
 const Admin = React.lazy(() => import("./Pages/Admin"));

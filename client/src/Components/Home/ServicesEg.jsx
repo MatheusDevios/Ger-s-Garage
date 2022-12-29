@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { mobile, tablet } from "../../responsive";
+import { mobile, tablet } from "../../Utils/responsive";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { publicRequest } from "../../requestMethods";
+import { publicRequest } from "../../Utils/requestMethods";
 
 const ServicesEg = () => {
   const TURBO =

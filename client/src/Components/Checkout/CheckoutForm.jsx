@@ -1,8 +1,8 @@
 import Checkout from "./Checkout";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { mobile, tablet } from "../../responsive";
-import { userRequest } from "../../requestMethods";
+import { mobile, tablet } from "../../Utils/responsive";
+import { userRequest } from "../../Utils/requestMethods";
 import { cartActions } from "../../Redux/cartRedux";
 import { useNavigate } from "react-router-dom";
 

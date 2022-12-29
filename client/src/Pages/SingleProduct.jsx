@@ -3,15 +3,13 @@ import Remove from "@mui/icons-material/Remove";
 import styled from "styled-components";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
-import { mobile, tablet } from "../responsive";
+import { mobile, tablet } from "../Utils/responsive";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import Banner from "../Components/SingleProduct/Banner";
-import { publicRequest } from "../requestMethods";
-// import { addProduct } from "../redux/cartRedux";
+import { publicRequest } from "../Utils/requestMethods";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../Redux/cartRedux";
-// import { products } from "../Data/data";
 import { useQuery } from "@tanstack/react-query";
 
 const SingleProduct = () => {
@@ -20,7 +18,6 @@ const SingleProduct = () => {
   let content;
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
-  // const product = products[id - 1];
 
   const { data: product, isFetching } = useQuery({
     queryKey: ["productsData"],

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { banner } from "../../Data/data";
-import { mobile } from "../../responsive";
+import { mobile } from "../../Utils/responsive";
 
 const Banner = () => {
   return (

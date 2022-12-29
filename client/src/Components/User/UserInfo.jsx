@@ -1,7 +1,7 @@
 import Loading from "../Loading";
 import UserDetails from "./UserDetails";
 import { useQuery } from "@tanstack/react-query";
-import { userRequest } from "../../requestMethods";
+import { userRequest } from "../../Utils/requestMethods";
 import styled, { keyframes } from "styled-components";
 
 const UserInfo = () => {
