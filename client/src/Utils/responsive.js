@@ -19,5 +19,8 @@ export const special = (props) => {
     @media only screen and (max-height: 800px) {
       ${props}
     }
+    @media only screen and (max-width: 1300px) {
+      ${props}
+    }
   `;
 };
