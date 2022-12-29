@@ -4,7 +4,11 @@ import styled from "styled-components";
 const Service = ({ service }) => {
   return (
     <Wrapper>
-      <Link style={{ textDecoration: "none" }} to={`/service/${service._id}`}>
+      <Link
+        style={{ textDecoration: "none" }}
+        to={`/service/${service._id}`}
+        state={{ service: service }}
+      >
         <ContainerList>
           <ContainerImg>
             <Image src={service.img} />

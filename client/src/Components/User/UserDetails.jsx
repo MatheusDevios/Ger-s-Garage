@@ -9,6 +9,7 @@ const UserDetails = (props) => {
     <UserDetailsContainer>
       <TopContainer>
         <h3>{status}</h3>
+        <h3>{orderId ? `SHOPPING INFO` : `SERVICE INFO`}</h3>
         <Link to={`/invoice/${orderId}`} state={{ from: props }}>
           <Button>Invoice</Button>
         </Link>

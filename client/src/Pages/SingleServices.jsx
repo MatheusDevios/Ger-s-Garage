@@ -13,23 +13,12 @@ import Banner from "../Components/SingleProduct/Banner";
 
 const SingleServices = () => {
   const location = useLocation();
+  const { service } = location.state;
   const id = location.pathname.split("/")[2];
-  // const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
-  // const [color, setColor] = useState("");
-  // const [size, setSize] = useState("");
   //   const dispatch = useDispatch();
   const product = [];
-
-  useEffect(() => {
-    const getProduct = async () => {
-      //   try {
-      //     const res = await publicRequest.get("/products/find/" + id);
-      //     setProduct(res.data);
-      //   } catch {}
-    };
-    getProduct();
-  }, [id]);
+  const { img, name, description, price } = service;
 
   const handleQuantity = (type) => {
     if (type === "dec") {
@@ -48,18 +37,13 @@ const SingleServices = () => {
       <Banner />
       <Wrapper>
         <ImgContainer>
-          <Image src={product.img} />
+          <Image src={img} />
         </ImgContainer>
         <InfoContainer>
-          <Title>{product.title}</Title>
-          <Desc>{product.desc}</Desc>
-          <Price>From {product.price} €</Price>
+          <Title>{name}</Title>
+          <Desc>{description}</Desc>
+          <Price>From {price} €</Price>
           <AddContainer>
-            <AmountContainer>
-              <Remove onClick={() => handleQuantity("dec")} />
-              <Amount>{quantity}</Amount>
-              <Add onClick={() => handleQuantity("inc")} />
-            </AmountContainer>
             <Button onClick={handleClick}>ADD TO CART</Button>
           </AddContainer>
         </InfoContainer>
@@ -115,6 +99,7 @@ const AddContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 1rem 0;
   ${mobile({ width: "100%" })}
 `;
 

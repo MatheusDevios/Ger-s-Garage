@@ -70,7 +70,7 @@ const UserInfo = () => {
   }
   return (
     <UserInfoContainer>
-      <Title>Orders</Title>
+      <Title>Services / Orders</Title>
       <Card>
         <ul>{content}</ul>
       </Card>
