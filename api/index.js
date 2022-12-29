@@ -12,7 +12,8 @@ const userRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
 const productRoute = require("./routes/product");
 const sericeRoute = require("./routes/service");
-const cartRoute = require("./routes/cart");
+const appointmentRoute = require("./routes/appointment");
+const slotRoute = require("./routes/slot");
 const orderRoute = require("./routes/order");
 const cors = require("cors");
 
@@ -29,7 +30,8 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
 app.use("/api/services", sericeRoute);
-app.use("/api/carts", cartRoute);
+app.use("/api/appointments", appointmentRoute);
+app.use("/api/slots", slotRoute);
 app.use("/api/orders", orderRoute);
 
 app.listen(process.env.PORT || 5001, () => {
