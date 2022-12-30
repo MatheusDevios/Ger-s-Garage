@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 const SlotSchema = new mongoose.Schema(
   {
+    mechanic: { type: String, required: true },
     slotTime: { type: String, required: true },
     slotDate: { type: String, required: true },
   },

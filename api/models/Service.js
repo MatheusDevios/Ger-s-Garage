@@ -9,6 +9,7 @@ const ServiceSchema = new mongoose.Schema(
     icon: { type: String, required: true },
     shortDescription: { type: String, required: true },
     description: { type: String, required: true },
+    status: { type: String, default: "Booked" },
   },
   { timestamps: true }
 );

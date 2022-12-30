@@ -16,65 +16,44 @@ import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useNavigate } from "react-router";
+import AppointmentForm from "./AppointmentForm";
+import MechanicsForm from "./MechanicsForm";
+import Loading from "../Loading";
 
 const Appointment = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userId = localStorage.getItem("userId");
-  const cart = useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart.items);
+  const totalAmountProducts = useSelector((state) => state.cart.totalAmount);
   const email = useSelector((state) => state.auth.email);
   const phone = useSelector((state) => state.auth.phone);
   const name = useSelector((state) => state.auth.name);
   const [time, setTime] = useState("");
+  const [mechanic, setMechanic] = useState("");
   const [dateValue, setDateValue] = useState(dayjs(null));
+  const [professionalsDisabled, setProfessionalsDisabled] = useState(true);
   const [timeDisabled, setTimeDisabled] = useState(true);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [formattedDate, setFormattedDate] = useState("");
-  let availableSlot1 = false;
-  let availableSlot2 = false;
-  let availableSlot3 = false;
-  let availableSlot4 = false;
+  const [availableSlot1, setAvailableSlot1] = useState(false);
+  const [availableSlot2, setAvailableSlot2] = useState(false);
+  const [availableSlot3, setAvailableSlot3] = useState(false);
+  const [availableSlot4, setAvailableSlot4] = useState(false);
 
   const { data: slots, isFetching } = useQuery({
     queryKey: ["slotData"],
     queryFn: async () => {
       const res = await publicRequest.get(`/slots/`);
-      // console.log(res.data);
+      // console.log(cart);
       return res.data;
     },
   });
 
-  if (!isFetching) {
-    // console.log(slots);
-    // eslint-disable-next-line
-    slots.map((slot) => {
-      // console.log(slot.slotDate);
-      // console.log(formattedDate);
-      if (formattedDate === slot.slotDate) {
-        // console.log(formattedDate);
-        switch (slot.slotTime) {
-          case "1":
-            availableSlot1 = true;
-            break;
-          case "2":
-            availableSlot2 = true;
-            break;
-          case "3":
-            availableSlot3 = true;
-            break;
-          case "4":
-            availableSlot4 = true;
-            break;
-          default:
-            availableSlot1 = false;
-            availableSlot2 = false;
-            availableSlot3 = false;
-            availableSlot4 = false;
-            break;
-        }
-      }
-    });
-  }
+  const isSunday = (date) => {
+    const day = date.day();
+    return day === 0;
+  };
 
   const handleChangeTime = (event) => {
     setTime(event.target.value);
@@ -90,12 +69,130 @@ const Appointment = (props) => {
     const day = String(newValue.$D).padStart(2, "0");
     const month = String(newValue.$M + 1).padStart(2, "0");
     setFormattedDate(`${day}/${month}/${newValue.$y}`);
-    handleToggleTime();
+    handleToggleProfessionals();
   };
 
-  const handleToggleTime = () => {
-    setTimeDisabled(false);
+  const handleToggleProfessionals = () => {
+    setProfessionalsDisabled(false);
   };
+
+  const handleToggleTime = (value) => {
+    setMechanic(value);
+    setAvailableSlot1(false);
+    setAvailableSlot2(false);
+    setAvailableSlot3(false);
+    setAvailableSlot4(false);
+    slots.map((slot) => {
+      if (formattedDate === slot.slotDate) {
+        if (value == slot.mechanic && slot.slotTime) {
+          // console.log(slot.slotTime);
+          switch (value) {
+            case 1:
+              switch (slot.slotTime) {
+                case "1":
+                  setAvailableSlot1(true);
+                  break;
+                case "2":
+                  setAvailableSlot2(true);
+                  break;
+                case "3":
+                  setAvailableSlot3(true);
+                  break;
+                case "4":
+                  setAvailableSlot4(true);
+                  break;
+                default:
+                  setAvailableSlot1(false);
+                  setAvailableSlot2(false);
+                  setAvailableSlot3(false);
+                  setAvailableSlot4(false);
+                  break;
+              }
+              break;
+            case 2:
+              switch (slot.slotTime) {
+                case "1":
+                  availableSlot1 = true;
+                  break;
+                case "2":
+                  availableSlot2 = true;
+                  break;
+                case "3":
+                  availableSlot3 = true;
+                  break;
+                case "4":
+                  availableSlot4 = true;
+                  break;
+                default:
+                  availableSlot1 = false;
+                  availableSlot2 = false;
+                  availableSlot3 = false;
+                  availableSlot4 = false;
+                  break;
+              }
+              break;
+            case 3:
+              switch (slot.slotTime) {
+                case "1":
+                  setAvailableSlot1(true);
+                  break;
+                case "2":
+                  setAvailableSlot2(true);
+                  break;
+                case "3":
+                  setAvailableSlot3(true);
+                  break;
+                case "4":
+                  setAvailableSlot4(true);
+                  break;
+                default:
+                  setAvailableSlot1(false);
+                  setAvailableSlot2(false);
+                  setAvailableSlot3(false);
+                  setAvailableSlot4(false);
+                  break;
+              }
+              break;
+            case 4:
+              switch (slot.slotTime) {
+                case "1":
+                  setAvailableSlot1(true);
+                  break;
+                case "2":
+                  setAvailableSlot2(true);
+                  break;
+                case "3":
+                  setAvailableSlot3(true);
+                  break;
+                case "4":
+                  setAvailableSlot4(true);
+                  break;
+                default:
+                  setAvailableSlot1(false);
+                  setAvailableSlot2(false);
+                  setAvailableSlot3(false);
+                  setAvailableSlot4(false);
+                  break;
+              }
+              break;
+            default:
+              setAvailableSlot1(false);
+              setAvailableSlot2(false);
+              setAvailableSlot3(false);
+              setAvailableSlot4(false);
+              break;
+          }
+        }
+      }
+    });
+    if (value === 0) {
+      setTimeDisabled(true);
+    } else {
+      setTimeDisabled(false);
+    }
+  };
+
+  const haldleFormResult = () => {};
 
   const handleClick = async () => {
     const newDate = dateValue.toISOString();
@@ -112,10 +209,16 @@ const Appointment = (props) => {
       name,
       email,
       phone,
-      products: cart || [],
+      //ADD TYPE, MAKER AND LICENCE TO THE USER REGISTRATION FRONTEND
+      type: "Honda",
+      maker: "Hondaa",
+      license: "sadadsa123",
+      products: cart,
+      totalAmountProducts,
       service: props.service,
       slotTime: time,
       slotDate: `${day}/${month}/${year}`,
+      mechanic,
     });
     dispatch(cartActions.clearCartHandler({ items: [], totalAmount: 0 }));
     navigate("/");
@@ -123,55 +226,73 @@ const Appointment = (props) => {
 
   return (
     <Container>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Stack spacing={3}>
-          <MobileDatePicker
-            label="Schedule your Service"
-            inputFormat="DD/MM/YYYY"
-            minDate={dayjs()}
-            value={dateValue}
-            onChange={handleChangeDate}
-            renderInput={(params) => <TextField {...params} />}
-          />
-          <CalendarContainer>
-            <FormControl required sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-required-label">
-                Time
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-required-label"
-                id="demo-simple-select-required"
-                value={time}
-                label="Time *"
-                disabled={timeDisabled}
-                onChange={handleChangeTime}
-              >
-                <MenuItem value={0}>
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem disabled={availableSlot1} value={1}>
-                  08:30 - 10:30
-                </MenuItem>
-                <MenuItem disabled={availableSlot2} value={2}>
-                  10:30 - 12:30
-                </MenuItem>
-                <MenuItem disabled={availableSlot3} value={3}>
-                  13:00 - 15:00
-                </MenuItem>
-                <MenuItem disabled={availableSlot4} value={4}>
-                  15:30 - 17:30
-                </MenuItem>
-              </Select>
-              <FormHelperText>
-                Select the time for your appointment
-              </FormHelperText>
-            </FormControl>
+      {isFetching ? (
+        <Loading />
+      ) : (
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Stack spacing={3}>
+            <MobileDatePicker
+              label="Schedule your Service"
+              inputFormat="DD/MM/YYYY"
+              shouldDisableDate={isSunday}
+              minDate={dayjs()}
+              value={dateValue}
+              onChange={handleChangeDate}
+              renderInput={(params) => <TextField {...params} />}
+            />
+            <CalendarContainer>
+              <InfoContainer>
+                <MechanicsForm
+                  disable={professionalsDisabled}
+                  onChange={handleToggleTime}
+                />
+                <FormControl
+                  // style={{ display: `${timeDisabled}` }}
+                  disabled={timeDisabled}
+                  required
+                  sx={{ m: 1, minWidth: 120 }}
+                >
+                  <InputLabel id="demo-simple-select-required-label">
+                    Time
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-required-label"
+                    id="demo-simple-select-required"
+                    value={time}
+                    label="Time *"
+                    onChange={handleChangeTime}
+                  >
+                    <MenuItem value={0}>
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem disabled={availableSlot1} value={1}>
+                      08:30 - 10:30
+                    </MenuItem>
+                    <MenuItem disabled={availableSlot2} value={2}>
+                      10:30 - 12:30
+                    </MenuItem>
+                    <MenuItem disabled={availableSlot3} value={3}>
+                      13:00 - 15:00
+                    </MenuItem>
+                    <MenuItem disabled={availableSlot4} value={4}>
+                      15:30 - 17:30
+                    </MenuItem>
+                  </Select>
+                  <FormHelperText>
+                    Select the time for your appointment
+                  </FormHelperText>
+                </FormControl>
+              </InfoContainer>
+              <AppointmentDetailsContainer>
+                <AppointmentForm formResult={haldleFormResult} />
+              </AppointmentDetailsContainer>
+            </CalendarContainer>
             <Button disabled={buttonDisabled} onClick={handleClick}>
               SCHEDULE
             </Button>
-          </CalendarContainer>
-        </Stack>
-      </LocalizationProvider>
+          </Stack>
+        </LocalizationProvider>
+      )}
     </Container>
   );
 };
@@ -181,10 +302,19 @@ export default Appointment;
 const Container = styled.div`
   margin: auto;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-content: center;
-  width: 80%;
+  width: 100%;
   padding: 10px;
+`;
+
+const AppointmentDetailsContainer = styled.div`
+  flex: 1;
+`;
+
+const InfoContainer = styled.div`
+  flex: 1;
 `;
 
 const CalendarContainer = styled.div`
@@ -195,7 +325,6 @@ const CalendarContainer = styled.div`
 
 const Button = styled.button`
   padding: 15px;
-  margin-top: 0.8rem;
   border: 1px solid black;
   box-shadow: 0 3px 24px rgb(0 0 0 / 30%);
   border-radius: 1rem;

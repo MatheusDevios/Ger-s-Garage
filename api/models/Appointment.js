@@ -5,9 +5,18 @@ const ObjectId = mongoose.Types.ObjectId;
 const AppointmentSchema = new mongoose.Schema(
   {
     userId: { type: String, required: true },
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    phone: { type: String, required: true },
+    type: { type: String, required: true },
+    maker: { type: String, required: true },
+    license: { type: String, required: true },
+    mechanic: { type: String, required: true },
     slots: { type: ObjectId, ref: "Slot" },
-    service: { type: Array, required: true },
+    service: { type: Object, required: true },
     products: { type: Array, required: true },
+    totalAmountProducts: { type: String, required: true },
+    totalAppointmentAmount: { type: String, required: true },
   },
   { timestamps: true }
 );

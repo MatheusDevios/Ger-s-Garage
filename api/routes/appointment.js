@@ -27,15 +27,43 @@ router.post("/:id", verifyTokenAndAuthorization, async (req, res) => {
     const newSlot = new Slot({
       slotTime: req.body.slotTime,
       slotDate: req.body.slotDate,
+      mechanic: req.body.mechanic,
     });
 
     const savedSlod = await newSlot.save();
-
+    let newMechanic;
+    switch (req.body.mechanic) {
+      case 1:
+        newMechanic = "Michael";
+        break;
+      case 2:
+        newMechanic = "Jordan";
+        break;
+      case 3:
+        newMechanic = "Tim";
+        break;
+      case 4:
+        newMechanic = "Wilson";
+        break;
+      default:
+        break;
+    }
+    console.log(req.body.service.price);
     const newAppointment = new Appointment({
       userId: req.body.userId,
-      service: req.body.service,
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
+      type: req.body.type,
+      maker: req.body.maker,
+      license: req.body.license,
       products: req.body.products,
+      totalAmountProducts: req.body.totalAmountProducts,
+      totalAppointmentAmount:
+        req.body.totalAmountProducts + req.body.service.price,
+      service: req.body.service,
       slots: savedSlod._id,
+      mechanic: newMechanic,
     });
 
     const savedAppointment = await newAppointment.save();
