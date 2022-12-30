@@ -115,7 +115,8 @@ const AuthComp = () => {
         border: "1px solid #b40e0e",
         backgroundColor: "#fddddd",
       });
-      alert(err.message);
+      console.log(err.message);
+      // alert(err.message);
     }
   };
 

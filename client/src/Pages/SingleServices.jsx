@@ -3,7 +3,6 @@ import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
 import { mobile, tablet } from "../Utils/responsive";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
 import Banner from "../Components/SingleProduct/Banner";
 import Appointment from "../Components/Appointment/Appointment";
 
@@ -11,12 +10,7 @@ const SingleServices = () => {
   const location = useLocation();
   const { service } = location.state;
   // const id = location.pathname.split("/")[2];
-  const [toggle, setToggle] = useState(true);
   const { img, name, description, price } = service;
-
-  const toggleSchedule = () => {
-    setToggle(!toggle);
-  };
 
   return (
     <Container>
@@ -31,7 +25,7 @@ const SingleServices = () => {
           <Desc>{description}</Desc>
           <Price>From {price} €</Price>
           <AddContainer>
-            <Appointment disable={toggleSchedule} />
+            <Appointment service={service} />
           </AddContainer>
         </InfoContainer>
       </Wrapper>
