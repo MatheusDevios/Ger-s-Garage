@@ -24,7 +24,11 @@ const ServicesEg = () => {
   } else {
     content = services.map((service) => (
       <Item key={service._id}>
-        <Link style={{ textDecoration: "none" }} to={`/service/${service._id}`}>
+        <Link
+          style={{ textDecoration: "none" }}
+          to={`/service/${service._id}`}
+          state={{ service: service }}
+        >
           <Icon>
             <Image src={service.homeIcon} />
             <Content>{service.name}</Content>
