@@ -11,7 +11,7 @@ const router = require("express").Router();
 
 //GET ALL SLOTS
 
-router.get("/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const slots = await Slot.find();
     res.status(200).json(slots);

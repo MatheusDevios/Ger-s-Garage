@@ -5,6 +5,10 @@ import Loading from "./Components/Loading";
 import { authActions } from "./Redux/authRedux";
 import { userRequest } from "./Utils/requestMethods";
 import { cartActions } from "./Redux/cartRedux";
+import Appointment from "./Components/Appointment/Appointment";
+
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+
 const Invoice = React.lazy(() => import("./Pages/Invoice"));
 const Admin = React.lazy(() => import("./Pages/Admin"));
 const Auth = React.lazy(() => import("./Pages/Auth"));
@@ -44,7 +48,7 @@ function App() {
     const getUser = async () => {
       if (authToken) {
         const res = await userRequest.get(`users/find/${authUserId}`);
-        console.log(res.data);
+        // console.log(res.data);
         if (res.data) {
           dispatch(
             authActions.login({
@@ -67,7 +71,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <MuiThemeProvider>
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -98,9 +102,10 @@ function App() {
           />
           <Route path="/*" element={<Navigate replace to="/404" />} />
           <Route path="/404" element={<Error404 />} />
+          <Route path="/appointment" element={<Appointment />} />
         </Routes>
       </Suspense>
-    </>
+    </MuiThemeProvider>
   );
 }
 

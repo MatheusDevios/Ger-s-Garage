@@ -1,6 +1,6 @@
 const Appointment = require("../models/Appointment");
 const Slot = require("../models/Slot");
-const Nexmo = require("nexmo");
+
 const {
   verifyToken,
   verifyTokenAndAuthorization,
@@ -38,28 +38,7 @@ router.post("/:id", verifyTokenAndAuthorization, async (req, res) => {
       slots: savedSlod._id,
     });
 
-    const nexmo = new Nexmo({
-      apiKey: process.env.NEXMO_API_KEY,
-      apiSecret: process.env.NEXMO_API_SECRET_KEY,
-    });
-
-    let msg = `${req.body.name} this message is to confirm your appointment at ${req.body.appointment}.`;
-    // and saves the record to the data base
-    const savedAppointment = newAppointment.save((err, saved) => {
-      // Returns the saved appointment after a successful save
-      Appointment.find({ _id: saved._id })
-        .populate("slots")
-        .exec((err, appointment) => res.json(appointment));
-      const from = VIRTUAL_NUMBER;
-      const to = RECIPIENT_NUMBER;
-      nexmo.message.sendSms(from, to, msg, (err, responseData) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.dir(responseData);
-        }
-      });
-    });
+    const savedAppointment = await newAppointment.save();
 
     res.status(200).json(savedAppointment);
   } catch (err) {
@@ -93,12 +72,12 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
-//GET USER APPOINTMENTS
-router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
+//GET LAST USER APPOINTMENT
+router.get("/findLast/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
     const appointment = await Appointment.findOne({
-      userId: req.params.userId,
-    });
+      userId: req.params.id,
+    }).sort({ createdAt: -1 });
     res.status(200).json(appointment);
   } catch (err) {
     res.status(500).json(err);
