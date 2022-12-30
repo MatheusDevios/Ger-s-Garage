@@ -21,25 +21,51 @@ const Appointment = () => {
   const email = useSelector((state) => state.auth.email);
   const phone = useSelector((state) => state.auth.phone);
   const name = useSelector((state) => state.auth.name);
-  let content;
-  const [value, setValue] = useState(dayjs(null));
+  const [dateValue, setDateValue] = useState(dayjs(null));
   const [timeDisabled, setTimeDisabled] = useState(true);
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [formattedDate, setFormattedDate] = useState("");
+  let availableSlot1 = false;
+  let availableSlot2 = false;
+  let availableSlot3 = false;
+  let availableSlot4 = false;
 
   const { data: slots, isFetching } = useQuery({
-    queryKey: ["servicesData"],
+    queryKey: ["slotData"],
     queryFn: async () => {
-      //   console.log(value);
       const res = await publicRequest.get(`/slots/`);
-      console.log(res.data);
+      // console.log(res.data);
       return res.data;
     },
   });
 
-  if (isFetching) {
-    content = <Loading />;
-  } else {
-    content = <div></div>;
+  if (!isFetching) {
+    // console.log(slots);
+    // eslint-disable-next-line
+    slots.map((slot) => {
+      if (formattedDate === slot.slotDate) {
+        switch (slot.slotTime) {
+          case "1":
+            availableSlot1 = true;
+            break;
+          case "2":
+            availableSlot2 = true;
+            break;
+          case "3":
+            availableSlot3 = true;
+            break;
+          case "4":
+            availableSlot4 = true;
+            break;
+          default:
+            availableSlot1 = false;
+            availableSlot2 = false;
+            availableSlot3 = false;
+            availableSlot4 = false;
+            break;
+        }
+      }
+    });
   }
   const [time, setTime] = React.useState("");
 
@@ -53,62 +79,72 @@ const Appointment = () => {
   };
 
   const handleChangeDate = (newValue) => {
-    setValue(newValue);
+    setDateValue(newValue);
+    setFormattedDate(`${newValue.$D}/${newValue.$M + 1}/${newValue.$y}`);
     handleToggleTime();
   };
 
   const handleToggleTime = () => {
     setTimeDisabled(false);
   };
-  const handleToggle = () => {
-    setButtonDisabled(false);
-  };
 
   const handleClick = () => {};
 
   return (
     <Container>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Stack spacing={3}>
-          <MobileDatePicker
-            label="Schedule your Service"
-            inputFormat="DD/MM/YYYY"
-            minDate={dayjs()}
-            value={value}
-            onChange={handleChangeDate}
-            renderInput={(params) => <TextField {...params} />}
-          />
-          <CalendarContainer>
-            <FormControl required sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-simple-select-required-label">
-                Time
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-required-label"
-                id="demo-simple-select-required"
-                value={time}
-                label="Time *"
-                disabled={timeDisabled}
-                onChange={handleChangeTime}
-              >
-                <MenuItem value={0}>
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={1}>08:30 - 10:30</MenuItem>
-                <MenuItem value={2}>10:30 - 12:30</MenuItem>
-                <MenuItem value={3}>13:00 - 15:00</MenuItem>
-                <MenuItem value={4}>15:30 - 17:30</MenuItem>
-              </Select>
-              <FormHelperText>
-                Select the time for your appointment
-              </FormHelperText>
-            </FormControl>
-            <Button disabled={buttonDisabled} onClick={handleClick}>
-              SCHEDULE
-            </Button>
-          </CalendarContainer>
-        </Stack>
-      </LocalizationProvider>
+      {isFetching ? (
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Stack spacing={3}>
+            <MobileDatePicker
+              label="Schedule your Service"
+              inputFormat="DD/MM/YYYY"
+              minDate={dayjs()}
+              value={dateValue}
+              onChange={handleChangeDate}
+              renderInput={(params) => <TextField {...params} />}
+            />
+            <CalendarContainer>
+              <FormControl required sx={{ m: 1, minWidth: 120 }}>
+                <InputLabel id="demo-simple-select-required-label">
+                  Time
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-required-label"
+                  id="demo-simple-select-required"
+                  value={time}
+                  label="Time *"
+                  disabled={timeDisabled}
+                  onChange={handleChangeTime}
+                >
+                  <MenuItem value={0}>
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem disabled={availableSlot1} value={1}>
+                    08:30 - 10:30
+                  </MenuItem>
+                  <MenuItem disabled={availableSlot2} value={2}>
+                    10:30 - 12:30
+                  </MenuItem>
+                  <MenuItem disabled={availableSlot3} value={3}>
+                    13:00 - 15:00
+                  </MenuItem>
+                  <MenuItem disabled={availableSlot4} value={4}>
+                    15:30 - 17:30
+                  </MenuItem>
+                </Select>
+                <FormHelperText>
+                  Select the time for your appointment
+                </FormHelperText>
+              </FormControl>
+              <Button disabled={buttonDisabled} onClick={handleClick}>
+                SCHEDULE
+              </Button>
+            </CalendarContainer>
+          </Stack>
+        </LocalizationProvider>
+      ) : (
+        <Loading />
+      )}
     </Container>
   );
 };

@@ -10,7 +10,7 @@ import Appointment from "../Components/Appointment/Appointment";
 const SingleServices = () => {
   const location = useLocation();
   const { service } = location.state;
-  const id = location.pathname.split("/")[2];
+  // const id = location.pathname.split("/")[2];
   const [toggle, setToggle] = useState(true);
   const { img, name, description, price } = service;
 
