@@ -7,13 +7,14 @@ import Instagram from "@mui/icons-material/Instagram";
 import Room from "@mui/icons-material/LocationOn";
 import MailOutline from "@mui/icons-material/MailOutline";
 import Phone from "@mui/icons-material/Phone";
+import LOGO from "../assets/Logo.png";
 
 const Footer = () => {
   return (
     <ContainerGeral>
       <Container>
         <Left>
-          <Logo>LAMA.</Logo>
+          <Logo src={LOGO} />
           <Desc>
             There are many variations of passages of Lorem Ipsum available, but
             the majority have suffered alteration in some form, by injected
@@ -92,7 +93,9 @@ const Left = styled.div`
   padding: 20px;
 `;
 
-const Logo = styled.h1``;
+const Logo = styled.img`
+  width: 100px;
+`;
 
 const Desc = styled.p`
   margin: 20px 0px;

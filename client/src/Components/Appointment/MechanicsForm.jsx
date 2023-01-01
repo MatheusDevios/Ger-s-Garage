@@ -7,7 +7,7 @@ import { useState } from "react";
 
 const MechanicsForm = (props) => {
   const mechanicsDisabled = props.disable;
-  const [mechanic, setMechanic] = useState("");
+  const [mechanic, setMechanic] = useState(props.mechanic);
   let availableSlot1 = false;
   let availableSlot2 = false;
   let availableSlot3 = false;

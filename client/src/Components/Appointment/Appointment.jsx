@@ -25,7 +25,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Appointment = (props) => {
   const isLogged = useSelector((state) => state.auth.isLoggedIn);
-  // const isLogged = localStorage.getItem('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userId = localStorage.getItem("userId");
@@ -46,11 +45,15 @@ const Appointment = (props) => {
   const [availableSlot3, setAvailableSlot3] = useState(false);
   const [availableSlot4, setAvailableSlot4] = useState(false);
 
-  const { data: slots, isFetching } = useQuery({
+  const {
+    data: slots,
+    isFetching,
+    refetch,
+  } = useQuery({
     queryKey: ["slotData"],
     queryFn: async () => {
-      const res = await publicRequest.get(`/slots/`);
-      // console.log(cart);
+      const res = await publicRequest.get("/slots");
+      // console.log(slots);
       return res.data;
     },
   });
@@ -62,6 +65,7 @@ const Appointment = (props) => {
 
   const handleChangeTime = (event) => {
     setTime(event.target.value);
+    // console.log(formattedDate);
     if (event.target.value > 0 && event.target.value < 5) {
       setButtonDisabled(false);
     } else {
@@ -71,6 +75,10 @@ const Appointment = (props) => {
 
   const handleChangeDate = (newValue) => {
     setDateValue(newValue);
+    refetch();
+    setMechanic(0);
+    setTime(0);
+    setButtonDisabled(true);
     const day = String(newValue.$D).padStart(2, "0");
     const month = String(newValue.$M + 1).padStart(2, "0");
     setFormattedDate(`${day}/${month}/${newValue.$y}`);
@@ -90,7 +98,8 @@ const Appointment = (props) => {
     // eslint-disable-next-line
     slots.map((slot) => {
       if (formattedDate === slot.slotDate) {
-        if (value === slot.mechanic && slot.slotTime) {
+        // eslint-disable-next-line
+        if (value == slot.mechanic && slot.slotTime) {
           // console.log(slot.slotTime);
           switch (value) {
             case 1:
@@ -259,6 +268,7 @@ const Appointment = (props) => {
             <CalendarContainer>
               <InfoContainer>
                 <MechanicsForm
+                  mechanic={mechanic}
                   disable={professionalsDisabled}
                   onChange={handleToggleTime}
                 />

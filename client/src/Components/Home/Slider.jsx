@@ -4,6 +4,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { sliderItems } from "../../Data/data";
 import { mobile } from "../../Utils/responsive";
+import { Link } from "react-router-dom";
 
 const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
@@ -28,7 +29,9 @@ const Slider = () => {
               <InfoContainer>
                 <Title>{item.title}</Title>
                 <Desc>{item.desc}</Desc>
-                <Button>{item.button}</Button>
+                <Link to={item.id === 1 ? "/services" : "/products"}>
+                  <Button>{item.button}</Button>
+                </Link>
               </InfoContainer>
             </ImgContainer>
           </Slide>
