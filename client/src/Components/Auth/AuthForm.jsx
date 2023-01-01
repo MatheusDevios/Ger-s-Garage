@@ -4,6 +4,7 @@ import { mobile } from "../../Utils/responsive";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../Redux/authRedux";
 import { publicRequest } from "../../Utils/requestMethods";
+import { toast, ToastContainer } from "react-toastify";
 
 const AuthComp = () => {
   const dispatch = useDispatch();
@@ -67,6 +68,7 @@ const AuthComp = () => {
       submitHandler();
     } else {
       //change the password input class
+      toast.error("Passwords do not match!");
       setInvalidPassword({
         border: "1px solid #b40e0e",
         backgroundColor: "#fddddd",
@@ -100,7 +102,6 @@ const AuthComp = () => {
 
       const data = await res.data;
       // console.log("Data: ", data);
-
       // send data to Redux
       dispatch(
         authActions.login({
@@ -116,7 +117,7 @@ const AuthComp = () => {
         backgroundColor: "#fddddd",
       });
       console.log(err.message);
-      // alert(err.message);
+      toast.error("Credendials not valid!");
     }
   };
 
@@ -209,6 +210,12 @@ const AuthComp = () => {
             </ActionsToggle>
           </Actions>
         </form>
+        <ToastContainer
+          newestOnTop={true}
+          autoClose={5000}
+          pauseOnHover
+          theme="dark"
+        />
       </Auth>
     </ComponentAuth>
   );

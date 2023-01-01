@@ -48,7 +48,7 @@ router.post("/:id", verifyTokenAndAuthorization, async (req, res) => {
       default:
         break;
     }
-    console.log(req.body.service.price);
+    // console.log(req.body.service.price);
     const newAppointment = new Appointment({
       userId: req.body.userId,
       name: req.body.name,

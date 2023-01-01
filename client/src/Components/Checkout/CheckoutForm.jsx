@@ -5,6 +5,7 @@ import { mobile, tablet } from "../../Utils/responsive";
 import { userRequest } from "../../Utils/requestMethods";
 import { cartActions } from "../../Redux/cartRedux";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 const CheckoutForm = () => {
   const navigate = useNavigate();
@@ -26,7 +27,10 @@ const CheckoutForm = () => {
       address: address,
     });
     dispatch(cartActions.clearCartHandler({ items: [], totalAmount: 0 }));
-    navigate("/");
+    toast.success("Order done successfully!");
+    setTimeout(function () {
+      navigate("/");
+    }, 2000);
   };
   return (
     <Container>
@@ -53,6 +57,12 @@ const CheckoutForm = () => {
             <SummaryItemPrice>{totalPrice} €</SummaryItemPrice>
           </SummaryItem>
         </Summary>
+        <ToastContainer
+          newestOnTop={true}
+          autoClose={2000}
+          pauseOnHover
+          theme="dark"
+        />
       </Wrapper>
     </Container>
   );

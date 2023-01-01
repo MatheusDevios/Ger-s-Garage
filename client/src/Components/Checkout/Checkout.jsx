@@ -1,9 +1,10 @@
 import React from "react";
 import useInput from "../../hooks/use-input";
 import styled from "styled-components";
+import { toast } from "react-toastify";
 
 const isNotEmpty = (value) => value.trim() !== "";
-const isPostalCode = (value) => value.trim().length === 7;
+const isPostalCode = (value) => value.trim().length >= 7;
 
 const Checkout = (props) => {
   const {
@@ -57,7 +58,8 @@ const Checkout = (props) => {
   const confirmHandler = (event) => {
     event.preventDefault();
 
-    if (!formIsValid) {
+    if (!formIsValid || !event) {
+      toast.error("Please enter valid information.");
       return;
     }
 
@@ -109,7 +111,7 @@ const Checkout = (props) => {
           onBlur={codeBlurHandler}
         />
         {codeError && (
-          <p> Please enter your Postal Code with no space and 5 digits.</p>
+          <p> Please enter your Postal Code with 5 digits or more.</p>
         )}
       </Control>
       <Control>

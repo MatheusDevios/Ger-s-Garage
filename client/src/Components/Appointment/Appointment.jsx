@@ -20,7 +20,12 @@ import AppointmentForm from "./AppointmentForm";
 import MechanicsForm from "./MechanicsForm";
 import Loading from "../Loading";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Appointment = (props) => {
+  const isLogged = useSelector((state) => state.auth.isLoggedIn);
+  // const isLogged = localStorage.getItem('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userId = localStorage.getItem("userId");
@@ -112,22 +117,22 @@ const Appointment = (props) => {
             case 2:
               switch (slot.slotTime) {
                 case "1":
-                  availableSlot1 = true;
+                  setAvailableSlot1(true);
                   break;
                 case "2":
-                  availableSlot2 = true;
+                  setAvailableSlot2(true);
                   break;
                 case "3":
-                  availableSlot3 = true;
+                  setAvailableSlot3(true);
                   break;
                 case "4":
-                  availableSlot4 = true;
+                  setAvailableSlot4(true);
                   break;
                 default:
-                  availableSlot1 = false;
-                  availableSlot2 = false;
-                  availableSlot3 = false;
-                  availableSlot4 = false;
+                  setAvailableSlot1(false);
+                  setAvailableSlot2(false);
+                  setAvailableSlot3(false);
+                  setAvailableSlot4(false);
                   break;
               }
               break;
@@ -195,33 +200,43 @@ const Appointment = (props) => {
   const haldleFormResult = () => {};
 
   const handleClick = async () => {
-    const newDate = dateValue.toISOString();
-    const dateArray = newDate.split("T");
-    const newDateArray = dateArray[0];
-    const newstDate = newDateArray.split("-");
+    if (isLogged) {
+      const newDate = dateValue.toISOString();
+      const dateArray = newDate.split("T");
+      const newDateArray = dateArray[0];
+      const newstDate = newDateArray.split("-");
 
-    const day = String(newstDate[2]).padEnd(2, "0");
-    const month = String(newstDate[1]).padEnd(2, "0");
-    const year = newstDate[0];
+      const day = String(newstDate[2]).padEnd(2, "0");
+      const month = String(newstDate[1]).padEnd(2, "0");
+      const year = newstDate[0];
 
-    await userRequest.post(`/appointments/${userId}`, {
-      userId: userId,
-      name,
-      email,
-      phone,
-      //ADD TYPE, MAKER AND LICENCE TO THE USER REGISTRATION FRONTEND
-      type: "Honda",
-      maker: "Hondaa",
-      license: "sadadsa123",
-      products: cart,
-      totalAmountProducts,
-      service: props.service,
-      slotTime: time,
-      slotDate: `${day}/${month}/${year}`,
-      mechanic,
-    });
-    dispatch(cartActions.clearCartHandler({ items: [], totalAmount: 0 }));
-    navigate("/");
+      await userRequest.post(`/appointments/${userId}`, {
+        userId: userId,
+        name,
+        email,
+        phone,
+        //ADD TYPE, MAKER AND LICENCE TO THE USER REGISTRATION FRONTEND
+        type: "Honda",
+        maker: "Hondaa",
+        license: "sadadsa123",
+        products: cart,
+        totalAmountProducts,
+        service: props.service,
+        slotTime: time,
+        slotDate: `${day}/${month}/${year}`,
+        mechanic,
+      });
+      setButtonDisabled(true);
+      dispatch(cartActions.clearCartHandler({ items: [], totalAmount: 0 }));
+      toast.success("You have successfully scheduled your appointment!");
+      setTimeout(function () {
+        navigate("/");
+      }, 2000);
+    } else {
+      toast.warn(
+        "Sorry, we can not schedule an appointment if you are not logged in!"
+      );
+    }
   };
 
   return (
@@ -290,6 +305,12 @@ const Appointment = (props) => {
             <Button disabled={buttonDisabled} onClick={handleClick}>
               SCHEDULE
             </Button>
+            <ToastContainer
+              newestOnTop={true}
+              autoClose={5000}
+              pauseOnHover
+              theme="dark"
+            />
           </Stack>
         </LocalizationProvider>
       )}
