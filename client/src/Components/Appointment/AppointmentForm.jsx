@@ -1,9 +1,7 @@
 import { FormLabel } from "@mui/material";
-import { useState } from "react";
 import styled from "styled-components";
 
 const AppointmentForm = () => {
-  const handleChangeTime = () => {};
   const value1 = "Honda";
   return (
     <div>

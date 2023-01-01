@@ -87,9 +87,10 @@ const Appointment = (props) => {
     setAvailableSlot2(false);
     setAvailableSlot3(false);
     setAvailableSlot4(false);
+    // eslint-disable-next-line
     slots.map((slot) => {
       if (formattedDate === slot.slotDate) {
-        if (value == slot.mechanic && slot.slotTime) {
+        if (value === slot.mechanic && slot.slotTime) {
           // console.log(slot.slotTime);
           switch (value) {
             case 1:
