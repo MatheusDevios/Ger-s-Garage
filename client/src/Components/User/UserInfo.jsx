@@ -1,17 +1,19 @@
 import Loading from "../Loading";
-import UserDetails from "./UserDetails";
+import ServiceDetails from "./ServiceDetails";
 import { useQuery } from "@tanstack/react-query";
 import { userRequest } from "../../Utils/requestMethods";
 import styled, { keyframes } from "styled-components";
 import { useSelector } from "react-redux";
+import { mobile } from "../../Utils/responsive";
+import OrderDetails from "./OrderDetails";
 
 const UserInfo = () => {
   const userId = localStorage.getItem("userId");
   const name = useSelector((state) => state.auth.name);
   const phone = useSelector((state) => state.auth.phone);
   const email = useSelector((state) => state.auth.email);
-  let content;
-  let loadedData = [];
+  let contentOrder;
+  let contentService;
 
   const { data: orderInfo, isFetching: orderIsFetching } = useQuery({
     queryKey: ["orderInfo"],
@@ -22,43 +24,63 @@ const UserInfo = () => {
     },
   });
 
-  for (const keyData in orderInfo) {
-    loadedData.push({
-      orderId: orderInfo[keyData]._id,
-      name: name,
-      email: email,
-      phone: phone,
-      address: orderInfo[keyData].address,
-      products: orderInfo[keyData].products,
-      subtotal: orderInfo[keyData].subtotal,
-      total: orderInfo[keyData].total,
-      status: orderInfo[keyData].status,
-      date: orderInfo[keyData].createdAt,
-    });
-  }
+  const { data: serviceInfo, isFetching: serviceIsFetching } = useQuery({
+    queryKey: ["serviceInfo"],
+    queryFn: async () => {
+      const res = await userRequest.get(`appointments/all/${userId}`);
+      // console.log(res.data);
+      return res.data;
+    },
+  });
+
   // console.log(loadedData);
 
-  if (orderIsFetching) {
-    content = <Loading />;
+  if (orderIsFetching || serviceIsFetching) {
+    contentOrder = <Loading />;
   } else {
-    content = (
+    contentOrder = (
       <>
-        {loadedData.map((item, index) => (
-          <UserDetails
-            key={item.orderId}
-            orderId={item.orderId}
-            name={item.name}
-            email={item.email}
-            phone={item.phone}
-            city={item.address.county}
+        {orderInfo.map((item, index) => (
+          <OrderDetails
+            key={item._id}
+            orderId={item._id}
+            name={name}
+            email={email}
+            phone={phone}
+            city={item.address.city}
             country={item.address.country}
             street={item.address.street}
             postalCode={item.address.postalCode}
-            items={item.products}
+            products={item.products}
             subtotal={item.subtotal}
             total={item.total}
-            date={item.date}
+            date={item.createdAt}
             status={item.status}
+          />
+        ))}
+      </>
+    );
+    contentService = (
+      <>
+        {serviceInfo.map((item, index) => (
+          <ServiceDetails
+            key={item._id}
+            serviceId={item._id}
+            status={item.service.status}
+            name={item.name}
+            email={item.email}
+            phone={item.phone}
+            type={item.type}
+            maker={item.maker}
+            license={item.license}
+            mechanic={item.mechanic}
+            comments={item.comments}
+            totalProduct={item.totalAmountProducts}
+            total={item.totalAppointmentAmount}
+            orderId={item._id}
+            service={item.service}
+            products={item.products}
+            date={item.createdAt}
           />
         ))}
       </>
@@ -67,9 +89,14 @@ const UserInfo = () => {
   return (
     <UserInfoContainer>
       <Title>Services / Orders</Title>
-      <Card>
-        <ul>{content}</ul>
-      </Card>
+      <InnerContaienr>
+        <Card>
+          <ul>{contentService}</ul>
+        </Card>
+        <Card>
+          <ul>{contentOrder}</ul>
+        </Card>
+      </InnerContaienr>
     </UserInfoContainer>
   );
 };
@@ -89,10 +116,18 @@ const usersApear = keyframes`
 `;
 
 const Card = styled.div`
+  flex: 1;
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   border-radius: 14px;
   background-color: white;
+`;
+const InnerContaienr = styled.div`
+  display: flex;
+  gap: 1rem;
+  ${mobile({
+    flexDirection: "column",
+  })}
 `;
 
 const UserInfoContainer = styled.div`

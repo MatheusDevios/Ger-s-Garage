@@ -12,6 +12,7 @@ const AppointmentSchema = new mongoose.Schema(
     maker: { type: String, required: true },
     license: { type: String, required: true },
     mechanic: { type: String, required: true },
+    comments: { type: String, required: false },
     slots: { type: ObjectId, ref: "Slot" },
     service: { type: Object, required: true },
     products: { type: Array, required: true },

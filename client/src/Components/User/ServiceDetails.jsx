@@ -3,26 +3,28 @@ import UserOrders from "./UserOrders";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const UserDetails = (props) => {
-  const { orderId, items, status } = props;
+const ServiceDetails = (props) => {
+  const { serviceId, service, products } = props;
   return (
     <UserDetailsContainer>
       <TopContainer>
-        <h3>{status}</h3>
-        <h3>{orderId ? `SHOPPING INFO` : `SERVICE INFO`}</h3>
-        <Link to={`/invoice/${orderId}`} state={{ from: props }}>
+        <h3>{service.status}</h3>
+        <h3> SERVICE INFO</h3>
+        <Link to={`/invoice/${serviceId}`} state={{ from: props }}>
           <Button>Invoice</Button>
         </Link>
       </TopContainer>
-      <OrderID>Order # {orderId}</OrderID>
-      {items.map((order, index) => (
-        <UserOrders key={index} name={order.name} amount={order.amount} />
-      ))}
+      <OrderID>Appointment # {serviceId}</OrderID>
+      <ServiceContainer>Service: {service.name}</ServiceContainer>
+      {products.lenght > 0 &&
+        products.map((order, index) => (
+          <UserOrders key={index} name={order.name} amount={order.amount} />
+        ))}
     </UserDetailsContainer>
   );
 };
 
-export default UserDetails;
+export default ServiceDetails;
 
 const UserDetailsContainer = styled.li`
   display: flex;
@@ -34,6 +36,14 @@ const UserDetailsContainer = styled.li`
     margin: 0 0 0.25rem 0;
     font-size: 1.4rem;
   }
+`;
+
+const ServiceContainer = styled.div`
+  margin-top: 0.8rem;
+  margin-bottom: 0.2rem;
+  font-weight: bold;
+  color: #d32929;
+  font-size: 1.2rem;
 `;
 
 const TopContainer = styled.div`

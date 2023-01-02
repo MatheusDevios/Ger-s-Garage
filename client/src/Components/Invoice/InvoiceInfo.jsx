@@ -11,13 +11,14 @@ const InvoiceInfo = (props) => {
     country,
     street,
     postalCode,
-    items,
+    products,
     subtotal,
     total,
     date,
     status,
     email,
     phone,
+    totalProduct,
   } = props.invoice;
 
   const navigate = useNavigate();
@@ -25,7 +26,6 @@ const InvoiceInfo = (props) => {
   const dateCreated = new Date(date);
   const dateFormated = `${dateCreated.getDate()}/${dateCreated.getMonth()}/${dateCreated.getFullYear()}`;
   const timeFormated = `${dateCreated.getHours()}:${dateCreated.getMinutes()}`;
-
   const handleClick = () => {
     navigate(-1);
   };
@@ -38,17 +38,33 @@ const InvoiceInfo = (props) => {
             <h3>{name}</h3>
             <h3>{status}</h3>
           </TopContainer>
-          <OrderID>Order # {orderId}</OrderID>
+          <OrderID>
+            Reference Number # {orderId || props.invoice.serviceId}
+          </OrderID>
           <Time>
-            <p>Ordered at: </p>
+            <p>Booked at: </p>
             <p>{dateFormated}</p>
             <p>{timeFormated}</p>
           </Time>
-          <UserInfo>Email: {email}</UserInfo>
           <UserInfo>Phone: {phone}</UserInfo>
+          <UserInfo>Email: {email}</UserInfo>
+          {props.invoice.serviceId !== undefined && (
+            <div>
+              <UserInfo>Type: {props.invoice.type}</UserInfo>
+              <UserInfo>Maker: {props.invoice.maker}</UserInfo>
+              <UserInfo>License Plate: {props.invoice.license}</UserInfo>
+            </div>
+          )}
           <Street>{street}</Street>
-          <Address>{`${postalCode}. ${city}, ${country}`}</Address>
-          {items.map((order, index) => (
+          {postalCode !== undefined ? (
+            <Address>{`${postalCode}. ${city}, ${country}`}</Address>
+          ) : (
+            <ServiceContainer>
+              <ServiceInfo>Service: {props.invoice.service.name}</ServiceInfo>
+              <ServiceInfo>Mechanic: {props.invoice.mechanic}</ServiceInfo>
+            </ServiceContainer>
+          )}
+          {products.map((order, index) => (
             <InvoiceDetails
               key={index}
               name={order.name}
@@ -57,8 +73,20 @@ const InvoiceInfo = (props) => {
             />
           ))}
           <Price>
-            <PriceInfo>SubTotal: {subtotal.toFixed(2)} €</PriceInfo>
-            <PriceInfo>Total: {total.toFixed(2)} €</PriceInfo>
+            {totalProduct !== undefined ? (
+              <div>
+                <PriceInfo>
+                  Products Price: {parseFloat(totalProduct).toFixed(2)} €
+                </PriceInfo>
+                <PriceInfo>
+                  Service Price:{" "}
+                  {parseFloat(props.invoice.service.price).toFixed(2)} €
+                </PriceInfo>
+              </div>
+            ) : (
+              <PriceInfo>SubTotal: {subtotal.toFixed(2)} €</PriceInfo>
+            )}
+            <PriceInfo>Total: {parseFloat(total).toFixed(2)} €</PriceInfo>
           </Price>
         </UserDetailsContainer>
       </Card>
@@ -79,6 +107,7 @@ const Container = styled.div`
 `;
 
 const Card = styled.div`
+  min-width: 100%;
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   border-radius: 14px;
@@ -97,6 +126,15 @@ const UserDetailsContainer = styled.li`
   }
 `;
 
+const ServiceContainer = styled.div`
+  margin-bottom: 1.3rem;
+  font-weight: bold;
+  color: #d32929;
+  font-size: 1.2rem;
+`;
+
+const ServiceInfo = styled.p``;
+
 const TopContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -114,11 +152,13 @@ const Time = styled.div`
   gap: 1rem;
   color: rgb(163, 153, 153);
   font-weight: 600;
-  padding-bottom: 10px;
+  padding-bottom: 1.4rem;
   font-size: 0.9rem;
 `;
 
-const UserInfo = styled.div``;
+const UserInfo = styled.div`
+  margin-bottom: 0.2rem;
+`;
 
 const Street = styled.div`
   margin-top: 0.8rem;
@@ -147,6 +187,9 @@ const Price = styled.div`
 
 const PriceInfo = styled.div`
   margin-bottom: 0.2rem;
+  display: flex;
+  align-items: end;
+  justify-content: end;
 `;
 
 const Button = styled.button`

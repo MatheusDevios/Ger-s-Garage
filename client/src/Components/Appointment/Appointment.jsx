@@ -19,9 +19,9 @@ import { useNavigate } from "react-router";
 import AppointmentForm from "./AppointmentForm";
 import MechanicsForm from "./MechanicsForm";
 import Loading from "../Loading";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FormLabel, Input } from "@mui/material";
 
 const Appointment = (props) => {
   const isLogged = useSelector((state) => state.auth.isLoggedIn);
@@ -40,6 +40,7 @@ const Appointment = (props) => {
   const [timeDisabled, setTimeDisabled] = useState(true);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [formattedDate, setFormattedDate] = useState("");
+  const [comments, setComments] = useState("");
   const [availableSlot1, setAvailableSlot1] = useState(false);
   const [availableSlot2, setAvailableSlot2] = useState(false);
   const [availableSlot3, setAvailableSlot3] = useState(false);
@@ -209,6 +210,10 @@ const Appointment = (props) => {
 
   const haldleFormResult = () => {};
 
+  const handleCommentChange = (event) => {
+    setComments(event.target.value);
+  };
+
   const handleClick = async () => {
     if (isLogged) {
       const newDate = dateValue.toISOString();
@@ -234,6 +239,7 @@ const Appointment = (props) => {
         service: props.service,
         slotTime: time,
         slotDate: `${day}/${month}/${year}`,
+        comments,
         mechanic,
       });
       setButtonDisabled(true);
@@ -313,6 +319,11 @@ const Appointment = (props) => {
                 <AppointmentForm formResult={haldleFormResult} />
               </AppointmentDetailsContainer>
             </CalendarContainer>
+            <FormLabel>Comments: </FormLabel>
+            <Input
+              placeholder="Type any comment for your appointment here."
+              onChange={handleCommentChange}
+            />
             <Button disabled={buttonDisabled} onClick={handleClick}>
               SCHEDULE
             </Button>
