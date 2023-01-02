@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import InvoiceDetails from "./InvoiceDetails";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { userRequest } from "../../Utils/requestMethods";
+import Loading from "../Loading";
 
 const InvoiceInfo = (props) => {
   const {
@@ -22,74 +25,110 @@ const InvoiceInfo = (props) => {
   } = props.invoice;
 
   const navigate = useNavigate();
-
   const dateCreated = new Date(date);
   const dateFormated = `${dateCreated.getDate()}/${dateCreated.getMonth()}/${dateCreated.getFullYear()}`;
   const timeFormated = `${dateCreated.getHours()}:${dateCreated.getMinutes()}`;
   const handleClick = () => {
     navigate(-1);
   };
+
+  const [time, setTime] = useState("");
+  const [newDate, setNewDate] = useState("");
+  const { data: slots, isFetching } = useQuery({
+    queryKey: ["slotData"],
+    queryFn: async () => {
+      const res = await userRequest.get(`/slots/${props.invoice.slot}`);
+      // console.log(res.data[0]);
+      switch (res.data[0].slotTime) {
+        case "1":
+          setTime("08:30 - 10:30");
+          break;
+        case "2":
+          setTime("10:30 - 12:30");
+          break;
+        case "3":
+          setTime("13:00 - 15:00");
+          break;
+        case "4":
+          setTime("15:30 - 17:30");
+          break;
+
+        default:
+          break;
+      }
+      return res.data[0];
+    },
+  });
+
+  // console.log(props.invoice);
   return (
     <Container>
-      <Card>
-        <Button onClick={handleClick}>Back</Button>
-        <UserDetailsContainer>
-          <TopContainer>
-            <h3>{name}</h3>
-            <h3>{status}</h3>
-          </TopContainer>
-          <OrderID>
-            Reference Number # {orderId || props.invoice.serviceId}
-          </OrderID>
-          <Time>
-            <p>Booked at: </p>
-            <p>{dateFormated}</p>
-            <p>{timeFormated}</p>
-          </Time>
-          <UserInfo>Phone: {phone}</UserInfo>
-          <UserInfo>Email: {email}</UserInfo>
-          {props.invoice.serviceId !== undefined && (
-            <div>
-              <UserInfo>Type: {props.invoice.type}</UserInfo>
-              <UserInfo>Maker: {props.invoice.maker}</UserInfo>
-              <UserInfo>License Plate: {props.invoice.license}</UserInfo>
-            </div>
-          )}
-          <Street>{street}</Street>
-          {postalCode !== undefined ? (
-            <Address>{`${postalCode}. ${city}, ${country}`}</Address>
-          ) : (
-            <ServiceContainer>
-              <ServiceInfo>Service: {props.invoice.service.name}</ServiceInfo>
-              <ServiceInfo>Mechanic: {props.invoice.mechanic}</ServiceInfo>
-            </ServiceContainer>
-          )}
-          {products.map((order, index) => (
-            <InvoiceDetails
-              key={index}
-              name={order.name}
-              price={order.price}
-              amount={order.amount}
-            />
-          ))}
-          <Price>
-            {totalProduct !== undefined ? (
+      {!isFetching ? (
+        <Card>
+          <Button onClick={handleClick}>Back</Button>
+          <UserDetailsContainer>
+            <TopContainer>
+              <h3>{name}</h3>
+              <h3>{status}</h3>
+            </TopContainer>
+            <OrderID>
+              Reference Number # {orderId || props.invoice.serviceId}
+            </OrderID>
+            <Time>
+              <p>Booked at: </p>
+              <p>{dateFormated}</p>
+              <p>{timeFormated}</p>
+            </Time>
+            <UserInfo>Phone: {phone}</UserInfo>
+            <UserInfo>Email: {email}</UserInfo>
+            {props.invoice.serviceId !== undefined && (
               <div>
-                <PriceInfo>
-                  Products Price: {parseFloat(totalProduct).toFixed(2)} €
-                </PriceInfo>
-                <PriceInfo>
-                  Service Price:{" "}
-                  {parseFloat(props.invoice.service.price).toFixed(2)} €
-                </PriceInfo>
+                <UserInfo>Type: {props.invoice.type}</UserInfo>
+                <UserInfo>Maker: {props.invoice.maker}</UserInfo>
+                <UserInfo>License Plate: {props.invoice.license}</UserInfo>
               </div>
-            ) : (
-              <PriceInfo>SubTotal: {subtotal.toFixed(2)} €</PriceInfo>
             )}
-            <PriceInfo>Total: {parseFloat(total).toFixed(2)} €</PriceInfo>
-          </Price>
-        </UserDetailsContainer>
-      </Card>
+            <Street>{street}</Street>
+            {postalCode !== undefined ? (
+              <Address>{`${postalCode}. ${city}, ${country}`}</Address>
+            ) : (
+              <ServiceContainer>
+                <ServiceInfo>Service: {props.invoice.service.name}</ServiceInfo>
+                <ServiceInfo>Mechanic: {props.invoice.mechanic}</ServiceInfo>
+                <ServiceInfo>
+                  Appointment day: {slots.slotDate} at: {time}
+                </ServiceInfo>
+              </ServiceContainer>
+            )}
+            {products.map((order, index) => (
+              <InvoiceDetails
+                key={index}
+                name={order.name}
+                price={order.price}
+                amount={order.amount}
+              />
+            ))}
+            <Price>
+              {totalProduct !== undefined ? (
+                <div>
+                  <PriceInfo>
+                    Products Price: {parseFloat(totalProduct).toFixed(2)} €
+                  </PriceInfo>
+                  <PriceInfo>
+                    Service Price:{" "}
+                    {parseFloat(props.invoice.service.price).toFixed(2)} €
+                  </PriceInfo>
+                </div>
+              ) : (
+                <PriceInfo>SubTotal: {subtotal.toFixed(2)} €</PriceInfo>
+              )}
+              <PriceInfo>Total: {parseFloat(total).toFixed(2)} €</PriceInfo>
+            </Price>
+          </UserDetailsContainer>
+        </Card>
+      ) : (
+        <Loading />
+      )}
     </Container>
   );
 };
@@ -133,7 +172,9 @@ const ServiceContainer = styled.div`
   font-size: 1.2rem;
 `;
 
-const ServiceInfo = styled.p``;
+const ServiceInfo = styled.p`
+  margin: 0.5rem;
+`;
 
 const TopContainer = styled.div`
   display: flex;

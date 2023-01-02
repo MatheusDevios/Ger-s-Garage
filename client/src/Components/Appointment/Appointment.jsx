@@ -33,6 +33,9 @@ const Appointment = (props) => {
   const email = useSelector((state) => state.auth.email);
   const phone = useSelector((state) => state.auth.phone);
   const name = useSelector((state) => state.auth.name);
+  const type = useSelector((state) => state.auth.type);
+  const maker = useSelector((state) => state.auth.maker);
+  const license = useSelector((state) => state.auth.license);
   const [time, setTime] = useState("");
   const [mechanic, setMechanic] = useState("");
   const [dateValue, setDateValue] = useState(dayjs(null));
@@ -230,10 +233,9 @@ const Appointment = (props) => {
         name,
         email,
         phone,
-        //ADD TYPE, MAKER AND LICENCE TO THE USER REGISTRATION FRONTEND
-        type: "Honda",
-        maker: "Hondaa",
-        license: "sadadsa123",
+        type,
+        maker,
+        license,
         products: cart,
         totalAmountProducts,
         service: props.service,
@@ -316,7 +318,12 @@ const Appointment = (props) => {
                 </FormControl>
               </InfoContainer>
               <AppointmentDetailsContainer>
-                <AppointmentForm formResult={haldleFormResult} />
+                <AppointmentForm
+                  type={type}
+                  maker={maker}
+                  license={license}
+                  formResult={haldleFormResult}
+                />
               </AppointmentDetailsContainer>
             </CalendarContainer>
             <FormLabel>Comments: </FormLabel>

@@ -6,6 +6,9 @@ const authRedux = createSlice({
     token: null,
     isAdmin: null,
     name: null,
+    maker: null,
+    license: null,
+    type: null,
     phone: null,
     email: null,
     userId: null,
@@ -18,6 +21,9 @@ const authRedux = createSlice({
       state.token = action.payload.token;
       state.isAdmin = action.payload.isAdmin;
       state.userId = action.payload.userId;
+      state.maker = action.payload.maker;
+      state.type = action.payload.type;
+      state.license = action.payload.license;
       state.name = action.payload.name;
       state.phone = action.payload.phone;
       state.email = action.payload.email;
@@ -28,6 +34,9 @@ const authRedux = createSlice({
       localStorage.removeItem("userId");
       state.token = null;
       state.isAdmin = null;
+      state.maker = null;
+      state.type = null;
+      state.license = null;
       state.userId = null;
       state.name = null;
       state.phone = null;

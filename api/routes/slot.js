@@ -20,4 +20,15 @@ router.get("/", async (req, res) => {
   }
 });
 
+//GET SPECIFIC SLOT
+router.get("/:id", async (req, res) => {
+  // console.log(req.params.id);
+  try {
+    const slot = await Slot.find({ _id: req.params.id });
+    res.status(200).json(slot);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

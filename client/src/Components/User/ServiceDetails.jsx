@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import UserOrders from "./UserOrders";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useQuery } from "@tanstack/react-query";
+import { userRequest } from "../../Utils/requestMethods";
 
 const ServiceDetails = (props) => {
   const { serviceId, service, products } = props;
+
   return (
     <UserDetailsContainer>
       <TopContainer>

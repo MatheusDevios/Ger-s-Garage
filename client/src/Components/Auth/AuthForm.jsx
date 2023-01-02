@@ -16,11 +16,17 @@ const AuthComp = () => {
   const nameInputRef = useRef();
   const surInputRef = useRef();
   const numberInputRef = useRef();
+  const makerInputRef = useRef();
+  const licenseInputRef = useRef();
+  const typeInputRef = useRef();
   let enteredEmail = "";
   let enteredPassword = "";
   let enteredFirstName = "";
   let enteredSurname = "";
   let enteredMobilePhone = "";
+  let license = "";
+  let maker = "";
+  let type = "";
 
   //to change password input classes
   const [invalidPassword, setInvalidPassword] = useState({
@@ -76,6 +82,12 @@ const AuthComp = () => {
     }
   };
 
+  const handleCarMakerChange = (event) => {
+    console.log("maker: " + makerInputRef.current.value);
+    console.log("type: " + typeInputRef.current.value);
+    console.log("license: " + licenseInputRef.current.value);
+  };
+
   const submitHandler = async (event) => {
     // event.preventDefault();
 
@@ -86,12 +98,19 @@ const AuthComp = () => {
         enteredFirstName = nameInputRef.current.value;
         enteredSurname = surInputRef.current.value;
         enteredMobilePhone = numberInputRef.current.value;
+        maker = makerInputRef.current.value;
+        type = typeInputRef.current.value;
+        license = licenseInputRef.current.value;
+        // console.log(maker);
         await publicRequest.post("/auth/register", {
           enteredFirstName,
           enteredSurname,
           enteredMobilePhone,
           enteredEmail,
           enteredPassword,
+          maker,
+          type,
+          license,
         });
       }
 
@@ -101,13 +120,16 @@ const AuthComp = () => {
       });
 
       const data = await res.data;
-      // console.log("Data: ", data);
+      console.log("Data: ", data);
       // send data to Redux
       dispatch(
         authActions.login({
           token: data.accessToken,
           isAdmin: data.isAdmin,
           userId: data._id,
+          maker: data.maker,
+          type: data.type,
+          license: data.license,
         })
       );
       window.location.reload(false);
@@ -157,6 +179,45 @@ const AuthComp = () => {
                   placeholder="Phone Number with no space..."
                   required
                   ref={numberInputRef}
+                />
+              </Control>
+              <Control>
+                <ControlLabel htmlFor="carType">Car Type</ControlLabel>
+                <SelectInput
+                  id="carType"
+                  required
+                  onChange={handleCarMakerChange}
+                  ref={typeInputRef}
+                >
+                  <option value="">Select your car type...</option>
+                  <option value="Motorbike">Motorbike</option>
+                  <option value="Car">Car</option>
+                  <option value="Small Van">Small Van</option>
+                  <option value="Small Bus">Small Bus</option>
+                </SelectInput>
+              </Control>
+              <Control>
+                <ControlLabel htmlFor="maker">Car Maker</ControlLabel>
+                <SelectInput
+                  id="maker"
+                  required
+                  onChange={handleCarMakerChange}
+                  ref={makerInputRef}
+                >
+                  <option value="">Select your car maker...</option>
+                  <option value="Honda">Honda</option>
+                  <option value="Toyota">Toyota</option>
+                  <option value="Hyunday">Hyunday</option>
+                </SelectInput>
+              </Control>
+              <Control>
+                <ControlLabel htmlFor="license">License Plate</ControlLabel>
+                <ControlInput
+                  type="text"
+                  id="license"
+                  placeholder="License plate..."
+                  required
+                  ref={licenseInputRef}
                 />
               </Control>
             </div>
@@ -226,7 +287,7 @@ export default AuthComp;
 const ComponentAuth = styled.section`
   border-top: 1px solid #da3939;
   border-bottom: 1px solid #da3939;
-  height: 74vh;
+  min-height: 74vh;
   display: flex;
   text-align: center;
   align-items: center;
@@ -237,12 +298,12 @@ const ComponentAuth = styled.section`
 `;
 
 const Auth = styled.div`
-  margin: 5rem auto;
+  margin: 1rem auto;
   border: 1px solid #da3939;
   box-shadow: 0 3px 24px rgb(0 0 0 / 50%);
   border-radius: 1rem;
   width: 40rem;
-  padding: 2rem;
+  padding: 1rem 2rem;
 `;
 
 const AuthH1 = styled.h1`
@@ -265,6 +326,19 @@ const EqualPassword = styled.div`
 `;
 
 const ControlInput = styled.input`
+  display: flex;
+  gap: 1rem;
+  font: inherit;
+  color: #38015c;
+  border-radius: 4px;
+  background-color: #f1e1fc;
+  border: 1px solid white;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  padding: 0.25rem;
+`;
+const SelectInput = styled.select`
   display: flex;
   gap: 1rem;
   font: inherit;

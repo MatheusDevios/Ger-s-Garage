@@ -10,9 +10,9 @@ router.post("/register", async (req, res) => {
     surname: req.body.enteredSurname,
     phone: req.body.enteredMobilePhone,
     email: req.body.enteredEmail,
-    type: req.body.enteredType,
-    maker: req.body.enteredMaker,
-    license: req.body.enteredLicense,
+    type: req.body.type,
+    maker: req.body.maker,
+    license: req.body.license,
     password: CryptoJS.AES.encrypt(
       req.body.enteredPassword,
       process.env.PASS_SEC

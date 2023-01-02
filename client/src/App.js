@@ -58,6 +58,9 @@ function App() {
               name: `${res.data.firstname} ${res.data.surname}`,
               phone: res.data.phone,
               email: res.data.email,
+              maker: res.data.maker,
+              type: res.data.type,
+              license: res.data.license,
             })
           );
         }

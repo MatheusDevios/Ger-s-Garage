@@ -81,6 +81,7 @@ const UserInfo = () => {
             service={item.service}
             products={item.products}
             date={item.createdAt}
+            slot={item.slots}
           />
         ))}
       </>
