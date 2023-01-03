@@ -6,12 +6,15 @@ import styled from "styled-components";
 import { mobile } from "../Utils/responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../Redux/cartRedux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 // import StripeCheckout from "react-stripe-checkout";
 // import { useEffect, useState } from "react";
 // import { userRequest } from "../requestMethods";
 
 const Cart = () => {
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.auth.token);
   const cart = useSelector((state) => state.cart.items);
   const cartTotalRedux = useSelector((state) => state.cart.totalAmount);
   const shipping = 5.9;
@@ -29,6 +32,14 @@ const Cart = () => {
     dispatch(cartActions.addItemToCartHandler(cartItem));
   };
 
+  const handleCheckout = () => {
+    if (token !== null) {
+      navigate("/checkout");
+    } else {
+      toast.warn("Sorry, we can not go to checkout if you are not logged in!");
+      navigate("/auth");
+    }
+  };
   // const [stripeToken, setStripeToken] = useState(null);
 
   // const onToken = (token) => {
@@ -135,9 +146,7 @@ const Cart = () => {
               token={onToken}
               stripeKey={KEY}
             > */}
-            <Link to="/checkout">
-              <Button>CHECKOUT NOW</Button>
-            </Link>
+            <Button onClick={handleCheckout}>CHECKOUT NOW</Button>
             {/* </StripeCheckout> */}
           </Summary>
         </Bottom>

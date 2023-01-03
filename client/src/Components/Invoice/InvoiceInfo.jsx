@@ -37,26 +37,30 @@ const InvoiceInfo = (props) => {
   const { data: slots, isFetching } = useQuery({
     queryKey: ["slotData"],
     queryFn: async () => {
-      const res = await userRequest.get(`/slots/${props.invoice.slot}`);
-      // console.log(res.data[0]);
-      switch (res.data[0].slotTime) {
-        case "1":
-          setTime("08:30 - 10:30");
-          break;
-        case "2":
-          setTime("10:30 - 12:30");
-          break;
-        case "3":
-          setTime("13:00 - 15:00");
-          break;
-        case "4":
-          setTime("15:30 - 17:30");
-          break;
+      if (props.invoice.slot) {
+        const res = await userRequest.get(`/slots/${props.invoice.slot}`);
+        // console.log(res.data[0]);
+        switch (res.data[0].slotTime) {
+          case "1":
+            setTime("08:30 - 10:30");
+            break;
+          case "2":
+            setTime("10:30 - 12:30");
+            break;
+          case "3":
+            setTime("13:00 - 15:00");
+            break;
+          case "4":
+            setTime("15:30 - 17:30");
+            break;
 
-        default:
-          break;
+          default:
+            break;
+        }
+        return res.data[0];
+      } else {
+        return "error";
       }
-      return res.data[0];
     },
   });
 
