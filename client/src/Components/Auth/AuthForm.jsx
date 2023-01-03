@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { authActions } from "../../Redux/authRedux";
 import { publicRequest } from "../../Utils/requestMethods";
 import { toast, ToastContainer } from "react-toastify";
+import { carMakers } from "../../Data/data";
 
 const AuthComp = () => {
   const dispatch = useDispatch();
@@ -82,12 +83,6 @@ const AuthComp = () => {
     }
   };
 
-  const handleCarMakerChange = (event) => {
-    console.log("maker: " + makerInputRef.current.value);
-    console.log("type: " + typeInputRef.current.value);
-    console.log("license: " + licenseInputRef.current.value);
-  };
-
   const submitHandler = async (event) => {
     // event.preventDefault();
 
@@ -120,7 +115,7 @@ const AuthComp = () => {
       });
 
       const data = await res.data;
-      console.log("Data: ", data);
+      // console.log("Data: ", data);
       // send data to Redux
       dispatch(
         authActions.login({
@@ -138,7 +133,7 @@ const AuthComp = () => {
         border: "1px solid #b40e0e",
         backgroundColor: "#fddddd",
       });
-      console.log(err.message);
+      // console.log(err.message);
       toast.error("Credendials not valid!");
     }
   };
@@ -183,12 +178,7 @@ const AuthComp = () => {
               </Control>
               <Control>
                 <ControlLabel htmlFor="carType">Car Type</ControlLabel>
-                <SelectInput
-                  id="carType"
-                  required
-                  onChange={handleCarMakerChange}
-                  ref={typeInputRef}
-                >
+                <SelectInput id="carType" required ref={typeInputRef}>
                   <option value="">Select your car type...</option>
                   <option value="Motorbike">Motorbike</option>
                   <option value="Car">Car</option>
@@ -198,16 +188,16 @@ const AuthComp = () => {
               </Control>
               <Control>
                 <ControlLabel htmlFor="maker">Car Maker</ControlLabel>
-                <SelectInput
-                  id="maker"
-                  required
-                  onChange={handleCarMakerChange}
-                  ref={makerInputRef}
-                >
+                <SelectInput id="maker" required ref={makerInputRef}>
                   <option value="">Select your car maker...</option>
-                  <option value="Honda">Honda</option>
-                  <option value="Toyota">Toyota</option>
-                  <option value="Hyunday">Hyunday</option>
+                  {carMakers.map((carMaker) => {
+                    return (
+                      <option key={carMaker.id} value={carMaker.title}>
+                        {carMaker.title}
+                      </option>
+                    );
+                  })}
+                  <option value="Other">Other</option>
                 </SelectInput>
               </Control>
               <Control>

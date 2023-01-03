@@ -33,7 +33,6 @@ const InvoiceInfo = (props) => {
   };
 
   const [time, setTime] = useState("");
-  const [newDate, setNewDate] = useState("");
   const { data: slots, isFetching } = useQuery({
     queryKey: ["slotData"],
     queryFn: async () => {

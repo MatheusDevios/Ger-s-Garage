@@ -64,24 +64,123 @@ export const sliderItems = [
   },
 ];
 
-export const categories = [
+//ADD THE CAR MAKERS
+export const carMakers = [
   {
     id: 1,
-    img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    title: "SHIRT STYLE!",
-    cat: "women",
+    title: "Hyundai Accent",
   },
   {
     id: 2,
-    img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    title: "LOUNGEWEAR LOVE",
-    cat: "man",
+    title: "Hyundai Elantra",
   },
   {
     id: 3,
-    img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-    title: "LIGHT JACKETS",
-    cat: "Skirt",
+    title: "Hyundai i Series",
+  },
+  {
+    id: 4,
+    title: "BMW 1 Series",
+  },
+  {
+    id: 5,
+    title: "BMW 2 Series",
+  },
+  {
+    id: 6,
+    title: "BMW 3 Series",
+  },
+  {
+    id: 7,
+    title: "BMW 4 Series",
+  },
+  {
+    id: 8,
+    title: "BMW 5 Series",
+  },
+  {
+    id: 9,
+    title: "BMW 6 Series",
+  },
+  {
+    id: 10,
+    title: "BMW 7 Series",
+  },
+  {
+    id: 12,
+    title: "BMW i Series",
+  },
+  {
+    id: 13,
+    title: "BMW M Series",
+  },
+  {
+    id: 14,
+    title: "BMW X Series",
+  },
+  {
+    id: 15,
+    title: "Honda Accord",
+  },
+  {
+    id: 16,
+    title: "Honda Civic",
+  },
+  {
+    id: 17,
+    title: "Honda CR-V",
+  },
+  {
+    id: 18,
+    title: "Honda HR-V",
+  },
+  {
+    id: 19,
+    title: "Ford Focus",
+  },
+  {
+    id: 20,
+    title: "Ford EcoSport",
+  },
+  {
+    id: 21,
+    title: "Ford Edge",
+  },
+  {
+    id: 22,
+    title: "Ford F-150",
+  },
+  {
+    id: 23,
+    title: "Audi A Series",
+  },
+  {
+    id: 24,
+    title: "Audi Q Series",
+  },
+  {
+    id: 25,
+    title: "Audi R Series",
+  },
+  {
+    id: 26,
+    title: "Audi S Series",
+  },
+  {
+    id: 27,
+    title: "Mercedes A Series",
+  },
+  {
+    id: 28,
+    title: "Mercedes AMG Series",
+  },
+  {
+    id: 29,
+    title: "Mercedes C Series",
+  },
+  {
+    id: 30,
+    title: "Toyota Corolla",
   },
 ];
 
