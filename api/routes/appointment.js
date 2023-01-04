@@ -1,3 +1,4 @@
+const { query } = require("express");
 const Appointment = require("../models/Appointment");
 const Slot = require("../models/Slot");
 
@@ -13,7 +14,7 @@ const router = require("express").Router();
 
 router.get("/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
-    const appointments = await Appointment.find();
+    const appointments = await Appointment.find().sort({ createdAt: -1 });
     res.status(200).json(appointments);
   } catch (err) {
     res.status(500).json(err);
@@ -98,8 +99,28 @@ router.post("/:id", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
-//UPDATE
-router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
+//UPDATE / ADD PRODUCTS TO THE SERVICE
+router.put("/update/:id", verifyTokenAndAdmin, async (req, res) => {
+  // console.log(req.params.id);
+  try {
+    const updatedAppointment = await Appointment.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: { products: req.body.products },
+        totalAmountProducts: req.body.totalAmountProducts,
+        totalAppointmentAmount: req.body.totalAppointmentAmount,
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedAppointment);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//UPDATE THE STATUS OF THE SERVICE
+router.put("/status/:id", verifyTokenAndAdmin, async (req, res) => {
+  // console.log(req.params.id);
   try {
     const updatedAppointment = await Appointment.findByIdAndUpdate(
       req.params.id,

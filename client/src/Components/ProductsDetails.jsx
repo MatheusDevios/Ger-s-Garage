@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const UserOrders = (props) => {
+const ProductsDetails = (props) => {
   const { name, amount } = props;
   return (
     <Orders>
@@ -15,7 +15,7 @@ const UserOrders = (props) => {
   );
 };
 
-export default UserOrders;
+export default ProductsDetails;
 
 const Orders = styled.div`
   display: grid;

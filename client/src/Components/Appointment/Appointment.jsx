@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { cartActions } from "../../Redux/cartRedux";
 import { useQuery } from "@tanstack/react-query";
 import { publicRequest, userRequest } from "../../Utils/requestMethods";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -26,9 +25,7 @@ import { FormLabel, Input } from "@mui/material";
 const Appointment = (props) => {
   const isLogged = useSelector((state) => state.auth.isLoggedIn);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const userId = localStorage.getItem("userId");
-  const cart = useSelector((state) => state.cart.items);
   const totalAmountProducts = useSelector((state) => state.cart.totalAmount);
   const email = useSelector((state) => state.auth.email);
   const phone = useSelector((state) => state.auth.phone);
@@ -236,7 +233,7 @@ const Appointment = (props) => {
         type,
         maker,
         license,
-        products: cart,
+        products: [],
         totalAmountProducts,
         service: props.service,
         slotTime: time,
@@ -245,7 +242,6 @@ const Appointment = (props) => {
         mechanic,
       });
       setButtonDisabled(true);
-      dispatch(cartActions.clearCartHandler({ items: [], totalAmount: 0 }));
       toast.success("You have successfully scheduled your appointment!");
       setTimeout(function () {
         navigate("/");
@@ -281,7 +277,6 @@ const Appointment = (props) => {
                   onChange={handleToggleTime}
                 />
                 <FormControl
-                  // style={{ display: `${timeDisabled}` }}
                   disabled={timeDisabled}
                   required
                   sx={{ m: 1, minWidth: 120 }}

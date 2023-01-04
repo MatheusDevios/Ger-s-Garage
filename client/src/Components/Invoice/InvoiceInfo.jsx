@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { userRequest } from "../../Utils/requestMethods";
 import Loading from "../Loading";
+import AdminInvoiceUpdate from "../Admin/AdminInvoiceUpdate";
+import { toast, ToastContainer } from "react-toastify";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const InvoiceInfo = (props) => {
   const {
@@ -22,8 +25,14 @@ const InvoiceInfo = (props) => {
     email,
     phone,
     totalProduct,
+    service,
   } = props.invoice;
-
+  const fromAdminPage = props.adminPage;
+  const productsUpdate = products;
+  const [statusValue, setStatusValue] = useState(status);
+  const [productsUpdated, setProductsUpdated] = useState(productsUpdate);
+  const [totalUpdated, setTotalUpdated] = useState(parseFloat(total));
+  const [productsPrice, setProductsPrice] = useState(parseFloat(totalProduct));
   const navigate = useNavigate();
   const dateCreated = new Date(date);
   const dateFormated = `${dateCreated.getDate()}/${dateCreated.getMonth()}/${dateCreated.getFullYear()}`;
@@ -33,7 +42,11 @@ const InvoiceInfo = (props) => {
   };
 
   const [time, setTime] = useState("");
-  const { data: slots, isFetching } = useQuery({
+  const {
+    data: slots,
+    isFetching,
+    refetch,
+  } = useQuery({
     queryKey: ["slotData"],
     queryFn: async () => {
       if (props.invoice.slot) {
@@ -63,7 +76,34 @@ const InvoiceInfo = (props) => {
     },
   });
 
-  // console.log(props.invoice);
+  const updateProduct = (newProduct) => {
+    productsUpdate.push(newProduct);
+    setProductsUpdated(productsUpdate);
+    setTotalUpdated(totalUpdated + newProduct.price);
+    setProductsPrice(productsPrice + newProduct.price);
+    // console.log(productsUpdated);
+    refetch();
+  };
+
+  const handleProductUpdate = async (e) => {
+    setStatusValue(e.target.value);
+    await userRequest.put(`/appointments/status/${orderId}`, {
+      service: {
+        status: e.target.value,
+        _id: service._id,
+        name: service.name,
+        price: service.price,
+        homeIcon: service.homeIcon,
+        img: service.img,
+        icon: service.icon,
+        shortDescription: service.shortDescription,
+        description: service.description,
+        createdAt: service.createdAt,
+        updatedAt: service.updatedAt,
+      },
+    });
+    toast.success("Status updated successfully.");
+  };
   return (
     <Container>
       {!isFetching ? (
@@ -72,7 +112,29 @@ const InvoiceInfo = (props) => {
           <UserDetailsContainer>
             <TopContainer>
               <h3>{name}</h3>
-              <h3>{status}</h3>
+              <StatusConteiner>
+                <h3>{statusValue}</h3>
+                {fromAdminPage && (
+                  <FormControl sx={{ m: 1, minWidth: "150px" }}>
+                    <InputLabel id="demo-simple-select-required-label">
+                      {statusValue}
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-required-label"
+                      id="demo-simple-select-required"
+                      value={statusValue}
+                      label="Status *"
+                      onChange={handleProductUpdate}
+                    >
+                      <MenuItem value="Booked">Booked</MenuItem>
+                      <MenuItem value="In Service">In Service</MenuItem>
+                      <MenuItem value="Completed">Completed</MenuItem>
+                      <MenuItem value="Collected">Collected</MenuItem>
+                      <MenuItem value="Unrepairable">Unrepairable</MenuItem>
+                    </Select>
+                  </FormControl>
+                )}
+              </StatusConteiner>
             </TopContainer>
             <OrderID>
               Reference Number # {orderId || props.invoice.serviceId}
@@ -101,9 +163,18 @@ const InvoiceInfo = (props) => {
                 <ServiceInfo>
                   Appointment day: {slots.slotDate} at: {time}
                 </ServiceInfo>
+                <ServiceInfo>
+                  Customer Comment: "{props.invoice.comments}"
+                </ServiceInfo>
               </ServiceContainer>
             )}
-            {products.map((order, index) => (
+            {fromAdminPage && (
+              <AdminInvoiceUpdate
+                updateProduct={updateProduct}
+                info={props.invoice}
+              />
+            )}
+            {productsUpdated.map((order, index) => (
               <InvoiceDetails
                 key={index}
                 name={order.name}
@@ -115,7 +186,7 @@ const InvoiceInfo = (props) => {
               {totalProduct !== undefined ? (
                 <div>
                   <PriceInfo>
-                    Products Price: {parseFloat(totalProduct).toFixed(2)} €
+                    Products Price: {productsPrice.toFixed(2)} €
                   </PriceInfo>
                   <PriceInfo>
                     Service Price:{" "}
@@ -125,13 +196,14 @@ const InvoiceInfo = (props) => {
               ) : (
                 <PriceInfo>SubTotal: {subtotal.toFixed(2)} €</PriceInfo>
               )}
-              <PriceInfo>Total: {parseFloat(total).toFixed(2)} €</PriceInfo>
+              <PriceInfo>Total: {totalUpdated.toFixed(2)} €</PriceInfo>
             </Price>
           </UserDetailsContainer>
         </Card>
       ) : (
         <Loading />
       )}
+      <ToastContainer />
     </Container>
   );
 };
@@ -146,6 +218,13 @@ const Container = styled.div`
   max-width: 60rem;
   width: 90%;
   margin: 2rem auto;
+`;
+
+const StatusConteiner = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Card = styled.div`
@@ -237,6 +316,8 @@ const PriceInfo = styled.div`
 `;
 
 const Button = styled.button`
+  display: flex;
+  align-items: center;
   width: max-content;
   padding: 8px 12px;
   background-color: black;

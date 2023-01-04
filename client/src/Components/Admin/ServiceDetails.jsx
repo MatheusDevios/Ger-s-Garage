@@ -1,31 +1,46 @@
-import React from "react";
-import ProductDetails from "../ProductsDetails";
+import ProductsDetails from "../ProductsDetails";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const ServiceDetails = (props) => {
   const { serviceId, service, products } = props;
-
   return (
     <UserDetailsContainer>
       <TopContainer>
         <h3>Status: {service.status}</h3>
-        <h3> SERVICE INFO</h3>
-        <Link to={`/invoice/${serviceId}`} state={{ from: props }}>
-          <Button>Invoice</Button>
-        </Link>
+        <h3>Service Info: {props.name}</h3>
+        <ButtonContainer>
+          <Link to={`/invoice/${serviceId}`} state={{ from: props }}>
+            <Button>Invoice</Button>
+          </Link>
+          <Link to={`/invoiceAdmin/${serviceId}`} state={{ from: props }}>
+            <Button>Edit Invoice</Button>
+          </Link>
+        </ButtonContainer>
       </TopContainer>
       <OrderID>Appointment # {serviceId}</OrderID>
       <ServiceContainer>Service: {service.name}</ServiceContainer>
       {products.length > 0 &&
         products.map((order, index) => (
-          <ProductDetails key={index} name={order.name} amount={order.amount} />
+          <ProductsDetails
+            key={index}
+            name={order.name}
+            amount={order.amount}
+          />
         ))}
     </UserDetailsContainer>
   );
 };
 
 export default ServiceDetails;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+`;
 
 const UserDetailsContainer = styled.li`
   display: flex;

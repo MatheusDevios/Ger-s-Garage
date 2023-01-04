@@ -1,14 +1,14 @@
 import React from "react";
-import UserOrders from "./UserOrders";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import ProductsDetails from "../ProductsDetails";
 
 const OrderDetails = (props) => {
   const { orderId, products, status } = props;
   return (
     <UserDetailsContainer>
       <TopContainer>
-        <h3>{status}</h3>
+        <h3>Status: {status}</h3>
         <h3>SHOPPING INFO</h3>
         <Link to={`/invoice/${orderId}`} state={{ from: props }}>
           <Button>Invoice</Button>
@@ -16,7 +16,7 @@ const OrderDetails = (props) => {
       </TopContainer>
       <OrderID>Order # {orderId}</OrderID>
       {products.map((order, index) => (
-        <UserOrders key={index} name={order.name} amount={order.amount} />
+        <ProductsDetails key={index} name={order.name} amount={order.amount} />
       ))}
     </UserDetailsContainer>
   );

@@ -62,6 +62,10 @@ const UserInfo = () => {
     );
     contentService = (
       <>
+        {/* USE THE CODE BELLOW BEFORE THE SERVICE 
+        DETAILS TO ONLY DISPLAY THE SERBIVES FIXED, COMPLETED AND UNREPAIRABLE  */}
+        {/* (item.service.status !== "Booked") &
+              (item.service.status !== "In Service") &&  */}
         {serviceInfo.map((item, index) => (
           <ServiceDetails
             key={item._id}

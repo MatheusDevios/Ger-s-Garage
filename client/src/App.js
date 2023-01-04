@@ -8,6 +8,7 @@ import { cartActions } from "./Redux/cartRedux";
 import Appointment from "./Components/Appointment/Appointment";
 
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import InvoiceAdmin from "./Pages/InvoiceAdmin";
 
 const Invoice = React.lazy(() => import("./Pages/Invoice"));
 const Admin = React.lazy(() => import("./Pages/Admin"));
@@ -97,6 +98,11 @@ function App() {
           <Route
             path="/invoice/:_id"
             element={isLogged ? <Invoice /> : <Navigate replace to="/*" />}
+          />
+          {/* <Route path="/invoiceAdmin/:_id" element={<InvoiceAdmin />} /> */}
+          <Route
+            path="/invoiceAdmin/:_id"
+            element={isAdmin ? <InvoiceAdmin /> : <Navigate replace to="/*" />}
           />
           <Route path="/cart" element={<Cart />} />
           <Route
