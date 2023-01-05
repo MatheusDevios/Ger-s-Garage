@@ -40,4 +40,4 @@ The server will listen on http://localhost:5001
 
 ## However, you will need to connect or run it on your own database.
 
-## Or you can use the <a href="https://https://reactjs.org/">Live Demo</a>
+## Or you can use the <a href="https://gers-garage.netlify.app/">Live Demo</a>
