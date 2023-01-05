@@ -104,7 +104,7 @@ const Container = styled.div`
   width: 80%;
   max-width: 1200px;
   margin: 0 auto;
-  ${mobile({ width: "95%" })}
+  ${mobile({ width: "99%" })}
 `;
 
 const ContainerTop = styled.div`
