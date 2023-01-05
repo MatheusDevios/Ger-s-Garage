@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { cartActions } from "../../Redux/cartRedux";
 import { mobile } from "../../Utils/responsive";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 const Product = ({ item }) => {
   const dispatch = useDispatch();
@@ -50,7 +50,6 @@ const Product = ({ item }) => {
           </Info>
         </Container>
       </ContainerList>
-      <ToastContainer />
     </Wrapper>
   );
 };

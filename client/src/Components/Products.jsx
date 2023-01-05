@@ -4,6 +4,7 @@ import { publicRequest } from "../Utils/requestMethods";
 import { mobile, special, tablet } from "../Utils/responsive";
 import Product from "./Home/Product";
 import Loading from "./Loading";
+import { ToastContainer } from "react-toastify";
 
 const Products = ({ cat, filters, sort, page }) => {
   //   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -36,6 +37,7 @@ const Products = ({ cat, filters, sort, page }) => {
     <Container>
       {page ? <Title>Shop With Us</Title> : <Title>Fresh Arrivals</Title>}
       {content}
+      <ToastContainer />
     </Container>
   );
 };
