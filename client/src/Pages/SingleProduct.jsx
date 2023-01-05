@@ -11,6 +11,7 @@ import { publicRequest } from "../Utils/requestMethods";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../Redux/cartRedux";
 import { useQuery } from "@tanstack/react-query";
+import { toast, ToastContainer } from "react-toastify";
 
 const SingleProduct = () => {
   const location = useLocation();
@@ -45,6 +46,7 @@ const SingleProduct = () => {
         img: product.img,
       })
     );
+    toast.success("Product added to cart");
   };
 
   if (isFetching) {
@@ -78,6 +80,7 @@ const SingleProduct = () => {
       <Banner />
       {content}
       <Footer />
+      <ToastContainer />
     </Container>
   );
 };
