@@ -234,7 +234,7 @@ const Appointment = (props) => {
         maker,
         license,
         products: [],
-        totalAmountProducts,
+        totalAmountProducts: 0,
         service: props.service,
         slotTime: time,
         slotDate: `${day}/${month}/${year}`,
