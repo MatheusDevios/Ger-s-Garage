@@ -232,12 +232,11 @@ const StatusConteiner = styled.div`
 `;
 
 const Card = styled.div`
-  min-width: 100%;
+  max-width: 100%;
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   border-radius: 14px;
   background-color: white;
-  margin: 2rem 0;
 `;
 
 const UserDetailsContainer = styled.li`

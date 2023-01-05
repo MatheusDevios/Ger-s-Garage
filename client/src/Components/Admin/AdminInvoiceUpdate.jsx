@@ -18,6 +18,7 @@ const AdminInvoiceUpdate = (props) => {
   const info = props.info;
   const [item, setItem] = useState("");
   const [value, setValue] = useState("");
+  const [disabled, setDisabled] = useState(true);
   const total = parseFloat(props.updatedTotalPrice);
   const totalProduct = parseFloat(props.updatedProductPrice);
 
@@ -32,6 +33,7 @@ const AdminInvoiceUpdate = (props) => {
 
   const handleClick = async (e) => {
     e.preventDefault();
+    // console.log("pressed");
     toast.success(
       "You successfully added an item to the Cliient's Service Invoice"
     );
@@ -42,6 +44,7 @@ const AdminInvoiceUpdate = (props) => {
     });
     setItem("");
     setValue("");
+    setDisabled(true);
     props.updateProduct({
       name: item.name,
       price: item.price,
@@ -51,6 +54,7 @@ const AdminInvoiceUpdate = (props) => {
 
   const handleProductUpdate = (event) => {
     const product = event.target.value;
+    setDisabled(false);
     setItem({ ...product, amount: 1 });
     setValue(product);
   };
@@ -86,7 +90,7 @@ const AdminInvoiceUpdate = (props) => {
               pelase go back to the previous page and check if it is there.
             </FormHelperText>
           </FormControl>
-          <Button onClick={handleClick}>
+          <Button disabled={disabled} onClick={handleClick}>
             Adicionar <Add />
           </Button>
         </AdminProductsUpdate>
