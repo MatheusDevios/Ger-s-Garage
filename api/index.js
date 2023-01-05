@@ -34,6 +34,7 @@ app.use("/api/appointments", appointmentRoute);
 app.use("/api/slots", slotRoute);
 app.use("/api/orders", orderRoute);
 
+//heroku test
 app.get("/", (req, res) => {
   res.send("APP IS RUNING");
 });
