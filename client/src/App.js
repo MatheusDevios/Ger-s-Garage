@@ -7,7 +7,6 @@ import { userRequest } from "./Utils/requestMethods";
 import { cartActions } from "./Redux/cartRedux";
 import Appointment from "./Components/Appointment/Appointment";
 
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import InvoiceAdmin from "./Pages/InvoiceAdmin";
 
 const Invoice = React.lazy(() => import("./Pages/Invoice"));
@@ -75,46 +74,44 @@ function App() {
   }, []);
 
   return (
-    <MuiThemeProvider>
-      <Suspense fallback={<Loading />}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/admin"
-            element={isAdmin ? <Admin /> : <Navigate replace to="/user" />}
-          />
-          <Route
-            path="/user"
-            element={isLogged ? <User /> : <Navigate replace to="/auth" />}
-          />
-          <Route path="/services" element={<Services />} />
-          <Route path="/service/:_id" element={<SingleServices />} />
-          <Route
-            path="/auth"
-            element={!isLogged ? <Auth /> : <Navigate replace to="/admin" />}
-          />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/product/:_id" element={<SingleProduct />} />
-          <Route
-            path="/invoice/:_id"
-            element={isLogged ? <Invoice /> : <Navigate replace to="/*" />}
-          />
-          {/* <Route path="/invoiceAdmin/:_id" element={<InvoiceAdmin />} /> */}
-          <Route
-            path="/invoiceAdmin/:_id"
-            element={isAdmin ? <InvoiceAdmin /> : <Navigate replace to="/*" />}
-          />
-          <Route path="/cart" element={<Cart />} />
-          <Route
-            path="/checkout"
-            element={isLogged ? <Checkout /> : <Navigate replace to="/auth" />}
-          />
-          <Route path="/*" element={<Navigate replace to="/404" />} />
-          <Route path="/404" element={<Error404 />} />
-          <Route path="/appointment" element={<Appointment />} />
-        </Routes>
-      </Suspense>
-    </MuiThemeProvider>
+    <Suspense fallback={<Loading />}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/admin"
+          element={isAdmin ? <Admin /> : <Navigate replace to="/user" />}
+        />
+        <Route
+          path="/user"
+          element={isLogged ? <User /> : <Navigate replace to="/auth" />}
+        />
+        <Route path="/services" element={<Services />} />
+        <Route path="/service/:_id" element={<SingleServices />} />
+        <Route
+          path="/auth"
+          element={!isLogged ? <Auth /> : <Navigate replace to="/admin" />}
+        />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/product/:_id" element={<SingleProduct />} />
+        <Route
+          path="/invoice/:_id"
+          element={isLogged ? <Invoice /> : <Navigate replace to="/*" />}
+        />
+        {/* <Route path="/invoiceAdmin/:_id" element={<InvoiceAdmin />} /> */}
+        <Route
+          path="/invoiceAdmin/:_id"
+          element={isAdmin ? <InvoiceAdmin /> : <Navigate replace to="/*" />}
+        />
+        <Route path="/cart" element={<Cart />} />
+        <Route
+          path="/checkout"
+          element={isLogged ? <Checkout /> : <Navigate replace to="/auth" />}
+        />
+        <Route path="/*" element={<Navigate replace to="/404" />} />
+        <Route path="/404" element={<Error404 />} />
+        <Route path="/appointment" element={<Appointment />} />
+      </Routes>
+    </Suspense>
   );
 }
 

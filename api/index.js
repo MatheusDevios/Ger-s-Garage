@@ -34,11 +34,6 @@ app.use("/api/appointments", appointmentRoute);
 app.use("/api/slots", slotRoute);
 app.use("/api/orders", orderRoute);
 
-//heroku test
-app.get("/", (req, res) => {
-  res.send("APP IS RUNING");
-});
-
 app.listen(process.env.PORT || 5001, () => {
   console.log("Backend server is running!");
 });
