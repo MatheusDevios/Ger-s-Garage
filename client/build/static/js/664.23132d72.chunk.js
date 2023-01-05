@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkgers_garage=self.webpackChunkgers_garage||[]).push([[664],{1664:function(e,s,a){a.r(s);var r=a(6153),n=a(9229),i=a(8859),t=a(7689),u=a(184);s.default=function(){var e=(0,t.TH)().state.from;return(0,u.jsxs)("div",{children:[(0,u.jsx)(r.Z,{}),(0,u.jsx)(i.Z,{invoice:e,adminPage:!1}),(0,u.jsx)(n.Z,{})]})}}}]);
+//# sourceMappingURL=664.23132d72.chunk.js.map
