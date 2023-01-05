@@ -26,7 +26,6 @@ const Appointment = (props) => {
   const isLogged = useSelector((state) => state.auth.isLoggedIn);
   const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
-  const totalAmountProducts = useSelector((state) => state.cart.totalAmount);
   const email = useSelector((state) => state.auth.email);
   const phone = useSelector((state) => state.auth.phone);
   const name = useSelector((state) => state.auth.name);
