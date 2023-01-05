@@ -10,6 +10,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const InvoiceInfo = (props) => {
+  // console.log(props.invoice);
   const {
     orderId,
     name,
@@ -77,6 +78,7 @@ const InvoiceInfo = (props) => {
   });
 
   const updateProduct = (newProduct) => {
+    // e.preventDefault();
     productsUpdate.push(newProduct);
     setProductsUpdated(productsUpdate);
     setTotalUpdated(totalUpdated + newProduct.price);
@@ -85,7 +87,7 @@ const InvoiceInfo = (props) => {
     refetch();
   };
 
-  const handleProductUpdate = async (e) => {
+  const handleStatusUpdate = async (e) => {
     setStatusValue(e.target.value);
     await userRequest.put(`/appointments/status/${orderId}`, {
       service: {
@@ -124,7 +126,7 @@ const InvoiceInfo = (props) => {
                       id="demo-simple-select-required"
                       value={statusValue}
                       label="Status *"
-                      onChange={handleProductUpdate}
+                      onChange={handleStatusUpdate}
                     >
                       <MenuItem value="Booked">Booked</MenuItem>
                       <MenuItem value="In Service">In Service</MenuItem>
@@ -171,6 +173,8 @@ const InvoiceInfo = (props) => {
             {fromAdminPage && (
               <AdminInvoiceUpdate
                 updateProduct={updateProduct}
+                updatedProductPrice={productsPrice}
+                updatedTotalPrice={totalUpdated}
                 info={props.invoice}
               />
             )}

@@ -101,7 +101,8 @@ router.post("/:id", verifyTokenAndAuthorization, async (req, res) => {
 
 //UPDATE / ADD PRODUCTS TO THE SERVICE
 router.put("/update/:id", verifyTokenAndAdmin, async (req, res) => {
-  // console.log(req.params.id);
+  // console.log(req.body.totalAmountProducts);
+  // console.log(req.body.totalAppointmentAmount);
   try {
     const updatedAppointment = await Appointment.findByIdAndUpdate(
       req.params.id,

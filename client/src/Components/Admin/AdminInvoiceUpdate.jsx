@@ -14,13 +14,12 @@ import { publicRequest, userRequest } from "../../Utils/requestMethods";
 import { toast, ToastContainer } from "react-toastify";
 
 const AdminInvoiceUpdate = (props) => {
+  // console.log(props);
   const info = props.info;
   const [item, setItem] = useState("");
   const [value, setValue] = useState("");
-  const [total, setTotal] = useState(parseFloat(info.total));
-  const [totalProduct, setTotalProduct] = useState(
-    parseFloat(info.totalProduct)
-  );
+  const total = parseFloat(props.updatedTotalPrice);
+  const totalProduct = parseFloat(props.updatedProductPrice);
 
   const { data: products, isFetching } = useQuery({
     queryKey: ["productsData"],
@@ -31,16 +30,16 @@ const AdminInvoiceUpdate = (props) => {
     },
   });
 
-  const handleClick = async () => {
-    // console.log(item);
-    toast.success("Item added successfully to the Client's Service Invoice.");
+  const handleClick = async (e) => {
+    e.preventDefault();
+    toast.success(
+      "You successfully added an item to the Cliient's Service Invoice"
+    );
     await userRequest.put(`/appointments/update/${info.serviceId}`, {
       products: item,
       totalAmountProducts: item.price + totalProduct,
       totalAppointmentAmount: item.price + total,
     });
-    setTotalProduct(item.price + totalProduct);
-    setTotal(item.price + total);
     setItem("");
     setValue("");
     props.updateProduct({
