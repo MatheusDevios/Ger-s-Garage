@@ -33,19 +33,7 @@ router.get("/all/:id", verifyTokenAndAuthorization, async (req, res) => {
   }
 });
 
-//GET LAST USER APPOINTMENT
-router.get("/findLast/:id", verifyTokenAndAuthorization, async (req, res) => {
-  try {
-    const appointment = await Appointment.findOne({
-      userId: req.params.id,
-    }).sort({ createdAt: -1 });
-    res.status(200).json(appointment);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
 //CREATE
-
 router.post("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
     const newSlot = new Slot({
@@ -136,11 +124,42 @@ router.put("/status/:id", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
-//DELETE
+//DELETE PRODUCTS TO THE SERVICE
+router.put("/delete/:id", verifyTokenAndAdmin, async (req, res) => {
+  try {
+    const updatedAppointment = await Appointment.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: { products: req.body.products },
+        totalAmountProducts: req.body.totalAmountProducts,
+        totalAppointmentAmount: req.body.totalAppointmentAmount,
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedAppointment);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//BOTH ENDPOINT BELLOW IS NOT BEING USED SO FAR
+//DELETE SERVICE
 router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
     await Appointment.findByIdAndDelete(req.params.id);
     res.status(200).json("Appointment has been deleted...");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+//GET LAST USER APPOINTMENT
+router.get("/findLast/:id", verifyTokenAndAuthorization, async (req, res) => {
+  try {
+    const appointment = await Appointment.findOne({
+      userId: req.params.id,
+    }).sort({ createdAt: -1 });
+    res.status(200).json(appointment);
   } catch (err) {
     res.status(500).json(err);
   }

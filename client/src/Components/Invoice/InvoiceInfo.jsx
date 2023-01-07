@@ -52,7 +52,6 @@ const InvoiceInfo = (props) => {
     queryFn: async () => {
       if (props.invoice.slot) {
         const res = await userRequest.get(`/slots/${props.invoice.slot}`);
-        // console.log(res.data[0]);
         switch (res.data[0].slotTime) {
           case "1":
             setTime("08:30 - 10:30");
@@ -105,6 +104,21 @@ const InvoiceInfo = (props) => {
       },
     });
     toast.success("Status updated successfully.");
+  };
+
+  const handleDeleteProduct = async (product) => {
+    const index = productsUpdated.findIndex((p) => p._id === product._id);
+    const updated = productsUpdated.filter((p, indexP) => indexP !== index);
+    // console.log(updated);
+    setProductsUpdated(updated);
+    await userRequest.put(`/appointments/delete/${orderId}`, {
+      products: updated,
+      totalAmountProducts: productsPrice - product.price,
+      totalAppointmentAmount: totalUpdated - product.price,
+    });
+    setProductsPrice(productsPrice - product.price);
+    setTotalUpdated(totalUpdated - product.price);
+    toast.success("Status removed an item from the Invoice successfully.");
   };
   return (
     <Container>
@@ -181,6 +195,8 @@ const InvoiceInfo = (props) => {
             {productsUpdated.map((order, index) => (
               <InvoiceDetails
                 key={index}
+                onDelete={handleDeleteProduct}
+                productID={order._id}
                 name={order.name}
                 price={order.price}
                 amount={order.amount}
