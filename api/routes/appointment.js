@@ -143,6 +143,7 @@ router.put("/delete/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //BOTH ENDPOINT BELLOW IS NOT BEING USED SO FAR
+
 //DELETE SERVICE
 router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
