@@ -32,7 +32,6 @@ const AdminInvoiceUpdate = (props) => {
   });
 
   const handleClick = async (e) => {
-    e.preventDefault();
     // console.log("pressed");
     toast.success(
       "You successfully added an item to the Cliient's Service Invoice"
@@ -46,6 +45,7 @@ const AdminInvoiceUpdate = (props) => {
     setValue("");
     setDisabled(true);
     props.updateProduct({
+      _id: item._id,
       name: item.name,
       price: item.price,
       amount: 1,

@@ -29,9 +29,8 @@ const InvoiceInfo = (props) => {
     service,
   } = props.invoice;
   const fromAdminPage = props.adminPage;
-  const productsUpdate = products;
   const [statusValue, setStatusValue] = useState(status);
-  const [productsUpdated, setProductsUpdated] = useState(productsUpdate);
+  const [productsUpdated, setProductsUpdated] = useState(products);
   const [totalUpdated, setTotalUpdated] = useState(parseFloat(total));
   const [productsPrice, setProductsPrice] = useState(parseFloat(totalProduct));
   const navigate = useNavigate();
@@ -46,7 +45,7 @@ const InvoiceInfo = (props) => {
   const {
     data: slots,
     isFetching,
-    refetch,
+    // refetch,
   } = useQuery({
     queryKey: ["slotData"],
     queryFn: async () => {
@@ -78,12 +77,10 @@ const InvoiceInfo = (props) => {
 
   const updateProduct = (newProduct) => {
     // e.preventDefault();
-    productsUpdate.push(newProduct);
-    setProductsUpdated(productsUpdate);
+    setProductsUpdated([...productsUpdated, newProduct]);
     setTotalUpdated(totalUpdated + newProduct.price);
     setProductsPrice(productsPrice + newProduct.price);
-    // console.log(productsUpdated);
-    refetch();
+    // refetch();
   };
 
   const handleStatusUpdate = async (e) => {
