@@ -4,7 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { mobile } from "../../Utils/responsive";
 
 const InvoiceDetails = (props) => {
-  const { name, price, amount, productID } = props;
+  const { name, price, amount, productID, fromAdminPage } = props;
 
   const handleDelete = () => {
     props.onDelete({ _id: productID, price });
@@ -21,9 +21,11 @@ const InvoiceDetails = (props) => {
       <OrderInfo>
         <Info>Price: {price}</Info>
       </OrderInfo>
-      <Button onClick={handleDelete}>
-        <DeleteIcon />
-      </Button>
+      {fromAdminPage && (
+        <Button onClick={handleDelete}>
+          <DeleteIcon />
+        </Button>
+      )}
     </Orders>
   );
 };

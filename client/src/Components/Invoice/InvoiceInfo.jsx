@@ -192,6 +192,7 @@ const InvoiceInfo = (props) => {
             {productsUpdated.map((order, index) => (
               <InvoiceDetails
                 key={index}
+                fromAdminPage={fromAdminPage}
                 onDelete={handleDeleteProduct}
                 productID={order._id}
                 name={order.name}
