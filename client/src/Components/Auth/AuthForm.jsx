@@ -179,7 +179,7 @@ const AuthComp = () => {
               <Control>
                 <ControlLabel htmlFor="carType">Car Type</ControlLabel>
                 <SelectInput id="carType" required ref={typeInputRef}>
-                  <option value="Car">Select your car type...</option>
+                  <option value="">Select your car type...</option>
                   <option value="Motorbike">Motorbike</option>
                   <option value="Car">Car</option>
                   <option value="Small Van">Small Van</option>
@@ -189,7 +189,7 @@ const AuthComp = () => {
               <Control>
                 <ControlLabel htmlFor="maker">Car Maker</ControlLabel>
                 <SelectInput id="maker" required ref={makerInputRef}>
-                  <option value="Other">Select your car maker...</option>
+                  <option value="">Select your car maker...</option>
                   {carMakers.map((carMaker) => {
                     return (
                       <option key={carMaker.id} value={carMaker.title}>
