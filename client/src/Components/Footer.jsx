@@ -54,8 +54,8 @@ const Footer = () => {
         <Right>
           <Title>Contact</Title>
           <ContactItem>
-            <Room style={{ marginRight: "10px" }} /> 622 Dixie Path , South
-            Tobinchester 98336
+            <Room style={{ marginRight: "10px" }} /> 1550 Higher Glanmire Road,
+            Cork, Ireland
           </ContactItem>
           <ContactItem>
             <Phone style={{ marginRight: "10px" }} /> +353 083 123 4567
