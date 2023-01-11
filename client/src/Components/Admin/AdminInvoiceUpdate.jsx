@@ -91,7 +91,7 @@ const AdminInvoiceUpdate = (props) => {
             </FormHelperText>
           </FormControl>
           <Button disabled={disabled} onClick={handleClick}>
-            Adicionar <Add />
+            Add <Add />
           </Button>
         </AdminProductsUpdate>
       )}
