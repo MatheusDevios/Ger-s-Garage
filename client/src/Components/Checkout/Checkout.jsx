@@ -2,6 +2,7 @@ import React from "react";
 import useInput from "../../hooks/use-input";
 import styled from "styled-components";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const isPostalCode = (value) => value.trim().length >= 7;
@@ -78,7 +79,7 @@ const Checkout = (props) => {
   };
 
   return (
-    <Form onSubmit={confirmHandler}>
+    <Form>
       <Control>
         <label htmlFor="name">Your Name</label>
         <input
@@ -137,10 +138,10 @@ const Checkout = (props) => {
         {countryError && <p> Please enter your City Name.</p>}
       </Control>
       <Actions>
-        <ActionsButton type="button" onClick={props.onCloseCart}>
-          Cancel
-        </ActionsButton>
-        <ActionsSubmit>Confirm</ActionsSubmit>
+        <Link to="/cart">
+          <ActionsButton type="button">Cancel</ActionsButton>
+        </Link>
+        <ActionsSubmit onClick={confirmHandler}>Confirm</ActionsSubmit>
       </Actions>
     </Form>
   );
