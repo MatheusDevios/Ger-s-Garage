@@ -33,14 +33,12 @@ function App() {
 
   const persistCartHandler = () => {
     if (cartItems) {
-      Object.keys(cartItems).forEach(function (product, index) {
-        dispatch(
-          cartActions.updateCartHandler({
-            items: cartItems,
-            totalAmount: cartTotalPrice,
-          })
-        );
-      });
+      dispatch(
+        cartActions.updateCartHandler({
+          items: cartItems,
+          totalAmount: cartTotalPrice,
+        })
+      );
     }
   };
 
