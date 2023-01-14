@@ -37,7 +37,7 @@ const Product = ({ item }) => {
               <NameInfo>{item.name}</NameInfo>
             </Link>
             <PriceContianer>
-              <PriceInfo>{item.price}</PriceInfo>
+              <PriceInfo>€{item.price.toFixed(2)}</PriceInfo>
               <Link
                 style={{ textDecoration: "none" }}
                 onClick={addToCartHandler}

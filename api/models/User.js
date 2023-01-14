@@ -10,6 +10,8 @@ const UserSchema = new mongoose.Schema(
     maker: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    cart: { type: Array },
+    cartTotalAmount: { type: Number },
     isAdmin: {
       type: Boolean,
       default: false,

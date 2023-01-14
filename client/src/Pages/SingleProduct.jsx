@@ -60,7 +60,7 @@ const SingleProduct = () => {
         <InfoContainer>
           <Title>{product.name}</Title>
           <Desc>{product.description}</Desc>
-          <Price>{product.price} €</Price>
+          <Price>€{product.price.toFixed(2)}</Price>
           <AddContainer>
             <AmountContainer>
               <Remove onClick={() => handleQuantity("dec")} />

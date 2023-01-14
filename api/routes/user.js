@@ -91,4 +91,23 @@ router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
+//UPDATE / ADD PRODUCTS TO THE CART
+router.put("/userUpdate/:id", verifyTokenAndAuthorization, async (req, res) => {
+  // console.log(req.body.cart);
+  // console.log(req.body.cartTotalAmount);
+  try {
+    const updatedAppointment = await User.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: { cart: req.body.cart },
+        cartTotalAmount: req.body.cartTotalAmount,
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedAppointment);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;

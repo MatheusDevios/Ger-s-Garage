@@ -23,7 +23,7 @@ const SingleServices = () => {
         <InfoContainer>
           <Title>{name}</Title>
           <Desc>{description}</Desc>
-          <Price>From {price} €</Price>
+          <Price>From €{price.toFixed(2)}</Price>
           <AddContainer>
             <Appointment service={service} />
           </AddContainer>
