@@ -92,7 +92,7 @@ const Cart = () => {
                       <b>Product:</b> {product.name}
                     </ProductName>
                     <ProductId>
-                      <b>Unit Price:</b> {product.price.toFixed(2)} €
+                      <b>Unit Price:</b> €{product.price.toFixed(2)}
                     </ProductId>
                     <ProductId>
                       <b>Quantity:</b> {product.amount}
@@ -111,7 +111,7 @@ const Cart = () => {
                     <Add onClick={cartItemAddHandler.bind(null, product)} />
                   </ProductAmountContainer>
                   <ProductPrice>
-                    {(product.price * product.amount).toFixed(2)} €
+                    €{(product.price * product.amount).toFixed(2)}
                   </ProductPrice>
                 </PriceDetail>
               </Product>
@@ -122,19 +122,19 @@ const Cart = () => {
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>{subTotal} €</SummaryItemPrice>
+              <SummaryItemPrice>€{subTotal}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>{shipping.toFixed(2)} €</SummaryItemPrice>
+              <SummaryItemPrice>€{shipping.toFixed(2)}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>{discount.toFixed(2)} €</SummaryItemPrice>
+              <SummaryItemPrice>€{discount.toFixed(2)}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>{TotalPrice} €</SummaryItemPrice>
+              <SummaryItemPrice>€{TotalPrice}</SummaryItemPrice>
             </SummaryItem>
             {/* <StripeCheckout
               name="Lama Shop"
