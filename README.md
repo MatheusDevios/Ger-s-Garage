@@ -1,4 +1,4 @@
-# <div align="center"> MatMeals Order App</div>
+# <div align="center"> Ger's Garage Web Application</div>
 
 <p align="center">A Responsive MERN CRUD Garage Web Application made with React, Redux, Node.js, Hooks, User Auth consuming and Sending data to MongoDB.</p>
 
