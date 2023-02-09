@@ -13,7 +13,6 @@ const cartRedux = createSlice({
       const newTotalAmount = state.totalAmount + newItem.price * newItem.amount;
       //   console.log(newTotalAmount);
       const existingItem = state.items.find((item) => item.id === newItem.id);
-      //   state.items.amount = 0;
       if (!existingItem) {
         state.items.push({
           id: newItem.id,
