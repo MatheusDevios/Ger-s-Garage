@@ -23,6 +23,7 @@ const Checkout = React.lazy(() => import("./Pages/Checkout"));
 const Services = React.lazy(() => import("./Pages/Services"));
 const SingleServices = React.lazy(() => import("./Pages/SingleServices"));
 const Error404 = React.lazy(() => import("./Pages/Error404"));
+const secretCart = process.env.REACT_APP_CART_SECRET;
 
 function App() {
   const dispatch = useDispatch();
@@ -30,7 +31,6 @@ function App() {
   const authUserId = localStorage.getItem("userId");
   const isLogged = useSelector((state) => state.auth.isLoggedIn);
   const isAdmin = useSelector((state) => state.auth.isAdmin);
-  var secretCart = process.env.REACT_APP_CART_SECRET;
 
   const persistCartHandler = () => {
     try {
@@ -38,6 +38,8 @@ function App() {
       const { cart, cartTotalAmount } = JSON.parse(
         AES.decrypt(encryptedData, secretCart).toString(encUtf8)
       );
+      // console.log(cart);
+      // console.log(cartTotalAmount);
       if (cart) {
         dispatch(
           cartActions.updateCartHandler({
@@ -48,7 +50,7 @@ function App() {
         );
       }
     } catch (error) {
-      // console.log("Empty cart.");
+      console.log("Empty cart.");
     }
   };
 
@@ -71,6 +73,8 @@ function App() {
               license: res.data.license,
             })
           );
+          // console.log(res.data.cart);
+          // console.log(res.data.cartTotalAmount);
           dispatch(
             cartActions.updateCartHandler({
               items: res.data.cart,
@@ -83,8 +87,8 @@ function App() {
         dispatch(authActions.logout());
       }
     };
-    getUser();
     persistCartHandler();
+    getUser();
     // eslint-disable-next-line
   }, []);
 

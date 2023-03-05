@@ -2,12 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { userRequest } from "../Utils/requestMethods";
 import AES from "crypto-js/aes";
 import Cookies from "js-cookie";
-import encUtf8 from "crypto-js/enc-utf8";
+// import encUtf8 from "crypto-js/enc-utf8";
 //ON A REAL PROJECT, THIS WOULD BE USED WITH .ENV, IN ORDER TO HAVE SECURITY
 //AND NO ONE HAVE ACCES TO THE SECRET PHRASE OF THE CART
 const cookieOptions = { expires: 7 };
 var secretCart = process.env.REACT_APP_CART_SECRET;
-console.log(secretCart);
 
 const cartRedux = createSlice({
   name: "cart",
@@ -94,12 +93,8 @@ const cartRedux = createSlice({
           secretCart
         ).toString();
         Cookies.set("encryptedData", encryptedCart, cookieOptions);
-        const encryptedData = Cookies.get("encryptedData");
-        const { cart } = JSON.parse(
-          AES.decrypt(encryptedData, secretCart).toString(encUtf8)
-        );
-        cart.length === 0 && Cookies.remove("encryptedData");
-        console.log(cart.length);
+        state.items.length === 0 && Cookies.remove("encryptedData");
+        // console.log(state.items.length);
       }
     },
     removeFromDB(state, action) {
