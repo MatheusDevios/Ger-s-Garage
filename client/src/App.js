@@ -30,12 +30,13 @@ function App() {
   const authUserId = localStorage.getItem("userId");
   const isLogged = useSelector((state) => state.auth.isLoggedIn);
   const isAdmin = useSelector((state) => state.auth.isAdmin);
+  var secretCart = process.env.REACT_APP_CART_SECRET;
 
   const persistCartHandler = () => {
     try {
       const encryptedData = Cookies.get("encryptedData");
       const { cart, cartTotalAmount } = JSON.parse(
-        AES.decrypt(encryptedData, "cartwithnousersecretkey").toString(encUtf8)
+        AES.decrypt(encryptedData, secretCart).toString(encUtf8)
       );
       if (cart) {
         dispatch(
