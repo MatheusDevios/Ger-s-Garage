@@ -76,6 +76,7 @@ const Appointment = (props) => {
   const handleChangeDate = (newValue) => {
     setDateValue(newValue);
     refetch();
+    //to make sure everithing is as default when changing date
     setMechanic(0);
     setTime(0);
     setButtonDisabled(true);
@@ -91,6 +92,8 @@ const Appointment = (props) => {
 
   const handleToggleTime = (value) => {
     setMechanic(value);
+    //setting the default availability slots to false, to prevent the user from scheduling twice
+    //the same time for a sipecific professional.
     setAvailableSlot1(false);
     setAvailableSlot2(false);
     setAvailableSlot3(false);

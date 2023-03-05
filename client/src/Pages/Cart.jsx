@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 const Cart = () => {
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
+  const user = localStorage.getItem("userId");
   const cart = useSelector((state) => state.cart.items);
   const cartTotalRedux = useSelector((state) => state.cart.totalAmount);
   const shipping = 5.9;
@@ -24,11 +25,10 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   const cartItemRemoveHandler = (id) => {
-    dispatch(cartActions.removeItemFromCart(id));
+    dispatch(cartActions.removeItemFromCart({ id, user }));
   };
   const cartItemAddHandler = (item) => {
-    // console.log(item);
-    const cartItem = { ...item, amount: 1 };
+    const cartItem = { ...item, amount: 1, user: user };
     dispatch(cartActions.addItemToCartHandler(cartItem));
   };
 
@@ -39,6 +39,10 @@ const Cart = () => {
       toast.warn("Sorry, we can not go to checkout if you are not logged in!");
       navigate("/auth");
     }
+  };
+
+  const handleClearCart = () => {
+    dispatch(cartActions.removeFromDB(user));
   };
   // const [stripeToken, setStripeToken] = useState(null);
 
@@ -75,9 +79,9 @@ const Cart = () => {
           <Link to="/products">
             <TopButton>CONTINUE SHOPPING</TopButton>
           </Link>
-          <Link to="/checkout">
-            <TopButton type="filled">CHECKOUT NOW</TopButton>
-          </Link>
+          <TopButton onClick={handleClearCart} type="filled">
+            CLEAR CART
+          </TopButton>
         </Top>
         <Bottom>
           <Info>

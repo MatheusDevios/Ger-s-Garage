@@ -6,8 +6,10 @@ import { authActions } from "./Redux/authRedux";
 import { userRequest } from "./Utils/requestMethods";
 import { cartActions } from "./Redux/cartRedux";
 import Appointment from "./Components/Appointment/Appointment";
-
 import InvoiceAdmin from "./Pages/InvoiceAdmin";
+import AES from "crypto-js/aes";
+import encUtf8 from "crypto-js/enc-utf8";
+import Cookies from "js-cookie";
 
 const Invoice = React.lazy(() => import("./Pages/Invoice"));
 const Admin = React.lazy(() => import("./Pages/Admin"));
@@ -26,19 +28,26 @@ function App() {
   const dispatch = useDispatch();
   const authToken = localStorage.getItem("token");
   const authUserId = localStorage.getItem("userId");
-  const cartItems = JSON.parse(localStorage.getItem("cartItems"));
-  const cartTotalPrice = parseInt(localStorage.getItem("cartTotalAmount"));
   const isLogged = useSelector((state) => state.auth.isLoggedIn);
   const isAdmin = useSelector((state) => state.auth.isAdmin);
 
   const persistCartHandler = () => {
-    if (cartItems) {
-      dispatch(
-        cartActions.updateCartHandler({
-          items: cartItems,
-          totalAmount: cartTotalPrice,
-        })
+    try {
+      const encryptedData = Cookies.get("encryptedData");
+      const { cart, cartTotalAmount } = JSON.parse(
+        AES.decrypt(encryptedData, "cartwithnousersecretkey").toString(encUtf8)
       );
+      if (cart) {
+        dispatch(
+          cartActions.updateCartHandler({
+            items: cart,
+            totalAmount: cartTotalAmount,
+            userId: authUserId,
+          })
+        );
+      }
+    } catch (error) {
+      // console.log("Empty cart.");
     }
   };
 
@@ -46,7 +55,7 @@ function App() {
     const getUser = async () => {
       if (authToken) {
         const res = await userRequest.get(`users/find/${authUserId}`);
-        // console.log(res.data);
+        // console.log(res.data.cart);
         if (res.data) {
           dispatch(
             authActions.login({
@@ -61,13 +70,20 @@ function App() {
               license: res.data.license,
             })
           );
+          dispatch(
+            cartActions.updateCartHandler({
+              items: res.data.cart,
+              totalAmount: res.data.cartTotalAmount,
+              userId: authUserId,
+            })
+          );
         }
       } else {
         dispatch(authActions.logout());
       }
     };
-    persistCartHandler();
     getUser();
+    persistCartHandler();
     // eslint-disable-next-line
   }, []);
 
@@ -91,11 +107,11 @@ function App() {
         />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/product/:_id" element={<SingleProduct />} />
+        {/* <Route path="/product/:category" element={<ProductList />} /> */}
         <Route
           path="/invoice/:_id"
           element={isLogged ? <Invoice /> : <Navigate replace to="/*" />}
         />
-        {/* <Route path="/invoiceAdmin/:_id" element={<InvoiceAdmin />} /> */}
         <Route
           path="/invoiceAdmin/:_id"
           element={isAdmin ? <InvoiceAdmin /> : <Navigate replace to="/*" />}

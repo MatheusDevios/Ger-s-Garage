@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 const Product = ({ item }) => {
   const dispatch = useDispatch();
+  const user = localStorage.getItem("userId");
 
   const addToCartHandler = () => {
     dispatch(
@@ -17,6 +18,7 @@ const Product = ({ item }) => {
         amount: 1,
         price: item.price,
         img: item.img,
+        user,
       })
     );
     toast.success("Product added to cart");
@@ -71,7 +73,7 @@ const ContainerList = styled.div`
 const Container = styled.div`
   position: relative;
   width: 300px;
-  height: 420px;
+  height: 100%;
   padding: 20px;
   box-shadow: 0 3px 24px rgb(0 0 0 / 4%);
   border-radius: 8px;

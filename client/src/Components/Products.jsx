@@ -6,12 +6,14 @@ import Product from "./Home/Product";
 import Loading from "./Loading";
 import { ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
+import { Pagination } from "@mui/material";
 
 const Products = ({ filters, sort, page }) => {
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [pages, setPages] = useState(0);
   let content;
+  let totalPages;
 
-  // console.log(Object.keys(filters).length);
   const { data: products, isFetching } = useQuery({
     queryKey: ["productsData"],
     queryFn: async () => {
@@ -49,6 +51,7 @@ const Products = ({ filters, sort, page }) => {
 
   useEffect(() => {
     sortedProducts();
+    // eslint-disable-next-line
   }, [sort]);
 
   useEffect(() => {
@@ -63,19 +66,23 @@ const Products = ({ filters, sort, page }) => {
           )
         )
       );
+      handleChangeTo1();
       sortedProducts();
     }
+    // eslint-disable-next-line
   }, [filters, products]);
 
   if (isFetching) {
     content = <Loading />;
   } else {
+    // setFrom(1);
+    totalPages = Math.ceil(filteredProducts.length / 20);
     content = (
       <ProductContainer>
         {page
-          ? filteredProducts.map((item) => (
-              <Product item={item} key={item._id} />
-            ))
+          ? filteredProducts
+              .slice(pages * 20, 20 * (pages + 1))
+              .map((item) => <Product item={item} key={item._id} />)
           : products
               .slice(0, 5)
               .map((item) => <Product item={item} key={item._id} />)}
@@ -83,10 +90,25 @@ const Products = ({ filters, sort, page }) => {
     );
   }
 
+  const handlePageChange = (event, page) => {
+    if (filteredProducts.length > 20) setPages(page - 1);
+  };
+
+  const handleChangeTo1 = () => {
+    setPages(0);
+  };
+
   return (
     <Container>
       {page ? <Title>Shop With Us</Title> : <Title>Fresh Arrivals</Title>}
       {content}
+      {page && (
+        <Pagination
+          variant="outlined"
+          count={totalPages}
+          onChange={handlePageChange}
+        />
+      )}
       <ToastContainer />
     </Container>
   );

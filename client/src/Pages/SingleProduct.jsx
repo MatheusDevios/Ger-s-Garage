@@ -16,6 +16,7 @@ import { toast, ToastContainer } from "react-toastify";
 const SingleProduct = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
+  const user = localStorage.getItem("userId");
   let content;
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ const SingleProduct = () => {
         amount: quantity,
         price: product.price,
         img: product.img,
+        user: user,
       })
     );
     toast.success("Product added to cart");
