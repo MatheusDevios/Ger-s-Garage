@@ -96,20 +96,11 @@ function App() {
     <Suspense fallback={<Loading />}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route
-          path="/admin"
-          element={isAdmin ? <Admin /> : <Navigate replace to="/user" />}
-        />
-        <Route
-          path="/user"
-          element={isLogged ? <User /> : <Navigate replace to="/auth" />}
-        />
+        <Route path="/admin" element={isAdmin ? <Admin /> : <Navigate replace to="/user" />} />
+        <Route path="/user" element={isLogged ? <User /> : <Navigate replace to="/auth" />} />
         <Route path="/services" element={<Services />} />
         <Route path="/service/:_id" element={<SingleServices />} />
-        <Route
-          path="/auth"
-          element={!isLogged ? <Auth /> : <Navigate replace to="/admin" />}
-        />
+        <Route path="/auth" element={!isLogged ? <Auth /> : <Navigate replace to="/admin" />} />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/product/:_id" element={<SingleProduct />} />
         {/* <Route path="/product/:category" element={<ProductList />} /> */}

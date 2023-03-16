@@ -11,6 +11,7 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const InvoiceInfo = (props) => {
   // console.log(props.invoice);
+  const authUserId = localStorage.getItem("userId");
   const {
     orderId,
     name,
@@ -50,7 +51,7 @@ const InvoiceInfo = (props) => {
     queryKey: ["slotData"],
     queryFn: async () => {
       if (props.invoice.slot) {
-        const res = await userRequest.get(`/slots/${props.invoice.slot}`);
+        const res = await userRequest.get(`/slots/${props.invoice.slot}/${authUserId}`);
         switch (res.data[0].slotTime) {
           case "1":
             setTime("08:30 - 10:30");

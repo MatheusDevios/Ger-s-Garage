@@ -1,11 +1,7 @@
 const Appointment = require("../models/Appointment");
 const Slot = require("../models/Slot");
 
-const {
-  verifyToken,
-  verifyTokenAndAuthorization,
-  verifyTokenAndAdmin,
-} = require("./verifyToken");
+const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./verifyToken");
 
 const router = require("express").Router();
 
@@ -21,7 +17,7 @@ router.get("/", async (req, res) => {
 });
 
 //GET SPECIFIC SLOT
-router.get("/:id", async (req, res) => {
+router.get("/:id/:userId", verifyTokenAndAuthorization, async (req, res) => {
   // console.log(req.params.id);
   try {
     const slot = await Slot.find({ _id: req.params.id });
