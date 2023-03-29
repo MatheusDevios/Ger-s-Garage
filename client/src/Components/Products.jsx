@@ -4,7 +4,6 @@ import { publicRequest } from "../Utils/requestMethods";
 import { mobile, special, tablet } from "../Utils/responsive";
 import Product from "./Home/Product";
 import Loading from "./Loading";
-import { ToastContainer } from "react-toastify";
 import { useEffect, useState } from "react";
 import { Pagination } from "@mui/material";
 
@@ -22,9 +21,7 @@ const Products = ({ filters, sort, page }) => {
       page &&
         setFilteredProducts(
           res.data.filter((item) =>
-            Object.entries(filters).every(([key, value]) =>
-              item[key].includes(value)
-            )
+            Object.entries(filters).every(([key, value]) => item[key].includes(value))
           )
         );
       return res.data;
@@ -39,13 +36,9 @@ const Products = ({ filters, sort, page }) => {
         )
       );
     } else if (sort === "asc") {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => a.price - b.price)
-      );
+      setFilteredProducts((prev) => [...prev].sort((a, b) => a.price - b.price));
     } else {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => b.price - a.price)
-      );
+      setFilteredProducts((prev) => [...prev].sort((a, b) => b.price - a.price));
     }
   };
 
@@ -61,9 +54,7 @@ const Products = ({ filters, sort, page }) => {
     } else if (Object.keys(filters).length > 0) {
       setFilteredProducts(
         products.filter((item) =>
-          Object.entries(filters).every(([key, value]) =>
-            item.category.includes(value)
-          )
+          Object.entries(filters).every(([key, value]) => item.category.includes(value))
         )
       );
       handleChangeTo1();
@@ -83,9 +74,7 @@ const Products = ({ filters, sort, page }) => {
           ? filteredProducts
               .slice(pages * 20, 20 * (pages + 1))
               .map((item) => <Product item={item} key={item._id} />)
-          : products
-              .slice(0, 5)
-              .map((item) => <Product item={item} key={item._id} />)}
+          : products.slice(0, 5).map((item) => <Product item={item} key={item._id} />)}
       </ProductContainer>
     );
   }
@@ -102,14 +91,7 @@ const Products = ({ filters, sort, page }) => {
     <Container>
       {page ? <Title>Shop With Us</Title> : <Title>Fresh Arrivals</Title>}
       {content}
-      {page && (
-        <Pagination
-          variant="outlined"
-          count={totalPages}
-          onChange={handlePageChange}
-        />
-      )}
-      <ToastContainer />
+      {page && <Pagination variant="outlined" count={totalPages} onChange={handlePageChange} />}
     </Container>
   );
 };

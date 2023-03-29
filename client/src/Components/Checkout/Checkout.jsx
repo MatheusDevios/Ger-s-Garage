@@ -2,7 +2,6 @@ import React from "react";
 import useInput from "../../hooks/use-input";
 import styled from "styled-components";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const isPostalCode = (value) => value.trim().length >= 7;
@@ -49,12 +48,7 @@ const Checkout = (props) => {
     reset: resetCountry,
   } = useInput(isNotEmpty);
 
-  const formIsValid =
-    nameIsValid &&
-    codeIsValid &&
-    streetIsValid &&
-    cityIsValid &&
-    countryIsValid;
+  const formIsValid = nameIsValid && codeIsValid && streetIsValid && cityIsValid && countryIsValid;
 
   const confirmHandler = (event) => {
     event.preventDefault();
@@ -111,9 +105,7 @@ const Checkout = (props) => {
           onChange={codeChangeHandler}
           onBlur={codeBlurHandler}
         />
-        {codeError && (
-          <p> Please enter your Postal Code with 5 digits or more.</p>
-        )}
+        {codeError && <p> Please enter your Postal Code with 5 digits or more.</p>}
       </Control>
       <Control>
         <label htmlFor="city">County</label>
@@ -138,9 +130,9 @@ const Checkout = (props) => {
         {countryError && <p> Please enter your City Name.</p>}
       </Control>
       <Actions>
-        <Link to="/cart">
-          <ActionsButton type="button">Cancel</ActionsButton>
-        </Link>
+        <ActionsButton onClick={props.onClose} type="button">
+          Cancel
+        </ActionsButton>
         <ActionsSubmit onClick={confirmHandler}>Confirm</ActionsSubmit>
       </Actions>
     </Form>

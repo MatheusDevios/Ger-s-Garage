@@ -1,18 +1,15 @@
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
-import Footer from "../Components/Footer";
-import NavBar from "../Components/NavBar";
 import styled from "styled-components";
-import { mobile } from "../Utils/responsive";
+import { mobile, tablet } from "../Utils/responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../Redux/cartRedux";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 // import StripeCheckout from "react-stripe-checkout";
 // import { useEffect, useState } from "react";
 // import { userRequest } from "../requestMethods";
 
-const Cart = () => {
+const Cart = ({ onCloseCart, onOpenCheckout }) => {
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
   const user = localStorage.getItem("userId");
@@ -34,9 +31,10 @@ const Cart = () => {
 
   const handleCheckout = () => {
     if (token !== null) {
-      navigate("/checkout");
+      onOpenCheckout();
+      onCloseCart();
     } else {
-      toast.warn("Sorry, we can not go to checkout if you are not logged in!");
+      onCloseCart("checkout");
       navigate("/auth");
     }
   };
@@ -71,12 +69,11 @@ const Cart = () => {
   // }, [cart.total, history]);
   // }, [stripeToken, cart.total, history]);
   return (
-    <Container>
-      <NavBar />
-      <Wrapper>
+    <Container onClick={onCloseCart}>
+      <Wrapper onClick={(e) => e.stopPropagation()}>
         <Title>YOUR BAG</Title>
         <Top>
-          <Link to="/products">
+          <Link onClick={onCloseCart} to="/products">
             <TopButton>CONTINUE SHOPPING</TopButton>
           </Link>
           <TopButton onClick={handleClearCart} type="filled">
@@ -108,15 +105,11 @@ const Cart = () => {
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
-                    <Remove
-                      onClick={cartItemRemoveHandler.bind(null, product.id)}
-                    />
+                    <Remove onClick={cartItemRemoveHandler.bind(null, product.id)} />
                     <ProductAmount>|</ProductAmount>
                     <Add onClick={cartItemAddHandler.bind(null, product)} />
                   </ProductAmountContainer>
-                  <ProductPrice>
-                    €{(product.price * product.amount).toFixed(2)}
-                  </ProductPrice>
+                  <ProductPrice>€{(product.price * product.amount).toFixed(2)}</ProductPrice>
                 </PriceDetail>
               </Product>
             ))}
@@ -155,18 +148,34 @@ const Cart = () => {
           </Summary>
         </Bottom>
       </Wrapper>
-      <Footer />
     </Container>
   );
 };
 
 export default Cart;
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+`;
 
 const Wrapper = styled.div`
   padding: 20px;
+  width: 60%;
+  max-height: 80%;
+  ${tablet({ width: "96%" })}
   ${mobile({ padding: "10px" })}
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Title = styled.h1`
@@ -189,8 +198,7 @@ const TopButton = styled.button`
   box-shadow: 0 3px 24px rgb(0 0 0 / 30%);
   border-radius: 1rem;
   border: ${(props) => props.type === "filled" && "none"};
-  background-color: ${(props) =>
-    props.type === "filled" ? "black" : "transparent"};
+  background-color: ${(props) => (props.type === "filled" ? "black" : "transparent")};
   color: ${(props) => props.type === "filled" && "white"};
   transition: all 0.5s ease;
   &:hover {
@@ -203,6 +211,7 @@ const Bottom = styled.div`
   justify-content: space-between;
   box-shadow: 0 3px 24px rgb(0 0 0 / 30%);
   border-radius: 1rem;
+  overflow: scroll;
   ${mobile({ flexDirection: "column" })}
 `;
 

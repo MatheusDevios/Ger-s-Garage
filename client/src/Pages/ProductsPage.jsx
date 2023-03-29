@@ -1,6 +1,4 @@
 import React from "react";
-import Footer from "../Components/Footer";
-import NavBar from "../Components/NavBar";
 import Products from "../Components/Products";
 import styled from "styled-components";
 import { mobile } from "../Utils/responsive";
@@ -167,9 +165,7 @@ const ProductsPage = () => {
     const value = e.target.value;
     setValueSearch(e.target.value);
     setSearchedItem(
-      products.filter((products) =>
-        products.name.toLowerCase().includes(value.toLowerCase())
-      )
+      products.filter((products) => products.name.toLowerCase().includes(value.toLowerCase()))
     );
     // console.log(products);
   });
@@ -180,7 +176,6 @@ const ProductsPage = () => {
 
   return (
     <Page onClick={handleBlur}>
-      <NavBar />
       <Container>
         <FilterSearch>
           <SearchIcon />
@@ -191,9 +186,7 @@ const ProductsPage = () => {
             placeholder="Search Products.."
           />
         </FilterSearch>
-        {valueSearch?.length > 0 && (
-          <SearchContainer>{content}</SearchContainer>
-        )}
+        {valueSearch?.length > 0 && <SearchContainer>{content}</SearchContainer>}
         <FilterContainer>
           <Filter>
             <FilterText>Filter Products:</FilterText>
@@ -233,7 +226,6 @@ const ProductsPage = () => {
         </FilterContainer>
       </Container>
       <Products page={true} filters={filters} sort={sort} />
-      <Footer />
     </Page>
   );
 };

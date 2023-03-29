@@ -10,6 +10,9 @@ import InvoiceAdmin from "./Pages/InvoiceAdmin";
 import AES from "crypto-js/aes";
 import encUtf8 from "crypto-js/enc-utf8";
 import Cookies from "js-cookie";
+import Footer from "./Components/Footer";
+import NavBar from "./Components/NavBar";
+import { toast, ToastContainer } from "react-toastify";
 
 const Invoice = React.lazy(() => import("./Pages/Invoice"));
 const Admin = React.lazy(() => import("./Pages/Admin"));
@@ -31,6 +34,29 @@ function App() {
   const authUserId = localStorage.getItem("userId");
   const isLogged = useSelector((state) => state.auth.isLoggedIn);
   const isAdmin = useSelector((state) => state.auth.isAdmin);
+  const [cart, setCart] = React.useState(false);
+  const [checkOutModal, setCheckOutModal] = React.useState(false);
+
+  const onCloseCart = (value) => {
+    setCart(false);
+    if (value === "checkout") {
+      toast.warn("Sorry, we can not go to checkout if you are not logged in!");
+    }
+  };
+
+  const onOpenCart = () => {
+    setCart(true);
+  };
+  const onOpenCheckout = () => {
+    setCheckOutModal(true);
+  };
+
+  const onCloseCheckout = (value) => {
+    if (value === "order") {
+      toast.success("Your order has been placed successfully!");
+    }
+    setCheckOutModal(false);
+  };
 
   const persistCartHandler = () => {
     try {
@@ -94,6 +120,9 @@ function App() {
 
   return (
     <Suspense fallback={<Loading />}>
+      {cart && <Cart onCloseCart={onCloseCart} onOpenCheckout={onOpenCheckout} />}
+      {isLogged != null && checkOutModal && <Checkout onClose={onCloseCheckout} />}
+      <NavBar onOpenCart={onOpenCart} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={isAdmin ? <Admin /> : <Navigate replace to="/user" />} />
@@ -112,15 +141,16 @@ function App() {
           path="/invoiceAdmin/:_id"
           element={isAdmin ? <InvoiceAdmin /> : <Navigate replace to="/*" />}
         />
-        <Route path="/cart" element={<Cart />} />
         <Route
           path="/checkout"
-          element={isLogged ? <Checkout /> : <Navigate replace to="/auth" />}
+          // element={isLogged ? <Checkout /> : <Navigate replace to="/auth" />}
         />
         <Route path="/*" element={<Navigate replace to="/404" />} />
         <Route path="/404" element={<Error404 />} />
         <Route path="/appointment" element={<Appointment />} />
       </Routes>
+      <Footer />
+      <ToastContainer newestOnTop={true} autoClose={2000} pauseOnHover theme="dark" />
     </Suspense>
   );
 }

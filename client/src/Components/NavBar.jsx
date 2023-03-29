@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../Redux/authRedux";
 import { cartActions } from "../Redux/cartRedux";
 
-const NavBar = () => {
+const NavBar = ({onOpenCart}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isAdmin = useSelector((state) => state.auth.isAdmin);
@@ -79,12 +79,12 @@ const NavBar = () => {
                 <PageLink>Shop</PageLink>
               </Link>
             </Nav>
-            <CartContainer>
-              <Link style={{ textDecoration: "none" }} to={`/cart`}>
+            <CartContainer onClick={onOpenCart}>
+              {/* <Link style={{ textDecoration: "none" }} to={`/cart`}> */}
                 <Badge badgeContent={numberOfItems} color="error">
                   <ShoppingCartIcon style={{ color: "#18181d" }} />
                 </Badge>
-              </Link>
+              {/* </Link> */}
             </CartContainer>
           </MainBarContainer>
         </Container>

@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { userRequest } from "../../Utils/requestMethods";
 import Loading from "../Loading";
 import AdminInvoiceUpdate from "../Admin/AdminInvoiceUpdate";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const InvoiceInfo = (props) => {
@@ -130,9 +130,7 @@ const InvoiceInfo = (props) => {
                 <h3>{statusValue}</h3>
                 {fromAdminPage && (
                   <FormControl sx={{ m: 1, minWidth: "150px" }}>
-                    <InputLabel id="demo-simple-select-required-label">
-                      {statusValue}
-                    </InputLabel>
+                    <InputLabel id="demo-simple-select-required-label">{statusValue}</InputLabel>
                     <Select
                       labelId="demo-simple-select-required-label"
                       id="demo-simple-select-required"
@@ -150,9 +148,7 @@ const InvoiceInfo = (props) => {
                 )}
               </StatusConteiner>
             </TopContainer>
-            <OrderID>
-              Reference Number # {orderId || props.invoice.serviceId}
-            </OrderID>
+            <OrderID>Reference Number # {orderId || props.invoice.serviceId}</OrderID>
             <Time>
               <p>Booked at: </p>
               <p>{dateFormated}</p>
@@ -177,9 +173,7 @@ const InvoiceInfo = (props) => {
                 <ServiceInfo>
                   Appointment day: {slots.slotDate} at: {time}
                 </ServiceInfo>
-                <ServiceInfo>
-                  Customer Comment: "{props.invoice.comments}"
-                </ServiceInfo>
+                <ServiceInfo>Customer Comment: "{props.invoice.comments}"</ServiceInfo>
               </ServiceContainer>
             )}
             {fromAdminPage && (
@@ -204,12 +198,9 @@ const InvoiceInfo = (props) => {
             <Price>
               {totalProduct !== undefined ? (
                 <div>
+                  <PriceInfo>Products Price: {productsPrice.toFixed(2)} €</PriceInfo>
                   <PriceInfo>
-                    Products Price: {productsPrice.toFixed(2)} €
-                  </PriceInfo>
-                  <PriceInfo>
-                    Service Price:{" "}
-                    {parseFloat(props.invoice.service.price).toFixed(2)} €
+                    Service Price: {parseFloat(props.invoice.service.price).toFixed(2)} €
                   </PriceInfo>
                 </div>
               ) : (
@@ -222,7 +213,6 @@ const InvoiceInfo = (props) => {
       ) : (
         <Loading />
       )}
-      <ToastContainer />
     </Container>
   );
 };

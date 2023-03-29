@@ -1,8 +1,6 @@
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
 import styled from "styled-components";
-import Footer from "../Components/Footer";
-import NavBar from "../Components/NavBar";
 import { mobile, tablet } from "../Utils/responsive";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
@@ -11,7 +9,7 @@ import { publicRequest } from "../Utils/requestMethods";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../Redux/cartRedux";
 import { useQuery } from "@tanstack/react-query";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 const SingleProduct = () => {
   const location = useLocation();
@@ -78,11 +76,8 @@ const SingleProduct = () => {
 
   return (
     <Container>
-      <NavBar />
       <Banner />
       {content}
-      <Footer />
-      <ToastContainer />
     </Container>
   );
 };

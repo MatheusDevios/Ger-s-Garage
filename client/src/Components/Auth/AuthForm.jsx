@@ -4,7 +4,7 @@ import { mobile } from "../../Utils/responsive";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../Redux/authRedux";
 import { publicRequest } from "../../Utils/requestMethods";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { carMakers } from "../../Data/data";
 
 const AuthComp = () => {
@@ -67,9 +67,7 @@ const AuthComp = () => {
       enteredPassword = passwordInputRef1.current.value;
       submitHandler();
       //if I'm registering a new user I have to compare if the passwords typed are equal.
-    } else if (
-      passwordInputRef1.current.value === passwordInputRef2.current.value
-    ) {
+    } else if (passwordInputRef1.current.value === passwordInputRef2.current.value) {
       enteredEmail = emailInputRef.current.value;
       enteredPassword = passwordInputRef1.current.value;
       submitHandler();
@@ -253,20 +251,12 @@ const AuthComp = () => {
             />
           </Control>
           <Actions>
-            <ActionsButton>
-              {isLogin ? "Login" : "Create Account"}
-            </ActionsButton>
+            <ActionsButton>{isLogin ? "Login" : "Create Account"}</ActionsButton>
             <ActionsToggle type="button" onClick={switchAuthModeHandler}>
               {isLogin ? "Create new account" : "Login with existing account"}
             </ActionsToggle>
           </Actions>
         </form>
-        <ToastContainer
-          newestOnTop={true}
-          autoClose={5000}
-          pauseOnHover
-          theme="dark"
-        />
       </Auth>
     </ComponentAuth>
   );

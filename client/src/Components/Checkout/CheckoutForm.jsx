@@ -5,9 +5,8 @@ import { mobile, tablet } from "../../Utils/responsive";
 import { userRequest } from "../../Utils/requestMethods";
 import { cartActions } from "../../Redux/cartRedux";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ onClose }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.items);
@@ -27,16 +26,14 @@ const CheckoutForm = () => {
       address: address,
     });
     dispatch(cartActions.clearCartHandler({ items: [], totalAmount: 0 }));
-    toast.success("Order done successfully!");
-    setTimeout(function () {
-      navigate("/");
-    }, 2000);
+    onClose("order");
+    navigate("/");
   };
   return (
-    <Container>
+    <Container onClick={(e) => e.stopPropagation()}>
       <Wrapper>
         <Form>
-          <Checkout onConfirm={submitOrder} />
+          <Checkout onConfirm={submitOrder} onClose={onClose} />
         </Form>
         <Summary>
           <SummaryTitle>ORDER SUMMARY</SummaryTitle>
@@ -57,12 +54,6 @@ const CheckoutForm = () => {
             <SummaryItemPrice>{totalPrice} €</SummaryItemPrice>
           </SummaryItem>
         </Summary>
-        <ToastContainer
-          newestOnTop={true}
-          autoClose={2000}
-          pauseOnHover
-          theme="dark"
-        />
       </Wrapper>
     </Container>
   );
@@ -73,12 +64,16 @@ export default CheckoutForm;
 const Container = styled.div``;
 
 const Wrapper = styled.div`
+  padding: 20px;
+  width: 60%;
+  max-height: 80%;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   display: flex;
   flex-direction: row;
   margin: 0 auto;
-  width: 80%;
-  max-width: 1200px;
-  ${tablet({})}
+  ${tablet({ width: "96%" })}
   ${mobile({ padding: "10px", flexDirection: "column-reverse" })}
 `;
 

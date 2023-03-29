@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import Footer from "../Components/Footer";
-import NavBar from "../Components/NavBar";
 import { mobile, tablet } from "../Utils/responsive";
 import { useLocation } from "react-router-dom";
 import Banner from "../Components/SingleProduct/Banner";
@@ -14,7 +12,6 @@ const SingleServices = () => {
 
   return (
     <Container>
-      <NavBar />
       <Banner />
       <Wrapper>
         <ImgContainer>
@@ -29,7 +26,6 @@ const SingleServices = () => {
           </AddContainer>
         </InfoContainer>
       </Wrapper>
-      <Footer />
     </Container>
   );
 };
