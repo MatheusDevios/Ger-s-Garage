@@ -1,12 +1,13 @@
 const { query } = require("express");
+const { createAppointment } = require("../services/appointmentService");
+const { createSlot } = require("../services/slotService");
 const Appointment = require("../models/Appointment");
-const Slot = require("../models/Slot");
 
 const {
   verifyToken,
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin,
-} = require("./verifyToken");
+} = require("../services/verifyToken");
 
 const router = require("express").Router();
 
@@ -36,32 +37,14 @@ router.get("/all/:id", verifyTokenAndAuthorization, async (req, res) => {
 //CREATE
 router.post("/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    const newSlot = new Slot({
+    const slot = {
       slotTime: req.body.slotTime,
       slotDate: req.body.slotDate,
       mechanic: req.body.mechanic,
-    });
+    };
+    const createdSlot = await createSlot(slot);
 
-    const savedSlod = await newSlot.save();
-    let newMechanic;
-    switch (req.body.mechanic) {
-      case 1:
-        newMechanic = "Michael";
-        break;
-      case 2:
-        newMechanic = "Jordan";
-        break;
-      case 3:
-        newMechanic = "Tim";
-        break;
-      case 4:
-        newMechanic = "Wilson";
-        break;
-      default:
-        break;
-    }
-    // console.log(req.body.service.price);
-    const newAppointment = new Appointment({
+    const appointment = {
       userId: req.body.userId,
       name: req.body.name,
       email: req.body.email,
@@ -71,15 +54,13 @@ router.post("/:id", verifyTokenAndAuthorization, async (req, res) => {
       license: req.body.license,
       products: req.body.products,
       totalAmountProducts: req.body.totalAmountProducts,
-      totalAppointmentAmount:
-        req.body.totalAmountProducts + req.body.service.price,
+      totalAppointmentAmount: req.body.totalAmountProducts + req.body.service.price,
       service: req.body.service,
-      slots: savedSlod._id,
-      mechanic: newMechanic,
+      slots: createdSlot._id,
       comments: req.body.comments,
-    });
+    };
 
-    const savedAppointment = await newAppointment.save();
+    const savedAppointment = await createAppointment(appointment, createdSlot);
 
     res.status(200).json(savedAppointment);
   } catch (err) {

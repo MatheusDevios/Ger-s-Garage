@@ -1,7 +1,11 @@
 const Appointment = require("../models/Appointment");
 const Slot = require("../models/Slot");
 
-const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./verifyToken");
+const {
+  verifyToken,
+  verifyTokenAndAuthorization,
+  verifyTokenAndAdmin,
+} = require("../services/verifyToken");
 
 const router = require("express").Router();
 
