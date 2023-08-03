@@ -53,7 +53,7 @@ const Appointment = (props) => {
     queryKey: ["slotData"],
     queryFn: async () => {
       const res = await publicRequest.get("/slots");
-      // console.log(slots);
+      console.log(slots);
       return res.data;
     },
   });
@@ -223,8 +223,8 @@ const Appointment = (props) => {
       const newDateArray = dateArray[0];
       const newstDate = newDateArray.split("-");
 
-      const day = String(newstDate[2]).padEnd(2, "0");
-      const month = String(newstDate[1]).padEnd(2, "0");
+      const day = String(parseInt(newstDate[2]) + 1).padStart(2, "0");
+      const month = String(newstDate[1]).padStart(2, "0");
       const year = newstDate[0];
 
       await userRequest.post(`/appointments/${userId}`, {
@@ -249,9 +249,7 @@ const Appointment = (props) => {
         navigate("/");
       }, 2000);
     } else {
-      toast.warn(
-        "Sorry, we can not schedule an appointment if you are not logged in!"
-      );
+      toast.warn("Sorry, we can not schedule an appointment if you are not logged in!");
     }
   };
 
@@ -278,14 +276,8 @@ const Appointment = (props) => {
                   disable={professionalsDisabled}
                   onChange={handleToggleTime}
                 />
-                <FormControl
-                  disabled={timeDisabled}
-                  required
-                  sx={{ m: 1, minWidth: 120 }}
-                >
-                  <InputLabel id="demo-simple-select-required-label">
-                    Time
-                  </InputLabel>
+                <FormControl disabled={timeDisabled} required sx={{ m: 1, minWidth: 120 }}>
+                  <InputLabel id="demo-simple-select-required-label">Time</InputLabel>
                   <Select
                     labelId="demo-simple-select-required-label"
                     id="demo-simple-select-required"
@@ -309,9 +301,7 @@ const Appointment = (props) => {
                       15:30 - 17:30
                     </MenuItem>
                   </Select>
-                  <FormHelperText>
-                    Select the time for your appointment
-                  </FormHelperText>
+                  <FormHelperText>Select the time for your appointment</FormHelperText>
                 </FormControl>
               </InfoContainer>
               <AppointmentDetailsContainer>
@@ -331,12 +321,7 @@ const Appointment = (props) => {
             <Button disabled={buttonDisabled} onClick={handleClick}>
               SCHEDULE
             </Button>
-            <ToastContainer
-              newestOnTop={true}
-              autoClose={5000}
-              pauseOnHover
-              theme="dark"
-            />
+            <ToastContainer newestOnTop={true} autoClose={5000} pauseOnHover theme="dark" />
           </Stack>
         </LocalizationProvider>
       )}

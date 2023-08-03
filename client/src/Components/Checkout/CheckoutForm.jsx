@@ -65,7 +65,7 @@ const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
-  width: 60%;
+  min-width: 60%;
   max-height: 80%;
   border-radius: 12px;
   background-color: white;
